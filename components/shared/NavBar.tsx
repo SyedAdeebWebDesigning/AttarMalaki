@@ -60,7 +60,7 @@ const NavBar = () => {
 								<SheetHeader>
 									<SheetTitle>
 										<Image
-											src="/logo/LogoWhite.svg"
+											src="/logo/LogoBlack.svg"
 											alt="Attar Malaki Logo"
 											width={200}
 											height={100}
