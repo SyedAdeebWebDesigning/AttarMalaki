@@ -24,7 +24,7 @@ const NavBar = () => {
 				<div className="flex items-center justify-between">
 					{/* Logo */}
 					<Image
-						src="/logo/logoBlack.svg"
+						src="/logo/LogoBlack.svg"
 						alt="Attar Malaki Logo"
 						width={250}
 						height={100}
