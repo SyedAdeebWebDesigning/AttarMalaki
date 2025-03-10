@@ -45,7 +45,7 @@ const navLinks = [
 
 const NavBar = () => {
 	return (
-		<header className="py-4 bg-white border-b shadow-md border-gray-300 sticky top-0 w-full z-[999]">
+		<header className="py-4 bg-white border-b shadow-md border-gray-300 sticky top-0 w-full z-[10]">
 			<MaxWidthWrapper>
 				<div className="flex items-center justify-between">
 					{/* Logo */}
@@ -82,7 +82,7 @@ const NavBar = () => {
 						{/* Mobile Navigation - Hamburger Menu */}
 						<Sheet>
 							<SheetTrigger className="sm:hidden">
-								<CgMenuRight className="text-2xl size-8" />
+								<CgMenuRight className="text-2xl size-8 mr-2" />
 							</SheetTrigger>
 							<SheetContent>
 								<SheetHeader>
