@@ -5,7 +5,10 @@ export default function Home() {
 		<section>
 			{/* Banner Section */}
 			<div className="bannerImg">
-				<Banner />
+				<Banner
+					position="left"
+					text="Unveil Your Elegance with Premium Arabic Perfumes."
+				/>
 			</div>
 		</section>
 	);

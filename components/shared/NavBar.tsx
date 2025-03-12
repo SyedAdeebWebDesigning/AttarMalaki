@@ -60,7 +60,7 @@ const NavBar = () => {
 
 					{/* Desktop Navigation */}
 					<nav>
-						<ul className="hidden sm:flex text-xl space-x-8">
+						<ul className="hidden md:flex text-xl space-x-8 items-center justify-center">
 							{navLinks.map((link, index) => (
 								<li key={index} className="relative group flex items-center">
 									<Link
@@ -81,7 +81,7 @@ const NavBar = () => {
 
 						{/* Mobile Navigation - Hamburger Menu */}
 						<Sheet>
-							<SheetTrigger className="sm:hidden">
+							<SheetTrigger className="md:hidden">
 								<CgMenuRight className="text-2xl size-8 mr-2" />
 							</SheetTrigger>
 							<SheetContent>

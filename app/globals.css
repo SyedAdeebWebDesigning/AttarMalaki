@@ -124,8 +124,17 @@
 	}
 
 	.bannerImg {
-		background: url("/BannerImg.png") no-repeat;
-		background-size: contain;
-		background-attachment: fixed;
+		background: url("/BannerImg.png") no-repeat center center;
+		background-size: cover; /* Ensures the whole image fits without cropping */
+		background-attachment: fixed; /* Keeps it fixed on larger screens */
+		width: 100%;
+		height: 100%; /* Full viewport height */
+	}
+	.bannerImg-2 {
+		background: url("/BannerImg-2.png") no-repeat center center;
+		background-size: cover; /* Ensures the whole image fits without cropping */
+		background-attachment: fixed; /* Keeps it fixed on larger screens */
+		width: 100%;
+		height: 100%; /* Full viewport height */
 	}
 }
