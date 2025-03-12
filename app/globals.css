@@ -122,4 +122,10 @@
 	body {
 		@apply bg-background text-foreground;
 	}
+
+	.bannerImg {
+		background: url("/BannerImg.png") no-repeat;
+		background-size: contain;
+		background-attachment: fixed;
+	}
 }

@@ -55,7 +55,7 @@ const NavBar = () => {
 						width={250}
 						height={100}
 						priority
-						className="object-contain"
+						className="object-contain object-left mr-2"
 					/>
 
 					{/* Desktop Navigation */}
