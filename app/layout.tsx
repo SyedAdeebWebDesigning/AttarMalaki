@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/shared/NavBar";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -28,23 +29,24 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
-			<head>
-				<style>
-					{`
-            @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap");
-            body {
-              font-family: "Cairo", sans-serif;
-              font-optical-sizing: auto;
-            }
-          `}
-				</style>
-			</head>
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-				<NavBar />
-				<main>{children}</main>
-			</body>
-		</html>
+		<ClerkProvider>
+			<html lang="en">
+				<head>
+					<style>
+						{`
+	            @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap");
+	            body {
+	              font-family: "Cairo", sans-serif;
+	              font-optical-sizing: auto;
+	            }
+	          `}
+					</style>
+				</head>
+				<body
+					className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+					<main>{children}</main>
+				</body>
+			</html>
+		</ClerkProvider>
 	);
 }

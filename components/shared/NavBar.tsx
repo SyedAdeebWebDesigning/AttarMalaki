@@ -2,8 +2,8 @@ import Image from "next/image";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import { CgMenuRight } from "react-icons/cg";
 import { IoBagOutline } from "react-icons/io5";
-import { FaHome, FaInfoCircle, FaBoxes } from "react-icons/fa";
-import { AiOutlineHome, AiOutlineInfoCircle } from "react-icons/ai";
+import { AiOutlineHome } from "react-icons/ai";
+import { BsBox2 } from "react-icons/bs";
 import { TbPerfume } from "react-icons/tb";
 import {
 	Sheet,
@@ -14,6 +14,8 @@ import {
 } from "../ui/sheet";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { User } from "lucide-react";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 // Navbar links with icons
 const navLinks = [
@@ -24,15 +26,15 @@ const navLinks = [
 		hasSpanText: false,
 	},
 	{
-		name: "About",
-		href: "/about",
-		icon: <AiOutlineInfoCircle className="mr-1.5 text-2xl size-6" />,
-		hasSpanText: false,
-	},
-	{
 		name: "Store",
 		href: "/store",
 		icon: <TbPerfume className="mr-1.5 text-2xl size-6" />,
+		hasSpanText: false,
+	},
+	{
+		name: "Your Orders",
+		href: "/your-orders",
+		icon: <BsBox2 className="mr-1.5 text-2xl size-5" />,
 		hasSpanText: false,
 	},
 	{
@@ -44,6 +46,7 @@ const navLinks = [
 ];
 
 const NavBar = () => {
+	const isSignedIn = false;
 	return (
 		<header className="py-4 bg-white border-b shadow-md border-gray-300 sticky top-0 w-full z-[10]">
 			<MaxWidthWrapper>
@@ -60,24 +63,42 @@ const NavBar = () => {
 
 					{/* Desktop Navigation */}
 					<nav>
-						<ul className="hidden md:flex text-xl space-x-8 items-center justify-center">
-							{navLinks.map((link, index) => (
-								<li key={index} className="relative group flex items-center">
-									<Link
-										href={link.href}
-										className={cn("hover:text-gray-700 flex items-center")}>
-										{link.icon} {link.name}
-										{link.hasSpanText && (
-											<span className=" top-1 -right-6 shadow-2xl rounded-full size-6 text-black flex items-center justify-center">
-												4
-											</span>
-										)}
-									</Link>
-									{/* Underline animation */}
-									<span className="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-gray-700 transition-all duration-300 group-hover:w-2/3"></span>
+						<SignedIn>
+							<ul className="hidden md:flex text-xl space-x-8 items-center justify-center">
+								{navLinks.map((link, index) => (
+									<li key={index} className="relative group flex items-center">
+										<Link
+											href={link.href}
+											className={cn("hover:text-gray-700 flex items-center")}>
+											{link.icon} {link.name}
+											{link.hasSpanText && (
+												<span className=" top-1 -right-6 shadow-2xl rounded-full size-6 text-black flex items-center justify-center">
+													4
+												</span>
+											)}
+										</Link>
+										{/* Underline animation */}
+										<span className="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-gray-700 transition-all duration-300 group-hover:w-2/3"></span>
+									</li>
+								))}
+								<li className="-ml-3 mt-2">
+									<UserButton />
 								</li>
-							))}
-						</ul>
+							</ul>
+						</SignedIn>
+						<SignedOut>
+							<ul className="hidden md:flex text-xl space-x-8 items-center justify-center">
+								<li>
+									<Link
+										href={"/sign-in"}
+										className="cursor-pointer relative group flex items-center">
+										<User />
+										<p className="ml-1">Sign In</p>
+										<span className="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-gray-700 transition-all duration-300 group-hover:w-2/3"></span>
+									</Link>
+								</li>
+							</ul>
+						</SignedOut>
 
 						{/* Mobile Navigation - Hamburger Menu */}
 						<Sheet>
@@ -96,17 +117,29 @@ const NavBar = () => {
 											className="object-contain"
 										/>
 									</SheetTitle>
-									<ul className="flex flex-col text-xl mt-5 space-y-3">
-										{navLinks.map((link, index) => (
-											<li key={index} className="flex items-center">
-												<a
-													href={link.href}
-													className="hover:text-gray-700 flex items-center">
-													{link.icon} {link.name}
-												</a>
+									<SignedIn>
+										<ul className="flex flex-col text-xl mt-5 space-y-3">
+											{navLinks.map((link, index) => (
+												<li key={index} className="flex items-center">
+													<a
+														href={link.href}
+														className="hover:text-gray-700 flex items-center">
+														{link.icon} {link.name}
+													</a>
+												</li>
+											))}
+										</ul>
+									</SignedIn>
+									<SignedOut>
+										<ul className="flex flex-col text-xl mt-5 space-y-3">
+											<li className="flex items-center">
+												<User />
+												<p className="ml-1">
+													<SignInButton />
+												</p>
 											</li>
-										))}
-									</ul>
+										</ul>
+									</SignedOut>
 								</SheetHeader>
 							</SheetContent>
 						</Sheet>
