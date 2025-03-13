@@ -43,6 +43,7 @@ const Banner = (props: BannerProps) => {
 									className="object-cover object-center rounded"
 									alt="hero"
 									fill
+									priority
 									src="/BannerImage.webp"
 								/>
 							</div>
