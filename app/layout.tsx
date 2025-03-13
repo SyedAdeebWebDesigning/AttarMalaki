@@ -29,7 +29,13 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<ClerkProvider>
+		<ClerkProvider
+			appearance={{
+				elements: {
+					formButtonPrimary: "bg-rose-700!",
+					userButtonPopoverCard: "top-[100px]!",
+				},
+			}}>
 			<html lang="en">
 				<head>
 					<style>
