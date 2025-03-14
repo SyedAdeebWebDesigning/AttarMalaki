@@ -48,7 +48,7 @@ const navLinks = [
 const NavBar = () => {
 	const isSignedIn = false;
 	return (
-		<header className="py-4 bg-white border-b shadow-md border-gray-300 sticky top-0 w-full z-[10]">
+		<header className="py-4 bg-white border-b shadow-md border-gray-300 sticky top-0 w-full z-[10] px-4">
 			<MaxWidthWrapper>
 				<div className="flex items-center justify-between">
 					{/* Logo */}
@@ -62,11 +62,13 @@ const NavBar = () => {
 					/>
 
 					{/* Desktop Navigation */}
-					<nav>
+					<nav className="flex flex-row-reverse">
 						<SignedIn>
-							<ul className="hidden md:flex text-xl space-x-8 items-center justify-center">
+							<ul className="text-xl space-x-8 items-center justify-center flex">
 								{navLinks.map((link, index) => (
-									<li key={index} className="relative group flex items-center">
+									<li
+										key={index}
+										className="relative group items-center hidden min-[814px]:flex ">
 										<Link
 											href={link.href}
 											className={cn("hover:text-gray-700 flex items-center")}>
@@ -81,13 +83,13 @@ const NavBar = () => {
 										<span className="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-gray-700 transition-all duration-300 group-hover:w-2/3"></span>
 									</li>
 								))}
-								<li className="-ml-3 mt-2">
+								<li className=" mt-2">
 									<UserButton />
 								</li>
 							</ul>
 						</SignedIn>
 						<SignedOut>
-							<ul className="hidden md:flex text-xl space-x-8 items-center justify-center">
+							<ul className="hidden min-[814px]:flex text-xl space-x-8 items-center justify-center">
 								<li>
 									<Link
 										href={"/sign-in"}
@@ -102,7 +104,7 @@ const NavBar = () => {
 
 						{/* Mobile Navigation - Hamburger Menu */}
 						<Sheet>
-							<SheetTrigger className="md:hidden">
+							<SheetTrigger className="min-[814px]:hidden">
 								<CgMenuRight className="text-2xl size-8 mr-2" />
 							</SheetTrigger>
 							<SheetContent>
