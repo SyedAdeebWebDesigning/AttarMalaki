@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import { User } from "lucide-react";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { FaLocationDot } from "react-icons/fa6";
+import { user } from "@prisma/client";
 
 // Navbar links with icons
 const navLinks = [
@@ -48,7 +49,10 @@ const navLinks = [
 	}, // Cart added in navLinks
 ];
 
-const NavBar = () => {
+interface NavBarProps {
+	user: user;
+}
+const NavBar = ({ user }: NavBarProps) => {
 	return (
 		<header className="py-4 bg-white border-b shadow-md border-gray-300 sticky top-0 w-full z-[10] px-4">
 			<MaxWidthWrapper>
@@ -88,11 +92,19 @@ const NavBar = () => {
 								<li className=" mt-2">
 									<UserButton>
 										<UserButton.MenuItems>
-											<UserButton.Link
-												label="Add Address"
-												labelIcon={<FaLocationDot />}
-												href="/address"
-											/>
+											{user && user.hasCompletedAddresses ? (
+												<UserButton.Link
+													label="Add Address"
+													labelIcon={<FaLocationDot />}
+													href="/address?type=add"
+												/>
+											) : (
+												<UserButton.Link
+													label="Manage Address"
+													labelIcon={<FaLocationDot />}
+													href="/address/type=manage"
+												/>
+											)}
 										</UserButton.MenuItems>
 									</UserButton>
 								</li>

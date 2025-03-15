@@ -14,13 +14,29 @@ generator client {
 }
 
 model user {
+  id                    String    @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId               String    @unique
+  firstName             String
+  lastName              String
+  email                 String    @unique
+  isAdmin               Boolean   @default(false)
+  imgUrl                String
+  hasCompletedAddresses Boolean   @default(false)
+  addresses             Address[] // One-to-Many Relationship
+  createdAt             DateTime? @default(now())
+  updatedAt             DateTime? @updatedAt
+}
+
+model Address {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  clerkId   String    @unique
-  firstName String
-  lastName  String
-  email     String
-  isAdmin   Boolean   @default(false)
-  imgUrl    String
+  userId    String    @db.ObjectId
+  user      user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  label     String // e.g., "Home", "Work", or Custom Name
+  street    String
+  city      String
+  state     String
+  country   String
+  zipCode   String
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 }
