@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import { CgMenuRight } from "react-icons/cg";
@@ -16,6 +18,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { User } from "lucide-react";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { FaLocationDot } from "react-icons/fa6";
 
 // Navbar links with icons
 const navLinks = [
@@ -46,7 +49,6 @@ const navLinks = [
 ];
 
 const NavBar = () => {
-	const isSignedIn = false;
 	return (
 		<header className="py-4 bg-white border-b shadow-md border-gray-300 sticky top-0 w-full z-[10] px-4">
 			<MaxWidthWrapper>
@@ -84,7 +86,15 @@ const NavBar = () => {
 									</li>
 								))}
 								<li className=" mt-2">
-									<UserButton />
+									<UserButton>
+										<UserButton.MenuItems>
+											<UserButton.Link
+												label="Add Address"
+												labelIcon={<FaLocationDot />}
+												href="/address"
+											/>
+										</UserButton.MenuItems>
+									</UserButton>
 								</li>
 							</ul>
 						</SignedIn>
