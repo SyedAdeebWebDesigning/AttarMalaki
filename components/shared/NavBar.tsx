@@ -94,13 +94,13 @@ const NavBar = ({ user }: NavBarProps) => {
 										<UserButton.MenuItems>
 											{user && user.hasCompletedAddresses ? (
 												<UserButton.Link
-													label="Add Address"
+													label="Manage Address"
 													labelIcon={<FaLocationDot />}
 													href="/address?type=add"
 												/>
 											) : (
 												<UserButton.Link
-													label="Manage Address"
+													label="Add Address"
 													labelIcon={<FaLocationDot />}
 													href="/address/type=manage"
 												/>
