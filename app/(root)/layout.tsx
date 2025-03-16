@@ -14,7 +14,7 @@ const layout = async ({ children }: layoutProps) => {
 	return (
 		<div>
 			<NavBar user={user} />
-			<main>{children}</main>
+			<div>{children}</div>
 		</div>
 	);
 };
