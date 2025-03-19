@@ -19,7 +19,7 @@ const Banner = (props: BannerProps) => {
 					<div className="container mx-auto flex flex-col-reverse md:flex-row items-center gap-12 py-16 md:py-24">
 						{/* Text Section */}
 						<div className="flex-1 text-center md:text-left">
-							<h1 className="text-3xl sm:text-4xl lg:text-6xl font-semibold mb-6 text-gray-900 leading-tight">
+							<h1 className="text-3xl sm:text-4xl lg:text-6xl font-medium text-cairo mb-6 text-gray-900 leading-tight">
 								{text}
 							</h1>
 							<div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">

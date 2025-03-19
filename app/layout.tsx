@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import NavBar from "@/components/shared/NavBar";
 import { ClerkProvider } from "@clerk/nextjs";
-
+import { ToastContainer } from "react-toastify";
 const geistSans = Geist({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
@@ -36,21 +35,27 @@ export default function RootLayout({
 					userButtonPopoverCard: "top-[100px]!",
 				},
 			}}>
-			<html lang="en">
+			<html lang="en" suppressHydrationWarning>
 				<head>
-					<style>
-						{`
-	            @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap");
-	            body {
-	              font-family: "Cairo", sans-serif;
-	              font-optical-sizing: auto;
-	            }
-	          `}
-					</style>
+					
 				</head>
 				<body
 					className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-					<main>{children}</main>
+					<main>
+						<ToastContainer
+							position="top-right"
+							autoClose={1500}
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick={false}
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+							theme="light"
+						/>
+						<div>{children}</div>
+					</main>
 				</body>
 			</html>
 		</ClerkProvider>

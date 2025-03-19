@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 export async function addAddress(
-	userId: string,
+	userClerkId: string, // Accept clerkId
 	addressData: {
 		label: string;
 		street: string;
@@ -15,21 +15,32 @@ export async function addAddress(
 	}
 ) {
 	try {
+		// Find user ID based on Clerk ID
+		const user = await prisma.user.findUnique({
+			where: { clerkId: userClerkId },
+			select: { id: true },
+		});
+
+		if (!user) {
+			return { success: false, message: "User not found" };
+		}
+
+		// Add address for the user
 		const newAddress = await prisma.address.create({
 			data: {
-				userId,
+				userId: user.id, // Use the fetched user ID
 				...addressData,
 			},
 		});
 
 		// Mark the user as having completed addresses
 		await prisma.user.update({
-			where: { id: userId },
+			where: { id: user.id }, // Use the correct user ID
 			data: { hasCompletedAddresses: true },
 		});
 
-		// Revalidate any related paths
-		revalidatePath("/profile"); // Adjust this path as needed
+		// Revalidate paths (optional, adjust as needed)
+		revalidatePath("/");
 
 		return { success: true, address: newAddress };
 	} catch (error) {
@@ -37,4 +48,3 @@ export async function addAddress(
 		return { success: false, message: "Failed to add address" };
 	}
 }
-

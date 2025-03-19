@@ -58,14 +58,16 @@ const NavBar = ({ user }: NavBarProps) => {
 			<MaxWidthWrapper>
 				<div className="flex items-center justify-between">
 					{/* Logo */}
-					<Image
-						src="/logo/LogoBlack.svg"
-						alt="Attar Malaki Logo"
-						width={250}
-						height={100}
-						priority
-						className="object-contain object-left mr-2"
-					/>
+					<Link href={"/"}>
+						<Image
+							src="/logo/LogoBlack.svg"
+							alt="Attar Malaki Logo"
+							width={250}
+							height={100}
+							priority
+							className="object-contain object-left mr-2"
+						/>
+					</Link>
 
 					{/* Desktop Navigation */}
 					<nav className="flex flex-row-reverse">
@@ -94,15 +96,15 @@ const NavBar = ({ user }: NavBarProps) => {
 										<UserButton.MenuItems>
 											{user && user.hasCompletedAddresses ? (
 												<UserButton.Link
-													label="Manage Address"
+													label="Your Address"
 													labelIcon={<FaLocationDot />}
-													href="/address?type=manage"
+													href="/your-address"
 												/>
 											) : (
 												<UserButton.Link
 													label="Add Address"
 													labelIcon={<FaLocationDot />}
-													href="/address/type=add"
+													href="/address?type=add"
 												/>
 											)}
 										</UserButton.MenuItems>

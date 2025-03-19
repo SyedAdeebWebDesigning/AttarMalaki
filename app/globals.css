@@ -121,6 +121,8 @@
 	}
 	body {
 		@apply bg-background text-foreground;
+		font-family: "Cairo", sans-serif;
+		font-optical-sizing: auto;
 	}
 
 	.bannerImg {
@@ -151,5 +153,9 @@
 
 	.cl-formButtonPrimary {
 		border: none !important;
+	}
+
+	.text-cairo {
+		font-family: "Cairo", sans-serif;
 	}
 }
