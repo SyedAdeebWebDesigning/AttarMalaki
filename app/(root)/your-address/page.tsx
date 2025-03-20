@@ -3,10 +3,9 @@ import { getAddress } from "@/lib/actions/address.action";
 import { getUserByClerkId } from "@/lib/actions/user.action";
 import { currentUser } from "@clerk/nextjs/server";
 import { AiOutlineHome } from "react-icons/ai";
-import { FaLocationCrosshairs } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { GoKebabHorizontal } from "react-icons/go";
-import { FaRegTrashAlt } from "react-icons/fa";
+import { GrLocation } from "react-icons/gr";
 import {
 	Tooltip,
 	TooltipContent,
@@ -15,6 +14,7 @@ import {
 } from "@/components/ui/tooltip";
 import { GoPlus } from "react-icons/go";
 import Link from "next/link";
+import DeleteAddressButton from "@/components/shared/DeleteAddressButton";
 interface pageProps {}
 
 const page = async ({}: pageProps) => {
@@ -33,8 +33,8 @@ const page = async ({}: pageProps) => {
 		<MaxWidthWrapper>
 			<div>
 				<h1 className="mt-10 font-medium text-3xl">Your Address</h1>
-				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-					<div className="my-2">
+				<div className="">
+					<div className="my-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
 						{address.success &&
 							address.addresses?.map((address) => {
 								return (
@@ -46,14 +46,14 @@ const page = async ({}: pageProps) => {
 												{address.label.toLowerCase() === "home" ? (
 													<AiOutlineHome className=" size-10 p-[7px] aspect-square  bg-white rounded-xl" />
 												) : (
-													<FaLocationCrosshairs />
+													<GrLocation className=" size-10 p-[7px] aspect-square  bg-white rounded-xl" />
 												)}
 											</div>
 											<div className="flex flex-col">
 												<h3 className="text-xl font-medium ">
 													<p className="mr-1">{address.label}</p>
 												</h3>
-												<h3 className="text-sm">
+												<h3 className="text-sm line-clamp-2">
 													{`${user?.firstName} ${user?.lastName}, ${address.street}, ${address.city}, ${address.state}, ${address.country}, ${address.zipCode}`}
 												</h3>
 												<div className="mt-3">
@@ -94,12 +94,10 @@ const page = async ({}: pageProps) => {
 													<TooltipProvider>
 														<Tooltip>
 															<TooltipTrigger asChild>
-																<Button
-																	variant={"destructive"}
-																	size={"icon"}
-																	className="rounded-full size-8 cursor-pointer ml-2">
-																	<FaRegTrashAlt />
-																</Button>
+																<DeleteAddressButton
+																	id={address.id}
+																	userId={user?.id as string}
+																/>
 															</TooltipTrigger>
 															<TooltipContent>
 																<p>Delete Address</p>

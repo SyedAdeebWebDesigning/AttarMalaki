@@ -59,11 +59,67 @@ export const getAddress = async (userId: string) => {
 
 		const addresses = await prisma.address.findMany({
 			where: { userId }, // Convert to ObjectId
-			orderBy: { createdAt: "desc" },
+			orderBy: { createdAt: "asc" },
 		});
 		return { success: true, addresses };
 	} catch (error) {
 		console.error("Error fetching address:", error);
 		return { success: false, message: "Failed to fetch address" };
+	}
+};
+
+export const getAddressById = async (id: string) => {
+	try {
+		const address = await prisma.address.findFirst({
+			where: {
+				id,
+			},
+		});
+		return { success: true, address };
+	} catch (error) {
+		console.error("Error fetching address:", error);
+		return { success: false, message: "Failed to fetch address" };
+	}
+};
+
+export const updateAddress = async (id: string, addressData: any) => {
+	try {
+		const updatedAddress = await prisma.address.update({
+			where: { id },
+			data: addressData,
+		});
+		return { success: true, updatedAddress };
+	} catch (error) {
+		console.error("Error updating address:", error);
+		return { success: false, message: "Failed to update address" };
+	}
+};
+
+export const deleteAddress = async (id: string, userId: string) => {
+	try {
+		// Count total addresses of the user
+		const totalAddresses = await prisma.address.count({
+			where: { userId },
+		});
+
+		// Prevent deletion if it's the last address
+		if (totalAddresses <= 1) {
+			return { success: false, message: "Cannot delete the last address" };
+		}
+
+		// Delete the address
+		const deletedAddress = await prisma.address.delete({
+			where: { id },
+		});
+
+		// Return success response
+		return {
+			success: true,
+			message: "Address deleted successfully",
+			deletedAddress,
+		};
+	} catch (error) {
+		console.error("Error deleting address:", error);
+		return { success: false, message: "Failed to delete address" };
 	}
 };

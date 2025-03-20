@@ -104,7 +104,7 @@ const NavBar = ({ user }: NavBarProps) => {
 												<UserButton.Link
 													label="Add Address"
 													labelIcon={<FaLocationDot />}
-													href="/address?type=add"
+													href="/address"
 												/>
 											)}
 										</UserButton.MenuItems>
