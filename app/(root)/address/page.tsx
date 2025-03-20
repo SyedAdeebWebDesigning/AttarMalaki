@@ -54,6 +54,8 @@ const Page = () => {
 		},
 	});
 
+	console.log(user.user?.id);
+
 	// Function to fetch address details based on zip code
 	const fetchAddressDetails = async (zipCode: string) => {
 		try {
@@ -124,7 +126,7 @@ const Page = () => {
 	const type = useSearchParams().get("type");
 
 	return (
-		<div className="max-w-xl mx-auto">
+		<div className="max-w-xl mx-auto px-3">
 			<MaxWidthWrapper>
 				<Form {...form}>
 					<h1 className="text-2xl font-semibold my-20 text-left">

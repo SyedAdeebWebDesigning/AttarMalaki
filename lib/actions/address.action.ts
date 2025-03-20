@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { ObjectId } from "mongodb";
 
 export async function addAddress(
 	userClerkId: string, // Accept clerkId
@@ -48,3 +49,21 @@ export async function addAddress(
 		return { success: false, message: "Failed to add address" };
 	}
 }
+
+export const getAddress = async (userId: string) => {
+	try {
+		// Check if userId is a valid ObjectId
+		if (!ObjectId.isValid(userId)) {
+			return { success: false, message: "Invalid user ID format" };
+		}
+
+		const addresses = await prisma.address.findMany({
+			where: { userId }, // Convert to ObjectId
+			orderBy: { createdAt: "desc" },
+		});
+		return { success: true, addresses };
+	} catch (error) {
+		console.error("Error fetching address:", error);
+		return { success: false, message: "Failed to fetch address" };
+	}
+};
