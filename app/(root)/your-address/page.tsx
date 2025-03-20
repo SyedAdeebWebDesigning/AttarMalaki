@@ -31,7 +31,7 @@ const page = async ({}: pageProps) => {
 	}
 	return (
 		<MaxWidthWrapper>
-			<div>
+			<div className="px-4">
 				<h1 className="mt-10 font-medium text-3xl">Your Address</h1>
 				<div className="">
 					<div className="my-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
