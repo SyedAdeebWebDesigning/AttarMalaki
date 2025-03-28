@@ -2,7 +2,7 @@ import UpdateAddressForm from "@/components/shared/UpdateAddressForm";
 
 interface PageProps {
 	params: {
-		id: string;
+		id: any;
 	};
 }
 
