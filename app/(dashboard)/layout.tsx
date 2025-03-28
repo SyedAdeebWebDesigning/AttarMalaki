@@ -2,11 +2,21 @@ import React from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { UserButton } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
+import { user } from "@prisma/client";
+import { getUserByClerkId } from "@/lib/actions/user.action";
+import { redirect } from "next/navigation";
 
 type Props = {
 	children: React.ReactNode;
 };
 const Layout = async ({ children }: Props) => {
+	const _ = await currentUser();
+	const user = (await getUserByClerkId(_?.id ?? "")) as user;
+
+	if (!user.isAdmin) {
+		return redirect("/");
+	}
 	return (
 		<SidebarProvider>
 			<AppSidebar />

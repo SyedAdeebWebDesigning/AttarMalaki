@@ -38,7 +38,7 @@ const Banner = (props: BannerProps) => {
 
 						{/* Image Section */}
 						<div className="flex-1 flex justify-center">
-							<div className="relative w-52 sm:w-64 md:w-80 lg:w-96 xl:w-[700px] aspect-square">
+							<div className="relative w-[400px] xl:w-[700px] aspect-square">
 								<Image
 									className="object-cover object-center rounded"
 									alt="hero"

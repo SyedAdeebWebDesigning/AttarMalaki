@@ -5,8 +5,8 @@ import MaxWidthWrapper from "./MaxWidthWrapper";
 import { CgMenuRight } from "react-icons/cg";
 import { IoBagOutline } from "react-icons/io5";
 import { AiOutlineHome } from "react-icons/ai";
-import { BsBox2 } from "react-icons/bs";
-import { TbPerfume } from "react-icons/tb";
+import { BsBox2, BsBox2Fill } from "react-icons/bs";
+import { TbLayoutDashboardFilled, TbPerfume } from "react-icons/tb";
 import {
 	Sheet,
 	SheetContent,
@@ -20,6 +20,7 @@ import { LayoutDashboard, User } from "lucide-react";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { FaLocationDot } from "react-icons/fa6";
 import { user } from "@prisma/client";
+import { useEffect, useState } from "react";
 
 // Navbar links with icons
 const navLinks = [
@@ -36,12 +37,6 @@ const navLinks = [
 		hasSpanText: false,
 	},
 	{
-		name: "Your Orders",
-		href: "/your-orders",
-		icon: <BsBox2 className="mr-1.5 text-2xl size-5" />,
-		hasSpanText: false,
-	},
-	{
 		name: "Bag",
 		href: "/bag",
 		icon: <IoBagOutline className="mr-1.5 text-2xl size-6" />,
@@ -53,6 +48,16 @@ interface NavBarProps {
 	user: user;
 }
 const NavBar = ({ user }: NavBarProps) => {
+	const [hasMounted, setHasMounted] = useState(false);
+
+	useEffect(() => {
+		setHasMounted(true);
+	}, []);
+
+	if (!hasMounted)
+		return (
+			<div className="py-4 bg-white border-b shadow-md border-gray-300 sticky top-0 w-full z-[10] px-4 h-[90.60px]"></div>
+		); // Prevents rendering on the server
 	return (
 		<header className="py-4 bg-white border-b shadow-md border-gray-300 sticky top-0 w-full z-[10] px-4">
 			<MaxWidthWrapper>
@@ -76,7 +81,7 @@ const NavBar = ({ user }: NavBarProps) => {
 								{navLinks.map((link, index) => (
 									<li
 										key={index}
-										className="relative group items-center hidden min-[1080]:flex ">
+										className="relative group items-center hidden min-[690]:flex ">
 										<Link
 											href={link.href}
 											className={cn("hover:text-gray-700 flex items-center")}>
@@ -91,20 +96,6 @@ const NavBar = ({ user }: NavBarProps) => {
 										<span className="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-gray-700 transition-all duration-300 group-hover:w-2/3"></span>
 									</li>
 								))}
-								{user && user.isAdmin && (
-									<li className="relative group items-center hidden min-[1080]:flex ">
-										<Link
-											href={"/dashboard"}
-											className={cn("hover:text-gray-700 flex items-center")}>
-											<LayoutDashboard />
-											<p className="ml-1">Dashboard</p>
-										</Link>
-										<span className="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-gray-700 transition-all duration-300 group-hover:w-2/3"></span>
-
-										{/* Underline animation */}
-										<span className="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-gray-700 transition-all duration-300 group-hover:w-2/3"></span>
-									</li>
-								)}
 								<li className=" mt-2">
 									<UserButton>
 										<UserButton.MenuItems>
@@ -121,13 +112,27 @@ const NavBar = ({ user }: NavBarProps) => {
 													href="/address"
 												/>
 											)}
+											<UserButton.Link
+												label="Your Orders"
+												labelIcon={<BsBox2Fill />}
+												href="/your-orders"
+											/>
+											{user && user.isAdmin && (
+												<UserButton.Link
+													label="Admin Dashboard"
+													labelIcon={
+														<TbLayoutDashboardFilled className="size-4" />
+													}
+													href="/dashboard"
+												/>
+											)}
 										</UserButton.MenuItems>
 									</UserButton>
 								</li>
 							</ul>
 						</SignedIn>
 						<SignedOut>
-							<ul className="hidden min-[1080]:flex text-xl space-x-8 items-center justify-center">
+							<ul className="hidden min-[690]:flex text-xl space-x-8 items-center justify-center">
 								<li>
 									<Link
 										href={"/sign-in"}
@@ -142,7 +147,7 @@ const NavBar = ({ user }: NavBarProps) => {
 
 						{/* Mobile Navigation - Hamburger Menu */}
 						<Sheet>
-							<SheetTrigger className="min-[1080]:hidden">
+							<SheetTrigger className="min-[690]:hidden">
 								<CgMenuRight className="text-2xl size-8 mr-2" />
 							</SheetTrigger>
 							<SheetContent>

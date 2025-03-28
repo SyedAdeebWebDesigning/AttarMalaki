@@ -8,6 +8,8 @@ const isPublicRoute = createRouteMatcher([
 	"/api/webhooks/stripe",
 ]);
 
+const adminRoute = createRouteMatcher(["/dashboard(.*)"]);
+
 export default clerkMiddleware(async (auth, request) => {
 	if (!isPublicRoute(request)) {
 		await auth.protect();

@@ -35,10 +35,7 @@ export default function RootLayout({
 					userButtonPopoverCard: "top-[100px]!",
 				},
 			}}>
-			<html lang="en" suppressHydrationWarning>
-				<head>
-					
-				</head>
+			<html lang="en" suppressHydrationWarning={true}>
 				<body
 					className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 					<main>
