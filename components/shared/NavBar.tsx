@@ -16,7 +16,7 @@ import {
 } from "../ui/sheet";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { User } from "lucide-react";
+import { LayoutDashboard, User } from "lucide-react";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { FaLocationDot } from "react-icons/fa6";
 import { user } from "@prisma/client";
@@ -76,7 +76,7 @@ const NavBar = ({ user }: NavBarProps) => {
 								{navLinks.map((link, index) => (
 									<li
 										key={index}
-										className="relative group items-center hidden min-[814px]:flex ">
+										className="relative group items-center hidden min-[1080]:flex ">
 										<Link
 											href={link.href}
 											className={cn("hover:text-gray-700 flex items-center")}>
@@ -91,6 +91,20 @@ const NavBar = ({ user }: NavBarProps) => {
 										<span className="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-gray-700 transition-all duration-300 group-hover:w-2/3"></span>
 									</li>
 								))}
+								{user && user.isAdmin && (
+									<li className="relative group items-center hidden min-[1080]:flex ">
+										<Link
+											href={"/dashboard"}
+											className={cn("hover:text-gray-700 flex items-center")}>
+											<LayoutDashboard />
+											<p className="ml-1">Dashboard</p>
+										</Link>
+										<span className="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-gray-700 transition-all duration-300 group-hover:w-2/3"></span>
+
+										{/* Underline animation */}
+										<span className="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-gray-700 transition-all duration-300 group-hover:w-2/3"></span>
+									</li>
+								)}
 								<li className=" mt-2">
 									<UserButton>
 										<UserButton.MenuItems>
@@ -113,7 +127,7 @@ const NavBar = ({ user }: NavBarProps) => {
 							</ul>
 						</SignedIn>
 						<SignedOut>
-							<ul className="hidden min-[814px]:flex text-xl space-x-8 items-center justify-center">
+							<ul className="hidden min-[1080]:flex text-xl space-x-8 items-center justify-center">
 								<li>
 									<Link
 										href={"/sign-in"}
@@ -128,7 +142,7 @@ const NavBar = ({ user }: NavBarProps) => {
 
 						{/* Mobile Navigation - Hamburger Menu */}
 						<Sheet>
-							<SheetTrigger className="min-[814px]:hidden">
+							<SheetTrigger className="min-[1080]:hidden">
 								<CgMenuRight className="text-2xl size-8 mr-2" />
 							</SheetTrigger>
 							<SheetContent>
@@ -154,6 +168,16 @@ const NavBar = ({ user }: NavBarProps) => {
 													</a>
 												</li>
 											))}
+											{user && user.isAdmin && (
+												<li className="flex items-center">
+													<a
+														href={"/dashboard"}
+														className="hover:text-gray-700 flex items-center">
+														<LayoutDashboard />
+														<p className="ml-1">Dashboard</p>
+													</a>
+												</li>
+											)}
 										</ul>
 									</SignedIn>
 									<SignedOut>
