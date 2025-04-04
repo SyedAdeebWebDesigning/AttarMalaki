@@ -65,7 +65,7 @@ const NavBar = ({ user }: NavBarProps) => {
 					{/* Logo */}
 					<Link href={"/"}>
 						<Image
-							src="/logo/LogoBlack.svg"
+							src="/logo/LogoBlack.png"
 							alt="Attar Malaki Logo"
 							width={250}
 							height={100}
@@ -173,16 +173,6 @@ const NavBar = ({ user }: NavBarProps) => {
 													</a>
 												</li>
 											))}
-											{user && user.isAdmin && (
-												<li className="flex items-center">
-													<a
-														href={"/dashboard"}
-														className="hover:text-gray-700 flex items-center">
-														<LayoutDashboard />
-														<p className="ml-1">Dashboard</p>
-													</a>
-												</li>
-											)}
 										</ul>
 									</SignedIn>
 									<SignedOut>

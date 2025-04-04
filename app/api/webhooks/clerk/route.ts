@@ -5,8 +5,10 @@ import {
 	createUser,
 	CreateUserProps,
 	deleteUserByClerkId,
+	getUserByClerkId,
 } from "@/lib/actions/user.action";
 import { NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
 export async function POST(req: Request) {
 	const SIGNING_SECRET = process.env.CLERK_WEBHOOK_SECRET;
 
@@ -81,6 +83,38 @@ export async function POST(req: Request) {
 		} catch (error: any) {
 			return NextResponse.json(
 				{ message: "Error creating user", error: error.message },
+				{ status: 500 }
+			);
+		}
+	}
+
+	if (evt.type === "user.updated") {
+		const { id, email_addresses, image_url, first_name, last_name } = evt.data;
+
+		try {
+			const user = await getUserByClerkId(id!);
+
+			if (!user) {
+				return NextResponse.json(
+					{ message: "User not found" },
+					{ status: 404 }
+				);
+			}
+
+			const updatedUser = await prisma.user.update({
+				where: { clerkId: id! },
+				data: {
+					email: email_addresses[0]?.email_address,
+					firstName: first_name ?? "",
+					lastName: last_name ?? "",
+					imgUrl: image_url,
+				},
+			});
+
+			return NextResponse.json({ message: "OK", user: updatedUser });
+		} catch (error: any) {
+			return NextResponse.json(
+				{ message: "Error updating user", error: error.message },
 				{ status: 500 }
 			);
 		}
