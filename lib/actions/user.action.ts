@@ -1,6 +1,24 @@
 "use server";
 import prisma from "@/lib/prisma";
 
+export type User = {
+	id: string;
+	firstName: string;
+	lastName: string;
+	email: string;
+	isAdmin: boolean;
+	imgUrl: string;
+	createdAt: Date;
+	hasCompletedAddresses: boolean;
+	updatedAt: Date;
+	addresses: {
+		street: string;
+		city: string;
+		state: string;
+		country: string;
+	}[];
+};
+
 export interface CreateUserProps {
 	firstName: string;
 	clerkId: string;
@@ -68,5 +86,39 @@ export const getUsers = async () => {
 	} catch (error) {
 		console.error("Error fetching users:", error);
 		throw new Error("Failed to fetch users. Please try again.");
+	}
+};
+
+export const getUsersWithAddress = async () => {
+	try {
+		// Fetching all users with their addresses from the database
+		return await prisma.user.findMany({
+			include: {
+				addresses: true,
+			},
+			orderBy: {
+				createdAt: "desc",
+			},
+		});
+	} catch (error) {
+		console.error("Error fetching users with address:", error);
+		throw new Error("Failed to fetch users with address. Please try again.");
+	}
+};
+
+export const toggleAdmin = async (userId: string, isAdmin: boolean) => {
+	try {
+		// Updating the user's admin status in the database
+		return await prisma.user.update({
+			where: {
+				id: userId,
+			},
+			data: {
+				isAdmin: !isAdmin,
+			},
+		});
+	} catch (error) {
+		console.error("Error toggling admin status:", error);
+		throw new Error("Failed to toggle admin status. Please try again.");
 	}
 };
