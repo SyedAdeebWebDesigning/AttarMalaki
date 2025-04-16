@@ -13,7 +13,7 @@ const Banner = (props: BannerProps) => {
 	const { position, text } = props;
 
 	return (
-		<div className="bg-[#fff9f9] px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 min-h-[90vh] flex items-center justify-center">
+		<div className="bg-[#fff9f9] px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 min-h-[90vh] flex items-center justify-center fixed w-full">
 			<MaxWidthWrapper>
 				<section className="text-gray-600 body-font">
 					<div className="container mx-auto flex flex-col-reverse md:flex-row items-center gap-12 py-16 md:py-24">
@@ -38,7 +38,7 @@ const Banner = (props: BannerProps) => {
 
 						{/* Image Section */}
 						<div className="flex-1 flex justify-center">
-							<div className="relative w-[400px] xl:w-[700px] aspect-square">
+							<div className="relative w-[300px] xl:w-[700px] aspect-square">
 								<Image
 									className="object-cover object-center rounded"
 									alt="hero"

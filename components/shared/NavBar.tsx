@@ -56,10 +56,10 @@ const NavBar = ({ user }: NavBarProps) => {
 
 	if (!hasMounted)
 		return (
-			<div className="py-4 bg-white border-b shadow-md border-gray-300 sticky top-0 w-full z-[10] px-4 h-[90.60px]"></div>
+			<div className="py-4 bg-white border-b shadow-md border-gray-300 sticky top-0 w-full z-[999] px-4 h-[90.60px]"></div>
 		); // Prevents rendering on the server
 	return (
-		<header className="py-4 bg-white border-b shadow-md border-gray-300 sticky top-0 w-full z-[10] px-4">
+		<header className="py-4 bg-white border-b shadow-md border-gray-300 sticky top-0 w-full z-[90] px-4">
 			<MaxWidthWrapper>
 				<div className="flex items-center justify-between">
 					{/* Logo */}

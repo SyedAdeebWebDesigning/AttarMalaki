@@ -44,6 +44,7 @@ export async function AppSidebar() {
 								<SidebarMenuItem key={item.title}>
 									<SidebarMenuButton asChild>
 										<Link
+											
 											href={item.url}
 											className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-700 transition-all">
 											<item.icon className="size-5" />

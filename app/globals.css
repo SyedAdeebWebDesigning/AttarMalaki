@@ -140,6 +140,21 @@
 		height: 100%; /* Full viewport height */
 	}
 
+	@font-face {
+		font-family: "Cairo-Regular";
+		src: url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.eot");
+		src: url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.eot?#iefix")
+				format("embedded-opentype"),
+			url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.woff2")
+				format("woff2"),
+			url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.woff")
+				format("woff"),
+			url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.ttf")
+				format("truetype"),
+			url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.svg#Cairo-Regular")
+				format("svg");
+	}
+
 	.cl-internal-1dauvpw {
 		display: none;
 	}
@@ -155,8 +170,8 @@
 		border: none !important;
 	}
 
-	.text-cairo {
-		font-family: "Cairo", sans-serif;
+	body {
+		font-family: "Cairo-Regular";
 	}
 }
 
@@ -182,4 +197,23 @@
 		--sidebar-border: 240 3.7% 15.9%;
 		--sidebar-ring: 217.2 91.2% 59.8%;
 	}
+}
+
+.slide-up-on-hover {
+	position: absolute;
+	bottom: 10%;
+	left: 50%;
+	transform: translateX(-50%);
+	transition: all 0.4s ease-in-out;
+	pointer-events: none; /* Optional: prevent accidental clicks while hidden */
+}
+
+.group:hover .slide-up-on-hover {
+	bottom: 50%;
+	transform: translate(-50%, 50%);
+}
+
+.text-shadow-black {
+	color: white;
+	text-shadow: 0 0 10px rgb(0, 0, 0);
 }
