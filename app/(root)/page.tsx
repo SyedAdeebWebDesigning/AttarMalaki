@@ -14,7 +14,7 @@ export default function Home() {
 			</div>
 
 			{/* Categories below the banner */}
-			<div className="relative z-20 bg-white py-10">
+			<div className="relative z-20 bg-white pb-10">
 				<Categories />
 				<Service />
 			</div>

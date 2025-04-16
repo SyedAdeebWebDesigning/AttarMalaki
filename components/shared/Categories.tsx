@@ -43,7 +43,7 @@ export default function Categories() {
 	return (
 		<section className="pb-12 bg-white">
 			<div className="sticky top-[90px] z-[30] w-full">
-				<h2 className="text-4xl  font-bold py-10 text-left bg-white w-full px-10">
+				<h2 className="text-4xl  font-bold py-2 md:py-10 text-left bg-white w-full px-10">
 					Shop by Category
 				</h2>
 			</div>
