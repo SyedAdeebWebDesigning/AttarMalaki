@@ -41,11 +41,15 @@ const categories = [
 
 export default function Categories() {
 	return (
-		<section className="pb-12 bg-white">
-			<div className="sticky top-[90px] z-[30] w-full">
-				<h2 className="text-4xl  font-bold py-2 md:py-10 text-left bg-white w-full px-10">
+		<section className="pb-12 bg-white container mx-auto">
+			<div className="flex flex-col items-center text-center">
+				<h2 className="text-3xl md:text-4xl font-bold mt-10">
 					Shop by Category
 				</h2>
+				<p className="text-muted-foreground max-w-2xl mt-4 mb-10">
+					Explore our curated collections—from luxurious ouds to refreshing
+					florals. Find your signature scent with ease.
+				</p>
 			</div>
 			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:px-10">
 				{categories.map((cat) => (

@@ -56,10 +56,14 @@ const services = [
 export default function Service() {
 	return (
 		<section className="w-full px-4 py-6">
-			<h2 className="text-4xl font-bold py-10 text-left bg-white w-full px-10">
-				Why Choose Us?
-			</h2>
-			<MaxWidthWrapper>
+			<div className="flex flex-col items-center mb-10 text-center">
+				<h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose Us?</h2>
+				<p className="text-muted-foreground max-w-2xl">
+					Experience the art of perfumery with pure ingredients, timeless
+					craftsmanship, and unmatched quality—because you deserve nothing less.
+				</p>
+			</div>
+			<div className="container mx-auto">
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-full">
 					{services.map((service, idx) => {
 						const Icon = service.icon;
@@ -79,7 +83,7 @@ export default function Service() {
 						);
 					})}
 				</div>
-			</MaxWidthWrapper>
+			</div>
 		</section>
 	);
 }

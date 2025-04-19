@@ -1,5 +1,6 @@
 import Banner from "@/components/shared/Banner";
 import Categories from "@/components/shared/Categories";
+import { FeaturedProducts } from "@/components/shared/FeaturedProducts";
 import Service from "@/components/shared/Services";
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
 			<div className="relative z-20 bg-white pb-10">
 				<Categories />
 				<Service />
+				<FeaturedProducts />
 			</div>
 		</section>
 	);
