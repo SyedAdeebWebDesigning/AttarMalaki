@@ -180,7 +180,7 @@ const NavBar = ({ user }: NavBarProps) => {
 										/>
 									</SheetTitle>
 									<SignedIn>
-										<ul className="flex flex-col text-xl mt-5 space-y-3">
+										<ul className="flex flex-col text-xl mt-10 space-y-3">
 											{navLinks.map((link, index) => (
 												<li key={index} className="flex items-center">
 													<a

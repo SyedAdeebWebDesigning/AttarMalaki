@@ -32,7 +32,8 @@ export default function RootLayout({
 			appearance={{
 				elements: {
 					formButtonPrimary: "bg-rose-700!",
-					userButtonPopoverCard: "top-[100px]!",
+					userButtonPopoverCard:
+						"top-[100px]! fixed! z-[100] right-0 w-[300px] max-w-[300px] rounded-lg shadow-lg",
 				},
 			}}>
 			<html lang="en" suppressHydrationWarning={true}>
