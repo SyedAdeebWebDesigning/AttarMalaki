@@ -1,3 +1,4 @@
+import { Footer } from "@/components/shared/Footer";
 import NavBar from "@/components/shared/NavBar";
 import { getUserByClerkId } from "@/lib/actions/user.action";
 import { currentUser } from "@clerk/nextjs/server";
@@ -15,6 +16,7 @@ const layout = async ({ children }: layoutProps) => {
 		<div>
 			<NavBar user={user} />
 			<div>{children}</div>
+			<Footer />
 		</div>
 	);
 };

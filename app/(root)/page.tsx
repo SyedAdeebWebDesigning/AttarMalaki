@@ -1,7 +1,9 @@
+import { FaqSection } from "@/components/shared/Accordion";
 import Banner from "@/components/shared/Banner";
 import Categories from "@/components/shared/Categories";
 import { FeaturedProducts } from "@/components/shared/FeaturedProducts";
 import Service from "@/components/shared/Services";
+import { Testimonials } from "@/components/shared/Testimonials";
 
 export default function Home() {
 	return (
@@ -19,6 +21,8 @@ export default function Home() {
 				<Categories />
 				<FeaturedProducts />
 				<Service />
+				<Testimonials />
+				<FaqSection />
 			</div>
 		</section>
 	);

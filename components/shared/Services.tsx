@@ -63,7 +63,7 @@ export default function Service() {
 					craftsmanship, and unmatched quality—because you deserve nothing less.
 				</p>
 			</div>
-			<div className="container mx-auto">
+			<MaxWidthWrapper>
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-full">
 					{services.map((service, idx) => {
 						const Icon = service.icon;
@@ -83,7 +83,7 @@ export default function Service() {
 						);
 					})}
 				</div>
-			</div>
+			</MaxWidthWrapper>
 		</section>
 	);
 }

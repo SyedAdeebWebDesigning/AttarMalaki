@@ -24,7 +24,7 @@ const Banner = (props: BannerProps) => {
 							</h1>
 							<div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
 								<Link
-									href={"/store"}
+									href={"/products"}
 									className={cn(
 										"py-3",
 										buttonVariants({

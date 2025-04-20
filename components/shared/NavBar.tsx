@@ -26,7 +26,6 @@ import {
 } from "@clerk/nextjs";
 import { FaLocationDot } from "react-icons/fa6";
 import { user } from "@prisma/client";
-import { useEffect, useState } from "react";
 
 const navLinks = [
 	{
@@ -36,8 +35,8 @@ const navLinks = [
 		hasSpanText: false,
 	},
 	{
-		name: "Store",
-		href: "/store",
+		name: "Products",
+		href: "/products",
 		icon: <TbPerfume className="mr-1.5 text-2xl size-6" />,
 		hasSpanText: false,
 	},
@@ -54,7 +53,6 @@ interface NavBarProps {
 }
 
 const NavBar = ({ user }: NavBarProps) => {
-	const [hasMounted, setHasMounted] = useState(false);
 	const { isLoaded } = useAuth();
 
 	return (
