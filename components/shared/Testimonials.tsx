@@ -130,7 +130,9 @@ export function Testimonials() {
 									className="border border-slate-200 shadow-sm">
 									<CardContent className="p-6">
 										<Quote className="h-8 w-8 text-slate-300 mb-4" />
-										<p className="text-slate-700 mb-6">{testimonial.content}</p>
+										<p className="text-slate-700 mb-6 line-clamp-4">
+											{testimonial.content}
+										</p>
 										<div className="flex items-center">
 											<Avatar className="h-10 w-10 mr-4">
 												<AvatarImage
