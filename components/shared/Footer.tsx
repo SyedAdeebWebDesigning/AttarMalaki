@@ -58,13 +58,6 @@ export function Footer() {
 								Contact Us
 							</h3>
 							<ul className="space-y-3">
-								<li className="flex items-center justify-center">
-									<MapPin className="mr-2 h-5 w-5 shrink-0 text-slate-500" />
-									<span>
-										Integral University, Dasauli, Kursi Road, Lucknow, Uttar
-										Pradesh 226026
-									</span>
-								</li>
 								<li className="flex items-center">
 									<Phone className="mr-2 h-5 w-5 shrink-0 text-slate-500" />
 									<span>+91 86307 66188</span>
