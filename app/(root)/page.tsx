@@ -1,3 +1,4 @@
+import ChatbotIframe from "@/components/ChatBot";
 import { FaqSection } from "@/components/shared/Accordion";
 import Banner from "@/components/shared/Banner";
 import Categories from "@/components/shared/Categories";
@@ -7,7 +8,7 @@ import { Testimonials } from "@/components/shared/Testimonials";
 
 export default function Home() {
 	return (
-		<section>
+		<section data-scroll-section>
 			{/* Hero Banner (takes full screen height) */}
 			<div className="relative w-full min-h-screen z-10">
 				<Banner
@@ -24,6 +25,7 @@ export default function Home() {
 				<Testimonials />
 				<FaqSection />
 			</div>
+			<ChatbotIframe />
 		</section>
 	);
 }

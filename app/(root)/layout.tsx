@@ -1,5 +1,6 @@
 import { Footer } from "@/components/shared/Footer";
 import NavBar from "@/components/shared/NavBar";
+import ScrollWrapper from "@/components/shared/ScrollWrapper";
 import { getUserByClerkId } from "@/lib/actions/user.action";
 import { currentUser } from "@clerk/nextjs/server";
 import { user } from "@prisma/client";

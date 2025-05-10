@@ -21,6 +21,7 @@
 		"@radix-ui/react-tooltip": "^1.1.8",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
+		"locomotive-scroll": "^4.1.4",
 		"lucide-react": "^0.479.0",
 		"mongodb": "^6.14.2",
 		"motion": "^12.5.0",
@@ -37,6 +38,7 @@
 	},
 	"devDependencies": {
 		"@tailwindcss/postcss": "^4",
+		"@types/locomotive-scroll": "^4.1.4",
 		"@types/node": "^20",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",

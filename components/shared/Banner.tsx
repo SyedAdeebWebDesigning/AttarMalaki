@@ -13,12 +13,16 @@ const Banner = (props: BannerProps) => {
 	const { position, text } = props;
 
 	return (
-		<div className="bg-[#fff9f9] px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 min-h-[90vh] flex items-center justify-center fixed w-full">
+		<div className="bg-[#fff9f9] px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 min-h-[90vh] flex items-center justify-center w-full">
 			<MaxWidthWrapper>
 				<section className="text-gray-600 body-font">
 					<div className="container mx-auto flex flex-col-reverse md:flex-row items-center gap-12 py-16 md:py-24">
 						{/* Text Section */}
-						<div className="flex-1 text-center md:text-left">
+						<div
+							className="flex-1 text-center md:text-left"
+							data-scroll-speed={2}
+							data-scroll-position="top"
+							data-scroll>
 							<h1 className="text-3xl sm:text-4xl lg:text-6xl font-medium text-cairo mb-6 text-gray-900 leading-tight">
 								{text}
 							</h1>

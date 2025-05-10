@@ -63,7 +63,7 @@ export function FeaturedProducts() {
 	];
 
 	return (
-		<section className="py-12 px-4 md:px-6 lg:px-8">
+		<section className="py-12 px-4 md:px-6 lg:px-8 bg-white">
 			<MaxWidthWrapper>
 				<div className="">
 					<div className="flex flex-col items-center mb-10 text-center">
