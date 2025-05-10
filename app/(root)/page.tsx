@@ -10,7 +10,7 @@ export default function Home() {
 	return (
 		<section data-scroll-section>
 			{/* Hero Banner (takes full screen height) */}
-			<div className="relative w-full min-h-screen z-10">
+			<div className="relative w-full  z-10">
 				<Banner
 					position="left"
 					text="Unveil Your Elegance with Premium Arabic Perfumes."
@@ -18,14 +18,13 @@ export default function Home() {
 			</div>
 
 			{/* Categories below the banner */}
-			<div className="relative z-20 bg-white pb-10">
+			<div className="relative z-20 bg-white">
 				<Categories />
 				<FeaturedProducts />
 				<Service />
 				<Testimonials />
 				<FaqSection />
 			</div>
-			<ChatbotIframe />
 		</section>
 	);
 }
