@@ -13,7 +13,8 @@ export default function Home() {
 			<div className="relative w-full  z-10">
 				<Banner
 					position="left"
-					text="Unveil Your Elegance with Premium Arabic Perfumes."
+					headline="Attar Malaki"
+					tagline="Unveil Your Elegance with Premium Arabic Perfumes."
 				/>
 			</div>
 

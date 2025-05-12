@@ -61,9 +61,9 @@ const NavBar = ({ user }: NavBarProps) => {
 				<div className="flex items-center justify-between">
 					<Link href={"/"}>
 						<Image
-							src="/logo/LogoBlack.png"
+							src="/logo/LogoBlack.svg"
 							alt="Attar Malaki Logo"
-							width={250}
+							width={200}
 							height={100}
 							priority
 							className="object-contain object-left mr-2"
