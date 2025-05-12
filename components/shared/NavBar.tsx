@@ -63,7 +63,7 @@ const NavBar = ({ user }: NavBarProps) => {
 						<Image
 							src="/logo/LogoBlack.svg"
 							alt="Attar Malaki Logo"
-							width={200}
+							width={250}
 							height={100}
 							priority
 							className="object-contain object-left mr-2"
