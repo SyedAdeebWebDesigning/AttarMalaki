@@ -11,7 +11,7 @@ interface BannerProps {
 }
 
 const Banner = (props: BannerProps) => {
-	const { position, headline, tagline } = props;
+	const { tagline } = props;
 
 	return (
 		<div className="bannerBG px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 min-h-[93vh] flex items-center justify-center w-full">

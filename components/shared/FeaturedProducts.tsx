@@ -19,45 +19,50 @@ export function FeaturedProducts() {
 	const featuredProducts: Product[] = [
 		{
 			id: "1",
-			name: "Royal Oud",
+			name: "Shanaya",
 			description:
-				"A rich, woody fragrance with notes of oud, sandalwood, and musk",
-			price: 499.99,
+				"A scent of passion and power. Shanaya blends rich florals with warm oriental spices, bottled in ruby red glass and crowned with gold. It’s sensual, bold, and unforgettable—just like the woman who wears it.",
+			price: 899.99,
 			image: "/bestsellers/01.webp",
 		},
 		{
 			id: "2",
-			name: "Amber Rose",
-			description: "A floral blend with amber and rose notes",
-			price: 499.99,
+			name: "Soraya",
+			description:
+				"Celestial elegance captured in a bottle. Soraya shimmers with notes of violet, musk, and moonlit florals, echoing starlit Arabian nights. For those who move with mystery and grace.",
+			price: 1299.99,
 			image: "/bestsellers/02.webp",
 		},
 		{
 			id: "3",
-			name: "Mystic Saffron",
-			description: "An exotic blend with saffron, vanilla, and spices",
-			price: 499.99,
+			name: "White Oud",
+			description:
+				"A softer side of royalty. White Oud is a clean, creamy twist on the legendary oud—balanced with white florals and smooth sandalwood. Subtle yet powerful, for those who rule quietly.",
+			price: 999.99,
 			image: "/bestsellers/03.webp",
 		},
 		{
 			id: "4",
-			name: "Jasmine Dreams",
-			description: "A delicate floral scent with jasmine and white musk",
-			price: 499.99,
+			name: "Veloura",
+			description:
+				"Veloura is a sultry embrace of Damask rose, saffron, and amber musk, layered with hints of plum and patchouli. It feels like silk on skin — bold yet delicate. Think twilight in a royal garden, wrapped in velvet shadows.",
+			price: 1099.99,
 			image: "/bestsellers/04.webp",
 		},
 		{
 			id: "5",
-			name: "Cedar Spice",
-			description: "A warm, spicy blend with cedar and cinnamon notes",
-			price: 499.99,
+			name: "Aurumé",
+			description:
+				"A golden fusion of warm amber, white oud, and a whisper of spiced vanilla, Aurumé is liquid opulence. It evokes desert sunsets, ancient wealth, and a touch of modern mystique. Rich but not loud. Royal but not arrogant.",
+			price: 1199.99,
 			image: "/bestsellers/05.webp",
 		},
 		{
 			id: "6",
-			name: "Vanilla Musk",
-			description: "A sweet, musky fragrance with vanilla and amber",
-			price: 499.99,
+			name: "Thalara",
+			description:
+				"Thalara is a haunting blend of marine amber, smoked oud, and green fig, grounded in notes of cedarwood and black salt. It opens fresh, like a midnight sea breeze, and settles into something ancient and magnetic. It's not a perfume — it's a presence. One whiff and you're transported to a forgotten coastal palace at the edge of the world.",
+			price: 1499.99,
 			image: "/bestsellers/06.webp",
 		},
 	];
@@ -91,10 +96,8 @@ export function FeaturedProducts() {
 								</div>
 								<CardContent className="p-4 flex flex-col h-40">
 									<div>
-										<h3 className="font-semibold text-lg">
-											{product.id}. {product.name}
-										</h3>
-										<p className="text-muted-foreground text-sm line-clamp-2 mt-1">
+										<h3 className="font-semibold text-xl ">{product.name}</h3>
+										<p className="text-muted-foreground text-sm line-clamp-4 mt-1 text-justify">
 											{product.description}
 										</p>
 									</div>
