@@ -55,7 +55,9 @@ const services = [
 
 export default function Service() {
 	return (
-		<section className="w-full px-4 py-6">
+		<section className="w-full px-4 py-6 WhyChooseUs min-h-[45vh] relative">
+			<div className="absolute w-full h-[1px] bg-gray-400 top-0" />
+			<div className="absolute w-full h-[1px] bg-gray-400 bottom-0" />
 			<div className="flex flex-col items-center mb-10 text-center">
 				<h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose Us?</h2>
 				<p className="text-muted-foreground max-w-2xl">

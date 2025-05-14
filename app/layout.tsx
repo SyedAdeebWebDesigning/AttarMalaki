@@ -39,7 +39,7 @@ export default function RootLayout({
 			<html lang="en" suppressHydrationWarning={true}>
 				<body
 					className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-					<main>
+					<main className="overflow-x-hidden">
 						<ToastContainer
 							position="top-right"
 							autoClose={1500}
