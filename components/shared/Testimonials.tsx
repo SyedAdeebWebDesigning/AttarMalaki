@@ -136,6 +136,7 @@ export function Testimonials() {
 										<div className="flex items-center">
 											<Avatar className="h-10 w-10 mr-4">
 												<AvatarImage
+													loading="lazy"
 													src={testimonial.avatar || "/placeholder.svg"}
 													alt={testimonial.name}
 												/>
