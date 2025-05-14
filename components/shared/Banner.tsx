@@ -17,24 +17,19 @@ const Banner = (props: BannerProps) => {
 		<div className="bannerBG px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 min-h-[93vh] flex items-center justify-center w-full">
 			<MaxWidthWrapper>
 				<section className="text-gray-600 body-font">
-					<div className="container mx-auto flex flex-col-reverse md:flex-row items-center gap-12 py-16 md:py-24">
+					<div className="container mx-auto flex flex-col-reverse md:flex-row items-center md:py-24">
 						{/* Text Section */}
-						<div
-							className="flex-1 text-center md:text-left"
-							data-scroll-speed={2}
-							data-scroll-position="top"
-							data-scroll>
-							<div className="flex items-center justify-center md:justify-start">
+						<div className="flex-1 text-center md:text-left">
+							<div className="flex items-center relative w-[300px] h-[100px] justify-center mx-auto md:mx-0">
 								<Image
 									src="/logo/LogoBlack.svg"
 									alt="Attar Malaki Logo"
-									width={450}
-									height={200}
+									fill
 									priority
-									className="object-contain object-left mr-2"
+									className="object-contain flex items-center justify-center mx-auto"
 								/>
 							</div>
-							<p className="text-lg sm:text-5xl text-gray-700 mb-8 text-left">
+							<p className="text-lg sm:text-3xl lg:text-5xl text-gray-700 mb-8 text-center md:text-left">
 								{tagline}
 							</p>
 							<div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
@@ -52,10 +47,10 @@ const Banner = (props: BannerProps) => {
 						</div>
 
 						{/* Image Section */}
-						<div className="flex-1 flex justify-center">
-							<div className="relative w-[300px] xl:w-[700px] aspect-square">
+						<div className="flex-1 flex justify-center overflow-hidden">
+							<div className="relative w-[300px] md:w-[500px] lg:w-[500px] xl:w-[700px] aspect-square">
 								<Image
-									className="object-cover object-center rounded"
+									className="object-cover object-center rounded "
 									alt="hero"
 									fill
 									priority
