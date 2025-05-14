@@ -226,7 +226,7 @@
 }
 
 .WhyChooseUs {
-	background: url("/WhyChooseUs.png") no-repeat center center;
+	background: url("/WhyChooseUs.webp") no-repeat center center;
 	background-size: cover; /* Ensures the whole image fits without cropping */
 	width: 100%;
 	height: 100%; /* Full viewport height */
