@@ -92,6 +92,7 @@ export function FeaturedProducts() {
 										src={product.image || "/placeholder.svg"}
 										alt={product.name}
 										fill
+										loading="lazy"
 										className="object-contain transition-transform duration-300 hover:scale-105"
 									/>
 								</div>

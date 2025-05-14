@@ -62,6 +62,7 @@ export default function Categories() {
 										src={cat.image}
 										alt={cat.name}
 										fill
+										loading="lazy"
 										className="object-cover ease-in-out"
 									/>
 								</div>
