@@ -5,6 +5,7 @@ import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import MaxWidthWrapper from "./MaxWidthWrapper";
+import { formatCurrency } from "@/lib/utils";
 
 interface Product {
 	id: string;
@@ -22,7 +23,7 @@ export function FeaturedProducts() {
 			name: "Shanaya",
 			description:
 				"A scent of passion and power. Shanaya blends rich florals with warm oriental spices, bottled in ruby red glass and crowned with gold. It’s sensual, bold, and unforgettable—just like the woman who wears it.",
-			price: 899.99,
+			price: 899,
 			image: "/bestsellers/01.webp",
 		},
 		{
@@ -30,7 +31,7 @@ export function FeaturedProducts() {
 			name: "Soraya",
 			description:
 				"Celestial elegance captured in a bottle. Soraya shimmers with notes of violet, musk, and moonlit florals, echoing starlit Arabian nights. For those who move with mystery and grace.",
-			price: 1299.99,
+			price: 1299,
 			image: "/bestsellers/02.webp",
 		},
 		{
@@ -38,7 +39,7 @@ export function FeaturedProducts() {
 			name: "White Oud",
 			description:
 				"A softer side of royalty. White Oud is a clean, creamy twist on the legendary oud—balanced with white florals and smooth sandalwood. Subtle yet powerful, for those who rule quietly.",
-			price: 999.99,
+			price: 999,
 			image: "/bestsellers/03.webp",
 		},
 		{
@@ -46,7 +47,7 @@ export function FeaturedProducts() {
 			name: "Veloura",
 			description:
 				"Veloura is a sultry embrace of Damask rose, saffron, and amber musk, layered with hints of plum and patchouli. It feels like silk on skin — bold yet delicate. Think twilight in a royal garden, wrapped in velvet shadows.",
-			price: 1099.99,
+			price: 1099,
 			image: "/bestsellers/04.webp",
 		},
 		{
@@ -54,7 +55,7 @@ export function FeaturedProducts() {
 			name: "Aurumé",
 			description:
 				"A golden fusion of warm amber, white oud, and a whisper of spiced vanilla, Aurumé is liquid opulence. It evokes desert sunsets, ancient wealth, and a touch of modern mystique. Rich but not loud. Royal but not arrogant.",
-			price: 1199.99,
+			price: 1199,
 			image: "/bestsellers/05.webp",
 		},
 		{
@@ -62,7 +63,7 @@ export function FeaturedProducts() {
 			name: "Thalara",
 			description:
 				"Thalara is a haunting blend of marine amber, smoked oud, and green fig, grounded in notes of cedarwood and black salt. It opens fresh, like a midnight sea breeze, and settles into something ancient and magnetic. It's not a perfume — it's a presence. One whiff and you're transported to a forgotten coastal palace at the edge of the world.",
-			price: 1499.99,
+			price: 1499,
 			image: "/bestsellers/06.webp",
 		},
 	];
@@ -96,13 +97,13 @@ export function FeaturedProducts() {
 								</div>
 								<CardContent className="p-4 flex flex-col h-40">
 									<div>
-										<h3 className="font-semibold text-xl ">{product.name}</h3>
-										<p className="text-muted-foreground text-sm line-clamp-4 mt-1 text-justify">
+										<h3 className="font-semibold text-2xl ">{product.name}</h3>
+										<p className="text-muted-foreground text-sm line-clamp-3 mt-1 text-justify">
 											{product.description}
 										</p>
 									</div>
-									<p className="font-bold text-lg mt-auto pt-2">
-										₹{product.price.toFixed(2)}
+									<p className="font-bold text-xl mt-auto pt-2">
+										{formatCurrency(product.price)}
 									</p>
 								</CardContent>
 								<CardFooter className="p-4 pt-0 flex gap-2">
