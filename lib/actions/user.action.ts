@@ -28,6 +28,11 @@ export interface CreateUserProps {
 	imgUrl: string;
 }
 
+/**
+ * Creates a new user in the database.
+ * @param {CreateUserProps} UserData - The user information to create.
+ * @returns {Promise<User>} The newly created user.
+ */
 export const createUser = async (UserData: CreateUserProps) => {
 	try {
 		// Creating a new user in the database
@@ -47,6 +52,11 @@ export const createUser = async (UserData: CreateUserProps) => {
 	}
 };
 
+/**
+ * Retrieves a user by their Clerk ID.
+ * @param {string} clerkId - The Clerk ID of the user.
+ * @returns {Promise<User | null>} The found user or null.
+ */
 export const getUserByClerkId = async (clerkId: string) => {
 	try {
 		// Fetching the user from the database
@@ -61,6 +71,11 @@ export const getUserByClerkId = async (clerkId: string) => {
 	}
 };
 
+/**
+ * Deletes a user by their Clerk ID.
+ * @param {string} clerkId - The Clerk ID of the user to delete.
+ * @returns {Promise<User>} The deleted user object.
+ */
 export const deleteUserByClerkId = async (clerkId: string) => {
 	try {
 		// Deleting the user from the database
@@ -75,6 +90,10 @@ export const deleteUserByClerkId = async (clerkId: string) => {
 	}
 };
 
+/**
+ * Retrieves all users from the database.
+ * @returns {Promise<User[]>} An array of user objects.
+ */
 export const getUsers = async () => {
 	try {
 		// Fetching all users from the database
@@ -89,6 +108,10 @@ export const getUsers = async () => {
 	}
 };
 
+/**
+ * Retrieves all users with their addresses included.
+ * @returns {Promise<User[]>} An array of user objects with address data.
+ */
 export const getUsersWithAddress = async () => {
 	try {
 		// Fetching all users with their addresses from the database
@@ -106,6 +129,12 @@ export const getUsersWithAddress = async () => {
 	}
 };
 
+/**
+ * Toggles a user's admin status.
+ * @param {string} userId - The ID of the user to update.
+ * @param {boolean} isAdmin - The current admin status to toggle.
+ * @returns {Promise<User>} The updated user object.
+ */
 export const toggleAdmin = async (userId: string, isAdmin: boolean) => {
 	try {
 		// Updating the user's admin status in the database

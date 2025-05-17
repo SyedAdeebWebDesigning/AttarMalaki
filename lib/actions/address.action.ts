@@ -4,6 +4,12 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { ObjectId } from "mongodb";
 
+/**
+ * Adds a new address for a user identified by Clerk ID.
+ * @param {string} userClerkId - The Clerk ID of the user.
+ * @param {object} addressData - The address details.
+ * @returns {Promise<object>} The result object with success flag and address or error message.
+ */
 export async function addAddress(
 	userClerkId: string, // Accept clerkId
 	addressData: {
@@ -50,6 +56,11 @@ export async function addAddress(
 	}
 }
 
+/**
+ * Retrieves all addresses for a user by user ID.
+ * @param {string} userId - The user's database ID.
+ * @returns {Promise<object>} The result containing success status and addresses or error message.
+ */
 export const getAddress = async (userId: string) => {
 	try {
 		// Check if userId is a valid ObjectId
@@ -68,6 +79,11 @@ export const getAddress = async (userId: string) => {
 	}
 };
 
+/**
+ * Retrieves a single address by its ID.
+ * @param {string} id - The ID of the address.
+ * @returns {Promise<object>} The result containing the address or error message.
+ */
 export const getAddressById = async (id: string) => {
 	try {
 		const address = await prisma.address.findFirst({
@@ -82,6 +98,12 @@ export const getAddressById = async (id: string) => {
 	}
 };
 
+/**
+ * Updates an existing address.
+ * @param {string} id - The ID of the address to update.
+ * @param {object} addressData - The updated address fields.
+ * @returns {Promise<object>} The result with success status and updated address or error message.
+ */
 export const updateAddress = async (id: string, addressData: any) => {
 	try {
 		const updatedAddress = await prisma.address.update({
@@ -95,6 +117,12 @@ export const updateAddress = async (id: string, addressData: any) => {
 	}
 };
 
+/**
+ * Deletes an address by its ID and user ID, preventing deletion of the last address.
+ * @param {string} id - The ID of the address to delete.
+ * @param {string} userId - The ID of the user.
+ * @returns {Promise<object>} The result with success status or error message.
+ */
 export const deleteAddress = async (id: string, userId: string) => {
 	try {
 		// Count total addresses of the user

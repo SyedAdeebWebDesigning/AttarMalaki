@@ -48,7 +48,7 @@ model Product {
   name             String
   description      String
   shortDescription String?
-  category         String[]
+  category         String
   tags             String[]
   image            String
   rating           Float?

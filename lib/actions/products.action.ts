@@ -1,0 +1,132 @@
+"use server";
+
+import prisma from "@/lib/prisma";
+import { Prisma, Product, Size } from "@prisma/client";
+
+/**
+ * Fetches all products from the database.
+ * @returns {Promise<Product[]>} An array of product objects.
+ */
+export const getProducts = async (): Promise<Product[]> => {
+	try {
+		const products = await prisma.product.findMany({});
+		if (!products) {
+			return [];
+		}
+		return products;
+	} catch (error) {}
+};
+
+/**
+ * Fetches a single product by its ID.
+ * @param {string} id - The ID of the product to fetch.
+ * @returns {Promise<Product | null>} The product object or null if not found.
+ */
+export const getProductById = async (id: string): Promise<Product | null> => {
+	try {
+		const product = await prisma.product.findUnique({
+			where: { id },
+		});
+		if (!product) {
+			return null;
+		}
+		return product;
+	} catch (error) {
+		console.error("Error fetching product by ID:", error);
+	}
+};
+
+/**
+ * Creates a new product with quantity options.
+ * @param {Prisma.ProductCreateInput & { quantities: { size: Size; price: number; stock: number; discountPrice?: number }[] }} data - The product data including quantity options.
+ * @returns {Promise<Product>} The newly created product.
+ */
+export const createProduct = async (
+  data: Prisma.ProductCreateInput & {
+    quantities: {
+      size: Size;
+      price: number;
+      stock: number;
+      discountPrice?: number;
+    }[];
+  }
+): Promise<Product> => {
+  try {
+    const { quantities, ...productData } = data;
+
+    const product = await prisma.product.create({
+      data: {
+        ...productData,
+        quantities: {
+          create: quantities,
+        },
+      },
+      include: {
+        quantities: true,
+      },
+    });
+
+    return product;
+  } catch (error) {
+    console.error("Error creating product:", error);
+    throw error;
+  }
+};
+
+/**
+ * Updates an existing product by its ID.
+ * @param {string} id - The ID of the product to update.
+ * @param {any} data - The updated product data.
+ * @returns {Promise<Product>} The updated product object.
+ */
+export const updateProduct = async (
+	id: string,
+	data: any
+): Promise<Product> => {
+	try {
+		const product = await prisma.product.update({
+			where: { id },
+			data,
+		});
+		return product;
+	} catch (error) {
+		console.error("Error updating product:", error);
+	}
+};
+
+/**
+ * Deletes a product by its ID.
+ * @param {string} id - The ID of the product to delete.
+ * @returns {Promise<Product>} The deleted product object.
+ */
+export const deleteProduct = async (id: string): Promise<Product> => {
+	try {
+		const product = await prisma.product.delete({
+			where: { id },
+		});
+		return product;
+	} catch (error) {
+		console.error("Error deleting product:", error);
+	}
+};
+
+/**
+ * Fetches products by category name.
+ * @param {string} category - The category to filter products by.
+ * @returns {Promise<Product[]>} An array of matching products.
+ */
+export const getProductsByCategory = async (
+	category: string
+): Promise<Product[]> => {
+	try {
+		const products = await prisma.product.findMany({
+			where: { category: category },
+		});
+		if (!products) {
+			return [];
+		}
+		return products;
+	} catch (error) {
+		console.error("Error fetching products by category:", error);
+	}
+};
