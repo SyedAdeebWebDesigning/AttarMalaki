@@ -8,9 +8,9 @@ import { Testimonials } from "@/components/shared/Testimonials";
 
 export default function Home() {
 	return (
-		<section data-scroll-section>
+		<section>
 			{/* Hero Banner (takes full screen height) */}
-			<div className="relative w-full  z-10">
+			<div className="relative w-full  z-10 pt-20">
 				<Banner
 					position="left"
 					headline="Attar Malaki"

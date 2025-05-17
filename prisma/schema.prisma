@@ -25,6 +25,7 @@ model user {
   addresses             Address[] // One-to-Many Relationship
   createdAt             DateTime? @default(now())
   updatedAt             DateTime? @updatedAt
+  Review                Review[]
 }
 
 model Address {
@@ -37,6 +38,53 @@ model Address {
   state     String
   country   String
   zipCode   String
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+}
+
+model Product {
+  id               String            @id @default(auto()) @map("_id") @db.ObjectId
+  slug             String            @unique
+  name             String
+  description      String
+  shortDescription String?
+  category         String[]
+  tags             String[]
+  image            String
+  rating           Float?
+  reviewsCount     Int?
+  isFeatured       Boolean           @default(false)
+  isBestSeller     Boolean           @default(false)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  Review           Review[]
+  quantities       ProductQuantity[]
+}
+
+model ProductQuantity {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  productId     String  @db.ObjectId
+  product       Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  size          Size
+  price         Int
+  discountPrice Int?
+  stock         Int
+}
+
+enum Size {
+  ML_20
+  ML_50
+  ML_100
+}
+
+model Review {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String    @db.ObjectId
+  user      user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String    @db.ObjectId
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  rating    Int
+  comment   String?
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 }

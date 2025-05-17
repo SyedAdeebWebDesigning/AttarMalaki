@@ -56,7 +56,7 @@ const NavBar = ({ user }: NavBarProps) => {
 	const { isLoaded } = useAuth();
 
 	return (
-		<header className="py-4 bg-white border-b shadow-md border-gray-300 sticky top-0 w-full z-[90] px-4">
+		<header className="py-4 bg-white/50  shadow-md fixed w-full z-[90] px-4 backdrop-blur-3xl">
 			<MaxWidthWrapper>
 				<div className="flex items-center justify-between">
 					<Link href={"/"}>
