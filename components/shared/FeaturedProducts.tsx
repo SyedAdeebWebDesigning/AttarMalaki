@@ -6,67 +6,23 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import { formatCurrency } from "@/lib/utils";
+import { getBestSellers } from "@/lib/actions/products.action";
 
 interface Product {
 	id: string;
 	name: string;
 	description: string;
-	price: number;
 	image: string;
+	quantities: {
+		size: string;
+		price: number;
+		discountPrice?: number | null;
+		stock: number;
+	}[];
 }
 
-export function FeaturedProducts() {
-	// This would typically come from your database or API
-	const featuredProducts: Product[] = [
-		{
-			id: "1",
-			name: "Shanaya",
-			description:
-				"A scent of passion and power. Shanaya blends rich florals with warm oriental spices, bottled in ruby red glass and crowned with gold. It's sensual, bold, and unforgettable—just like the woman who wears it.",
-			price: 2199,
-			image: "/bestsellers/01.webp",
-		},
-		{
-			id: "2",
-			name: "Soraya",
-			description:
-				"Celestial elegance captured in a bottle. Soraya shimmers with notes of violet, musk, and moonlit florals, echoing starlit Arabian nights. For those who move with mystery and grace.",
-			price: 2599,
-			image: "/bestsellers/02.webp",
-		},
-		{
-			id: "3",
-			name: "White Oud",
-			description:
-				"A softer side of royalty. White Oud is a clean, creamy twist on the legendary oud—balanced with white florals and smooth sandalwood. Subtle yet powerful, for those who rule quietly.",
-			price: 2399,
-			image: "/bestsellers/03.webp",
-		},
-		{
-			id: "4",
-			name: "Veloura",
-			description:
-				"Veloura is a sultry embrace of Damask rose, saffron, and amber musk, layered with hints of plum and patchouli. It feels like silk on skin — bold yet delicate. Think twilight in a royal garden, wrapped in velvet shadows.",
-			price: 2499,
-			image: "/bestsellers/04.webp",
-		},
-		{
-			id: "5",
-			name: "Aurumé",
-			description:
-				"A golden fusion of warm amber, white oud, and a whisper of spiced vanilla, Aurumé is liquid opulence. It evokes desert sunsets, ancient wealth, and a touch of modern mystique. Rich but not loud. Royal but not arrogant.",
-			price: 2799,
-			image: "/bestsellers/05.webp",
-		},
-		{
-			id: "6",
-			name: "Thalara",
-			description:
-				"Thalara is a haunting blend of marine amber, smoked oud, and green fig, grounded in notes of cedarwood and black salt. It opens fresh, like a midnight sea breeze, and settles into something ancient and magnetic. It's not a perfume — it's a presence. One whiff and you're transported to a forgotten coastal palace at the edge of the world.",
-			price: 2999,
-			image: "/bestsellers/06.webp",
-		},
-	];
+export async function FeaturedProducts() {
+	const bestSellers = (await getBestSellers()) as any[];
 
 	return (
 		<section className="py-12 px-4 md:px-6 lg:px-8 bg-white">
@@ -83,41 +39,66 @@ export function FeaturedProducts() {
 					</div>
 
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-						{featuredProducts.map((product) => (
-							<Card
-								key={product.id}
-								className="overflow-hidden transition-all duration-200 hover:shadow-md flex flex-col py-0 rounded cursor-pointer">
-								<div className="aspect-square relative overflow-hidden">
-									<Image
-										src={product.image || "/placeholder.svg"}
-										alt={product.name}
-										fill
-										loading="lazy"
-										className="object-contain transition-transform duration-300"
-									/>
-								</div>
-								<CardContent className="p-4 flex flex-col h-40">
-									<div>
-										<h3 className="font-semibold text-2xl ">{product.name}</h3>
-										<p className="text-muted-foreground text-sm line-clamp-3 mt-1 text-justify">
-											{product.description}
-										</p>
+						{bestSellers.map((product) => {
+							// Sort prices from lowest effective price
+							const sortedQuantities = [...product.quantities].sort((a, b) => {
+								const priceA =
+									a.discountPrice && a.discountPrice > 0
+										? a.discountPrice
+										: a.price;
+								const priceB =
+									b.discountPrice && b.discountPrice > 0
+										? b.discountPrice
+										: b.price;
+								return priceA - priceB;
+							});
+							const lowest = sortedQuantities[0];
+
+							return (
+								<Card
+									key={product.id}
+									className="overflow-hidden transition-all duration-200 hover:shadow-md flex flex-col py-0 rounded cursor-pointer">
+									<div className="aspect-square relative overflow-hidden">
+										<Image
+											src={product.image || "/placeholder.svg"}
+											alt={product.name}
+											fill
+											loading="lazy"
+											className="object-contain transition-transform duration-300"
+										/>
 									</div>
-									<p className="font-bold text-xl mt-auto pt-2">
-										{formatCurrency(product.price)}
-									</p>
-								</CardContent>
-								<CardFooter className="p-4 pt-0 flex gap-2">
-									<Button className="">
-										<ShoppingCart className="h-4 w-4 mr-2" />
-										Add to Cart
-									</Button>
-									<Button variant="outline" asChild>
-										<Link href={`/product/${product.id}`}>View More</Link>
-									</Button>
-								</CardFooter>
-							</Card>
-						))}
+									<CardContent className="p-4 flex flex-col h-40">
+										<div>
+											<h3 className="font-semibold text-2xl">{product.name}</h3>
+											<p className="text-muted-foreground text-sm line-clamp-3 mt-1 text-justify">
+												{product.description}
+											</p>
+										</div>
+										<p className="font-bold text-xl mt-auto pt-2">
+											{lowest.discountPrice && lowest.discountPrice > 0 ? (
+												<>
+													<span className="line-through text-muted-foreground mr-2">
+														{formatCurrency(lowest.price)}
+													</span>
+													<span>{formatCurrency(lowest.discountPrice)}</span>
+												</>
+											) : (
+												<span>{formatCurrency(lowest.price)}</span>
+											)}
+										</p>
+									</CardContent>
+									<CardFooter className="p-4 pt-0 flex gap-2">
+										<Button>
+											<ShoppingCart className="h-4 w-4 mr-2" />
+											Add to Cart
+										</Button>
+										<Button variant="outline" asChild>
+											<Link href={`/product/${product.slug}`}>View More</Link>
+										</Button>
+									</CardFooter>
+								</Card>
+							);
+						})}
 					</div>
 				</div>
 			</MaxWidthWrapper>

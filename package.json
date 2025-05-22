@@ -6,6 +6,7 @@
 		"dev": "next dev --turbopack",
 		"build": "prisma generate && next build",
 		"start": "next start",
+		"types": "ts-node scripts/gen-types.ts",
 		"lint": "next lint"
 	},
 	"dependencies": {
@@ -37,13 +38,16 @@
 		"zod": "^3.24.2"
 	},
 	"devDependencies": {
+		"@prisma/sdk": "^3.15.2",
 		"@tailwindcss/postcss": "^4",
 		"@types/locomotive-scroll": "^4.1.4",
 		"@types/node": "^20",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
 		"prisma": "^6.5.0",
+		"prisma-zod-generator": "^0.8.13",
 		"tailwindcss": "^4",
+		"ts-node": "^10.9.2",
 		"typescript": "^5"
 	}
 }

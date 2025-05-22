@@ -1,0 +1,36 @@
+import { z } from 'zod';
+import { ProductCreatetagsInputObjectSchema } from './ProductCreatetagsInput.schema';
+import { ReviewUncheckedCreateNestedManyWithoutProductInputObjectSchema } from './ReviewUncheckedCreateNestedManyWithoutProductInput.schema';
+
+import type { Prisma } from '@prisma/client';
+
+const Schema: z.ZodType<Prisma.ProductUncheckedCreateWithoutQuantitiesInput> = z
+  .object({
+    id: z.string().optional(),
+    slug: z.string(),
+    name: z.string(),
+    description: z.string(),
+    shortDescription: z.string().optional().nullable(),
+    category: z.string(),
+    tags: z
+      .union([
+        z.lazy(() => ProductCreatetagsInputObjectSchema),
+        z.string().array(),
+      ])
+      .optional(),
+    image: z.string(),
+    rating: z.number().optional().nullable(),
+    reviewsCount: z.number().optional().nullable(),
+    isFeatured: z.boolean().optional(),
+    isBestSeller: z.boolean().optional(),
+    createdAt: z.coerce.date().optional(),
+    updatedAt: z.coerce.date().optional(),
+    Review: z
+      .lazy(
+        () => ReviewUncheckedCreateNestedManyWithoutProductInputObjectSchema,
+      )
+      .optional(),
+  })
+  .strict();
+
+export const ProductUncheckedCreateWithoutQuantitiesInputObjectSchema = Schema;

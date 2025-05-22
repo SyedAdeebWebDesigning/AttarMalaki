@@ -2,12 +2,12 @@ import Heading from "@/components/shared/Heading";
 import { Button } from "@/components/ui/button";
 import { getProducts } from "@/lib/actions/products.action";
 import Link from "next/link";
-
+import { Product } from "@/typings";
+import ProductsTable from "@/components/shared/ProductsTable";
 interface pageProps {}
 
 const page = async ({}: pageProps) => {
-	const products = await getProducts();
-	console.log(products.length);
+	const products = (await getProducts()) as Product[];
 
 	if (products.length === 0) {
 		return (
@@ -24,8 +24,12 @@ const page = async ({}: pageProps) => {
 	}
 
 	return (
-		<section>
+		<section className="relative">
 			<Heading>Product</Heading>
+			<Link href={"/dashboard/products/new"} className="absolute top-0 right-4">
+				<Button className="">Add Product</Button>
+			</Link>
+			<ProductsTable products={products} />
 		</section>
 	);
 };

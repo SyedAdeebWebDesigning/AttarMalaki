@@ -9,7 +9,28 @@ import { Prisma, Product, Size } from "@prisma/client";
  */
 export const getProducts = async (): Promise<Product[]> => {
 	try {
-		const products = await prisma.product.findMany({});
+		const products = await prisma.product.findMany({
+			include: {
+				quantities: true,
+			},
+		});
+		if (!products) {
+			return [];
+		}
+		return products;
+	} catch (error) {}
+};
+
+export const getBestSellers = async (): Promise<Product[]> => {
+	try {
+		const products = await prisma.product.findMany({
+			where: {
+				isBestSeller: true,
+			},
+			include: {
+				quantities: true,
+			},
+		});
 		if (!products) {
 			return [];
 		}
@@ -42,35 +63,35 @@ export const getProductById = async (id: string): Promise<Product | null> => {
  * @returns {Promise<Product>} The newly created product.
  */
 export const createProduct = async (
-  data: Prisma.ProductCreateInput & {
-    quantities: {
-      size: Size;
-      price: number;
-      stock: number;
-      discountPrice?: number;
-    }[];
-  }
+	data: Prisma.ProductCreateInput & {
+		quantities: {
+			size: Size;
+			price: number;
+			stock: number;
+			discountPrice?: number;
+		}[];
+	}
 ): Promise<Product> => {
-  try {
-    const { quantities, ...productData } = data;
+	try {
+		const { quantities, ...productData } = data;
 
-    const product = await prisma.product.create({
-      data: {
-        ...productData,
-        quantities: {
-          create: quantities,
-        },
-      },
-      include: {
-        quantities: true,
-      },
-    });
+		const product = await prisma.product.create({
+			data: {
+				...productData,
+				quantities: {
+					create: quantities,
+				},
+			},
+			include: {
+				quantities: true,
+			},
+		});
 
-    return product;
-  } catch (error) {
-    console.error("Error creating product:", error);
-    throw error;
-  }
+		return product;
+	} catch (error) {
+		console.error("Error creating product:", error);
+		throw error;
+	}
 };
 
 /**

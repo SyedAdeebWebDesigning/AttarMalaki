@@ -370,6 +370,7 @@ const ProductForm = ({}: ProductFormProps) => {
 												<FormControl>
 													<Input
 														type="number"
+														min={0}
 														value={
 															typeof field.value === "number" ? field.value : ""
 														}
