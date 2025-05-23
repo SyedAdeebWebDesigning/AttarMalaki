@@ -61,12 +61,9 @@ export const getProductById = async (id: string): Promise<Product | null> => {
 	}
 };
 
-/**
- * Fetches a single product by its slug.
- * @param {string} slug - The slug of the product to fetch.
- * @returns {Promise<Product | null>} The product object or null if not found.
- */
-export const getProductBySlug = async (slug: string): Promise<Product> => {
+export const getProductBySlug = async (
+	slug: string
+): Promise<Product | null> => {
 	try {
 		const product = await prisma.product.findUnique({
 			where: { slug },
@@ -80,6 +77,7 @@ export const getProductBySlug = async (slug: string): Promise<Product> => {
 		return product;
 	} catch (error) {
 		console.error("Error fetching product by slug:", error);
+		return null; // Make sure we always return null in case of error
 	}
 };
 
