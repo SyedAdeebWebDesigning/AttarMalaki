@@ -16,7 +16,7 @@ const layout = async ({ children }: layoutProps) => {
 	return (
 		<div>
 			<NavBar user={user} />
-			<div>{children}</div>
+			<div className="">{children}</div>
 			<Footer />
 		</div>
 	);

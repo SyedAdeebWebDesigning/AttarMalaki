@@ -10,7 +10,7 @@ export default function Home() {
 	return (
 		<section>
 			{/* Hero Banner (takes full screen height) */}
-			<div className="relative w-full  z-10 pt-20">
+			<div className="relative w-full pt-20 z-10">
 				<Banner
 					position="left"
 					headline="Attar Malaki"

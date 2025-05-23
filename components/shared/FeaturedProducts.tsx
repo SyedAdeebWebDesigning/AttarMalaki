@@ -7,6 +7,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import { formatCurrency } from "@/lib/utils";
 import { getBestSellers } from "@/lib/actions/products.action";
+import AddToBag from "./AddToBag";
 
 interface Product {
 	id: string;
@@ -55,48 +56,47 @@ export async function FeaturedProducts() {
 							const lowest = sortedQuantities[0];
 
 							return (
-								<Card
-									key={product.id}
-									className="overflow-hidden transition-all duration-200 hover:shadow-md flex flex-col py-0 rounded cursor-pointer">
-									<div className="aspect-square relative overflow-hidden">
-										<Image
-											src={product.image || "/placeholder.svg"}
-											alt={product.name}
-											fill
-											loading="lazy"
-											className="object-contain transition-transform duration-300"
-										/>
-									</div>
-									<CardContent className="p-4 flex flex-col h-40">
-										<div>
-											<h3 className="font-semibold text-2xl">{product.name}</h3>
-											<p className="text-muted-foreground text-sm line-clamp-3 mt-1 text-justify">
-												{product.description}
-											</p>
+								<Link href={`/product/${product.slug}`} key={product.id}>
+									<Card className="overflow-hidden transition-all duration-200 hover:shadow-md flex flex-col py-0 rounded cursor-pointer">
+										<div className="aspect-square relative overflow-hidden">
+											<Image
+												src={product.image || "/placeholder.svg"}
+												alt={product.name}
+												fill
+												loading="lazy"
+												className="object-contain transition-transform duration-300"
+											/>
 										</div>
-										<p className="font-bold text-xl mt-auto pt-2">
-											{lowest.discountPrice && lowest.discountPrice > 0 ? (
-												<>
-													<span className="line-through text-muted-foreground mr-2">
-														{formatCurrency(lowest.price)}
-													</span>
-													<span>{formatCurrency(lowest.discountPrice)}</span>
-												</>
-											) : (
-												<span>{formatCurrency(lowest.price)}</span>
-											)}
-										</p>
-									</CardContent>
-									<CardFooter className="p-4 pt-0 flex gap-2">
-										<Button>
-											<ShoppingCart className="h-4 w-4 mr-2" />
-											Add to Cart
-										</Button>
-										<Button variant="outline" asChild>
-											<Link href={`/product/${product.slug}`}>View More</Link>
-										</Button>
-									</CardFooter>
-								</Card>
+										<CardContent className="p-4 flex flex-col h-40">
+											<div>
+												<h3 className="font-semibold text-2xl">
+													{product.name}
+												</h3>
+												<p className="text-muted-foreground text-sm line-clamp-3 mt-1 text-justify">
+													{product.description}
+												</p>
+											</div>
+											<p className="font-bold text-xl mt-auto pt-2">
+												{lowest.discountPrice && lowest.discountPrice > 0 ? (
+													<>
+														<span className="line-through text-muted-foreground mr-2">
+															{formatCurrency(lowest.price)}
+														</span>
+														<span>{formatCurrency(lowest.discountPrice)}</span>
+													</>
+												) : (
+													<span>{formatCurrency(lowest.price)}</span>
+												)}
+											</p>
+										</CardContent>
+										<CardFooter className="p-4 pt-0 flex gap-2">
+											<AddToBag />
+											<Button variant="outline" asChild>
+												<Link href={`/product/${product.slug}`}>View More</Link>
+											</Button>
+										</CardFooter>
+									</Card>
+								</Link>
 							);
 						})}
 					</div>

@@ -21,6 +21,10 @@ export const getProducts = async (): Promise<Product[]> => {
 	} catch (error) {}
 };
 
+/**
+ * Fetches best-selling products from the database.
+ * @returns {Promise<Product[]>} An array of best-selling product objects.
+ */
 export const getBestSellers = async (): Promise<Product[]> => {
 	try {
 		const products = await prisma.product.findMany({
@@ -54,6 +58,28 @@ export const getProductById = async (id: string): Promise<Product | null> => {
 		return product;
 	} catch (error) {
 		console.error("Error fetching product by ID:", error);
+	}
+};
+
+/**
+ * Fetches a single product by its slug.
+ * @param {string} slug - The slug of the product to fetch.
+ * @returns {Promise<Product | null>} The product object or null if not found.
+ */
+export const getProductBySlug = async (slug: string): Promise<Product> => {
+	try {
+		const product = await prisma.product.findUnique({
+			where: { slug },
+			include: {
+				quantities: true,
+			},
+		});
+		if (!product) {
+			return null;
+		}
+		return product;
+	} catch (error) {
+		console.error("Error fetching product by slug:", error);
 	}
 };
 
