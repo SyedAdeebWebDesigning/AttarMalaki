@@ -2,13 +2,9 @@ import { ProductDetails } from "@/components/shared/ProductDetails";
 import { getProductBySlug } from "@/lib/actions/products.action";
 import { Product } from "@/typings";
 
-type PageProps = {
-	params: {
-		slug: string;
-	};
-};
 
-const Page = async ({ params }: PageProps) => {
+
+const Page = async ({ params }) => {
 	const { slug } = params;
 
 	const product = (await getProductBySlug(slug)) as Product;
