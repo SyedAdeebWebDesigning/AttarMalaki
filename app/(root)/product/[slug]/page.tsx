@@ -1,20 +1,21 @@
 import { ProductDetails } from "@/components/shared/ProductDetails";
 import { getProductBySlug } from "@/lib/actions/products.action";
 import { Product } from "@/typings";
+import { Metadata } from "next";
 
-type Props = {
+interface PageProps {
 	params: {
 		slug: string;
 	};
-};
+}
 
-const page = async ({ params }: Props) => {
+const Page = async ({ params }: PageProps) => {
 	const { slug } = params;
-	const product = (await getProductBySlug(slug)) as Product;
+	const product: any = await getProductBySlug(slug);
 
 	if (!product) return <div>Product not found.</div>;
 
 	return <ProductDetails product={product} />;
 };
 
-export default page;
+export default Page;
