@@ -4,9 +4,10 @@ import Image from "next/image";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import { CgMenuRight } from "react-icons/cg";
 import { IoBagOutline } from "react-icons/io5";
-import { AiOutlineHome } from "react-icons/ai";
+import { FaHome } from "react-icons/fa";
+import { GiPerfumeBottle } from "react-icons/gi";
 import { BsBox2Fill } from "react-icons/bs";
-import { TbLayoutDashboardFilled, TbPerfume } from "react-icons/tb";
+import { TbLayoutDashboardFilled } from "react-icons/tb";
 import {
 	Sheet,
 	SheetContent,
@@ -16,7 +17,7 @@ import {
 } from "../ui/sheet";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, User } from "lucide-react";
+import { User } from "lucide-react";
 import {
 	SignInButton,
 	SignedIn,
@@ -31,13 +32,13 @@ const navLinks = [
 	{
 		name: "Home",
 		href: "/",
-		icon: <AiOutlineHome className="mr-1.5 text-2xl size-6" />,
+		icon: <FaHome className="mr-1.5 text-2xl size-6" />,
 		hasSpanText: false,
 	},
 	{
 		name: "Products",
 		href: "/products?page=1",
-		icon: <TbPerfume className="mr-1.5 text-2xl size-6" />,
+		icon: <GiPerfumeBottle className="mr-1.5 text-2xl size-6" />,
 		hasSpanText: false,
 	},
 	{

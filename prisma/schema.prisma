@@ -14,18 +14,20 @@ generator client {
 }
 
 model user {
-  id                    String    @id @default(auto()) @map("_id") @db.ObjectId
-  clerkId               String    @unique
+  id                    String     @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId               String     @unique
   firstName             String
   lastName              String
-  email                 String    @unique
-  isAdmin               Boolean   @default(false)
+  email                 String     @unique
+  isAdmin               Boolean    @default(false)
   imgUrl                String
-  hasCompletedAddresses Boolean   @default(false)
+  hasCompletedAddresses Boolean    @default(false)
   addresses             Address[] // One-to-Many Relationship
-  createdAt             DateTime? @default(now())
-  updatedAt             DateTime? @updatedAt
+  createdAt             DateTime?  @default(now())
+  updatedAt             DateTime?  @updatedAt
   Review                Review[]
+  Wishlist              Wishlist[]
+  Bag                   Bag[]
 }
 
 model Address {
@@ -40,6 +42,8 @@ model Address {
   zipCode   String
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
+
+  @@unique([userId, label]) // Ensure a user can only have one address with the same label
 }
 
 model Product {
@@ -59,6 +63,8 @@ model Product {
   updatedAt        DateTime          @updatedAt
   Review           Review[]
   quantities       ProductQuantity[]
+  Wishlist         Wishlist[]
+  Bag              Bag[]
 }
 
 model ProductQuantity {
@@ -87,4 +93,33 @@ model Review {
   comment   String?
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
+
+  @@unique([userId, productId]) // Ensure a user can only review a product once
+}
+
+model Wishlist {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String    @db.ObjectId
+  user      user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String    @db.ObjectId
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@unique([userId, productId]) // Ensure a user can only have one wishlist entry per product
+}
+
+model Bag {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String    @db.ObjectId
+  user      user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String    @db.ObjectId
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int       @default(1)
+  price     Int
+  size      String
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@unique([userId, productId]) // Ensure a user can only have one bag entry per product
 }
