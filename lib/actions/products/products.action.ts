@@ -7,13 +7,21 @@ import { Prisma, Product, Size } from "@prisma/client";
  * Fetches all products from the database.
  * @returns {Promise<Product[]>} An array of product objects.
  */
-export const getProducts = async (): Promise<Product[]> => {
+export const getProducts = async (page: number = 1): Promise<Product[]> => {
+	const perPage = 6;
+	const skip = (page - 1) * perPage;
 	try {
 		const products = await prisma.product.findMany({
+			skip,
+			take: perPage,
 			include: {
 				quantities: true,
 			},
+			orderBy: {
+				createdAt: "desc",
+			},
 		});
+
 		if (!products) {
 			return [];
 		}

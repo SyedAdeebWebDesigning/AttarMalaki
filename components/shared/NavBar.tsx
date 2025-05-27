@@ -36,7 +36,7 @@ const navLinks = [
 	},
 	{
 		name: "Products",
-		href: "/products",
+		href: "/products?page=1",
 		icon: <TbPerfume className="mr-1.5 text-2xl size-6" />,
 		hasSpanText: false,
 	},
