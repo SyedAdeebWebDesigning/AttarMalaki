@@ -4,7 +4,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import { user } from "@prisma/client";
-import { getUserByClerkId } from "@/lib/actions/user.action";
+import { getUserByClerkId } from "@/lib/actions/user/getUserByClerkId";
 import { redirect } from "next/navigation";
 
 type Props = {

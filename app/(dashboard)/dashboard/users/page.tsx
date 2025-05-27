@@ -1,6 +1,6 @@
 import Heading from "@/components/shared/Heading";
 import UsersTable from "@/components/shared/UsersTable";
-import { getUsersWithAddress } from "@/lib/actions/user.action";
+import { getUsersWithAddress } from "@/lib/actions/user/user.action";
 
 interface pageProps {}
 

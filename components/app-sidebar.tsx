@@ -12,9 +12,10 @@ import {
 } from "@/components/ui/sidebar";
 import { user } from "@prisma/client";
 import { currentUser } from "@clerk/nextjs/server";
-import { getUserByClerkId } from "@/lib/actions/user.action";
+import { getUserByClerkId } from "@/lib/actions/user/getUserByClerkId";
 import UserAvatar from "./shared/UserAvatar";
 import Link from "next/link";
+import { FaFigma } from "react-icons/fa6";
 
 // Menu items
 const items = [
@@ -22,6 +23,7 @@ const items = [
 	{ title: "Products", url: "/dashboard/products", icon: Package2 },
 	{ title: "Orders", url: "/dashboard/orders", icon: ListOrdered },
 	{ title: "Users", url: "/dashboard/users", icon: Users },
+	{ title: "Figma", url: "/dashboard/figma", icon: FaFigma },
 ];
 
 export async function AppSidebar() {
@@ -44,7 +46,6 @@ export async function AppSidebar() {
 								<SidebarMenuItem key={item.title}>
 									<SidebarMenuButton asChild>
 										<Link
-											
 											href={item.url}
 											className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-700 transition-all">
 											<item.icon className="size-5" />

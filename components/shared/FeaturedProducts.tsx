@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import { formatCurrency } from "@/lib/utils";
-import { getBestSellers } from "@/lib/actions/products.action";
+import { getBestSellers } from "@/lib/actions/products/getBestSellers";
 import AddToBag from "./AddToBag";
 import { Product } from "@/typings";
 

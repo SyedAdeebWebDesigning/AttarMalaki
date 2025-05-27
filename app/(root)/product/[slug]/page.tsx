@@ -1,5 +1,5 @@
 import { ProductDetails } from "@/components/shared/ProductDetails";
-import { getProductBySlug } from "@/lib/actions/products.action";
+import { getProductBySlug } from "@/lib/actions/products/getProductBySlug";
 import { Product } from "@/typings";
 
 type PageProps = {

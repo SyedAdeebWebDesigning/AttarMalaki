@@ -1,6 +1,6 @@
 import Heading from "@/components/shared/Heading";
 import { Button } from "@/components/ui/button";
-import { getProducts } from "@/lib/actions/products.action";
+import { getProducts } from "@/lib/actions/products/products.action";
 import Link from "next/link";
 import { Product } from "@/typings";
 import ProductsTable from "@/components/shared/ProductsTable";

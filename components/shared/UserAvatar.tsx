@@ -1,6 +1,6 @@
 import { user } from "@prisma/client";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { getUserByClerkId } from "@/lib/actions/user.action";
+import { getUserByClerkId } from "@/lib/actions/user/getUserByClerkId";
 import { currentUser } from "@clerk/nextjs/server";
 
 const UserAvatar = async () => {

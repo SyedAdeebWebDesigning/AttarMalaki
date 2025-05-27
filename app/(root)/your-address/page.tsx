@@ -1,6 +1,6 @@
 import MaxWidthWrapper from "@/components/shared/MaxWidthWrapper";
 import { getAddress } from "@/lib/actions/address.action";
-import { getUserByClerkId } from "@/lib/actions/user.action";
+import { getUserByClerkId } from "@/lib/actions/user/user.action";
 import { currentUser } from "@clerk/nextjs/server";
 import { AiOutlineHome } from "react-icons/ai";
 import { Button } from "@/components/ui/button";

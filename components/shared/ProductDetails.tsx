@@ -46,7 +46,7 @@ export function ProductDetails({ product }: Props) {
 						<h2 className="text-sm title-font text-gray-500 tracking-widest mb-1">
 							{product.category}
 						</h2>
-						<h1 className="text-gray-900 text-3xl title-font font-medium mb-4">
+						<h1 className="text-gray-900 text-3xl font-semibold mb-4">
 							{product.name}
 						</h1>
 

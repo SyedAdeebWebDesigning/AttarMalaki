@@ -1,3 +1,7 @@
+"use client";
+
+import React from "react";
+import Image from "next/image";
 import {
 	CheckCircle,
 	Star,
@@ -55,16 +59,27 @@ const services = [
 
 export default function Service() {
 	return (
-		<section className="w-full px-4 py-6 WhyChooseUs min-h-[45vh] relative">
-			<div className="absolute w-full h-[1px] bg-gray-400 top-0" />
-			<div className="absolute w-full h-[1px] bg-gray-400 bottom-0" />
-			<div className="flex flex-col items-center mb-10 text-center">
+		<section className="w-full px-4 py-6 min-h-[45vh] relative overflow-hidden border-y border-gray-200">
+			{/* Background Image as Next.js <Image> */}
+			<div className="absolute inset-0 -z-10 w-full h-full">
+				<Image
+					src="/WhyChooseUs.webp"
+					alt="Why Choose Us Background"
+					fill
+					className="object-cover object-center"
+					priority={false} // false means lazy load, true means preload
+					loading="lazy"
+				/>
+			</div>
+
+			<div className="flex flex-col items-center mb-10 text-center relative z-10">
 				<h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose Us?</h2>
 				<p className="text-muted-foreground max-w-2xl">
 					Experience the art of perfumery with pure ingredients, timeless
 					craftsmanship, and unmatched quality—because you deserve nothing less.
 				</p>
 			</div>
+
 			<MaxWidthWrapper>
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-full">
 					{services.map((service, idx) => {

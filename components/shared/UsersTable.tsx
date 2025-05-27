@@ -9,7 +9,7 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import Image from "next/image";
-import { User, toggleAdmin } from "@/lib/actions/user.action";
+import { User, toggleAdmin } from "@/lib/actions/user/user.action";
 import { useState } from "react";
 
 interface UsersTableProps {

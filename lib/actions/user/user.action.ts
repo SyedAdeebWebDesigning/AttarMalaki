@@ -53,25 +53,6 @@ export const createUser = async (UserData: CreateUserProps) => {
 };
 
 /**
- * Retrieves a user by their Clerk ID.
- * @param {string} clerkId - The Clerk ID of the user.
- * @returns {Promise<User | null>} The found user or null.
- */
-export const getUserByClerkId = async (clerkId: string) => {
-	try {
-		// Fetching the user from the database
-		return await prisma.user.findUnique({
-			where: {
-				clerkId: clerkId,
-			},
-		});
-	} catch (error) {
-		console.error("Error fetching user:", error);
-		throw new Error("Failed to fetch user. Please try again.");
-	}
-};
-
-/**
  * Deletes a user by their Clerk ID.
  * @param {string} clerkId - The Clerk ID of the user to delete.
  * @returns {Promise<User>} The deleted user object.

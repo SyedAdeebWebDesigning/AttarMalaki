@@ -6,7 +6,7 @@ import {
 	CreateUserProps,
 	deleteUserByClerkId,
 	getUserByClerkId,
-} from "@/lib/actions/user.action";
+} from "@/lib/actions/user/user.action";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 export async function POST(req: Request) {

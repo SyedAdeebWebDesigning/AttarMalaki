@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "react-toastify";
-import { createProduct } from "@/lib/actions/products.action";
+import { createProduct } from "@/lib/actions/products/products.action";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
