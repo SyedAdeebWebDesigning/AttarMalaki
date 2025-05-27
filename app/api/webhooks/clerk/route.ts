@@ -5,10 +5,10 @@ import {
 	createUser,
 	CreateUserProps,
 	deleteUserByClerkId,
-	getUserByClerkId,
 } from "@/lib/actions/user/user.action";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { getUserByClerkId } from "@/lib/actions/user/getUserByClerkId";
 export async function POST(req: Request) {
 	const SIGNING_SECRET = process.env.CLERK_WEBHOOK_SECRET;
 
