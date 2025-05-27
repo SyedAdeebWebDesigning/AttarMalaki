@@ -37,9 +37,6 @@ export default function RootLayout({
 				},
 			}}>
 			<html lang="en" suppressHydrationWarning={true}>
-				<head>
-					<link rel="preload" as="image" href="/WhyChooseUs.webp" />
-				</head>
 				<body
 					className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 					<main className="overflow-x-hidden">
