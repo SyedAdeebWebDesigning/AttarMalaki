@@ -155,9 +155,25 @@
 				format("svg");
 	}
 
+	@font-face {
+		font-family: "Amita";
+		src: url("https://fonts.googleapis.com/css2?family=Amita:wght@400;700&display=swap")
+			format("woff2");
+		font-weight: 400;
+		font-style: normal;
+	}
+
+	.logoText {
+		font-family: "Amita";
+		font-size: 1.5rem;
+		font-weight: 600;
+	}
+
 	.cl-internal-1dauvpw {
 		display: none;
 	}
+
+	
 	.cl-internal-13u79ez {
 		display: none;
 	}

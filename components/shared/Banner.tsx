@@ -5,6 +5,7 @@ import { buttonVariants } from "../ui/button";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import Logo from "./Logo";
 
 interface BannerProps {
 	position: "left" | "right";
@@ -34,14 +35,8 @@ const Banner = ({ tagline }: BannerProps) => {
 					<div className="container mx-auto flex flex-col-reverse md:flex-row items-center md:py-24 gap-12">
 						{/* Text Section */}
 						<div className="flex-1 text-center md:text-left">
-							<div className="relative w-[300px] h-[100px] mx-auto md:mx-0">
-								<Image
-									src="/logo/LogoBlack.svg"
-									alt="Attar Malaki Logo"
-									fill
-									priority
-									className="object-contain"
-								/>
+							<div className="relative mx-auto md:mx-0">
+								<Logo className="text-center md:text-left text-4xl text-black" />
 							</div>
 							<p className="text-lg sm:text-3xl lg:text-5xl text-gray-700 mt-6 mb-8">
 								{tagline}
