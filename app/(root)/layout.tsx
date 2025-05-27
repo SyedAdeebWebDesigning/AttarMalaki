@@ -9,8 +9,8 @@ interface layoutProps {
 }
 
 const layout = async ({ children }: layoutProps) => {
-	const _ = await currentUser();
-	const user = (await getUserByClerkId(_?.id ?? "")) as user;
+	const clerkUser = await currentUser();
+	const user = (await getUserByClerkId(clerkUser?.id ?? "")) as user;
 
 	return (
 		<div>

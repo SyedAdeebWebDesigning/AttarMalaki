@@ -1,11 +1,6 @@
 import prisma from "@/lib/prisma";
 import { Product } from "@prisma/client";
 
-// Cache this function and revalidate every 1 hour
-export const revalidate = 3600;
-export const fetchCache = "force-cache";
-export const dynamic = "force-static";
-
 export const getProductBySlug = async (
 	slug: string
 ): Promise<Product | null> => {
