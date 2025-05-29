@@ -43,10 +43,12 @@ const AddToBag = ({
 		setIsLoading(false);
 	};
 
+	console.log(totalQty, productQty);
+
 	return (
 		<Button
 			onClick={handleClick}
-			disabled={isLoading || productQty <= 0 || totalQty === 0}>
+			disabled={isLoading || productQty > totalQty || totalQty === 0}>
 			{isLoading ? "Adding..." : "Add to Bag"}
 			{productQty <= 0 && (
 				<span className="text-red-500 ml-2">Out of Stock</span>
