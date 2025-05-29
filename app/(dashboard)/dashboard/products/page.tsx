@@ -1,13 +1,13 @@
 import Heading from "@/components/shared/Heading";
 import { Button } from "@/components/ui/button";
-import { getProducts } from "@/lib/actions/products/products.action";
+import { getAllProducts } from "@/lib/actions/products/products.action";
 import Link from "next/link";
 import { Product } from "@/typings";
 import ProductsTable from "@/components/shared/ProductsTable";
 interface pageProps {}
 
 const page = async ({}: pageProps) => {
-	const products = (await getProducts()) as Product[];
+	const products = (await getAllProducts()) as Product[];
 
 	if (products.length === 0) {
 		return (

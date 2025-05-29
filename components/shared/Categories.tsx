@@ -1,42 +1,59 @@
-// components/Categories.tsx
-
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import MaxWidthWrapper from "./MaxWidthWrapper";
+import { cn } from "@/lib/utils";
 
 const categories = [
 	{
 		name: "Oudh",
-		image: "/categories/oud.webp",
-		href: "/products?category=oudh",
+		title: "Rich & Resinous",
+		subtitle: "Explore deep, woody aromas",
+		icon: "/categories/icons/oudh.png",
+		bg: "/categories/background/oudh.png",
+		href: "/products?page=1&category=oudh",
 	},
 	{
 		name: "Musk",
-		image: "/categories/musk.webp",
-		href: "/products?category=musk",
+		title: "Soft & Sensual",
+		subtitle: "Gentle whispers of warmth",
+		icon: "/categories/icons/musk.png",
+		bg: "/categories/background/musk.png",
+		href: "/products?page=1&category=musk",
 	},
 	{
 		name: "Floral",
-		image: "/categories/floral.webp",
-		href: "/products?category=floral",
+		title: "Elegant & Fresh",
+		subtitle: "Blossoms in every drop",
+		icon: "/categories/icons/floral.png",
+		bg: "/categories/background/floral.png",
+		href: "/products?page=1&category=floral",
 	},
 	{
 		name: "Fresh",
-		image: "/categories/fresh.webp",
-		href: "/products?category=fresh",
+		title: "Clean & Zesty",
+		subtitle: "Scents that spark energy",
+		icon: "/categories/icons/fresh.png",
+		bg: "/categories/background/fresh.png",
+		href: "/products?page=1&category=fresh",
 	},
 	{
 		name: "Woody",
-		image: "/categories/woody.webp",
-		href: "/products?category=woody",
+		title: "Earthy & Bold",
+		subtitle: "Forest vibes, bottled",
+		icon: "/categories/icons/woody.png",
+		bg: "/categories/background/woody.png",
+		href: "/products?page=1&category=woody",
 	},
 	{
 		name: "Spicy",
-		image: "/categories/spicy.webp",
-		href: "/products?category=spicy",
+		title: "Warm & Exotic",
+		subtitle: "Sparks a fiery presence",
+		icon: "/categories/icons/spicy.png",
+		bg: "/categories/background/spicy.png",
+		href: "/products?page=1&category=spicy",
 	},
 ];
 
@@ -53,23 +70,51 @@ export default function Categories() {
 						florals. Find your signature scent with ease.
 					</p>
 				</div>
-				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:px-10">
-					{categories.map((cat) => (
-						<Link href={cat.href} key={cat.name} className="w-full">
-							<Card className="relative group w-full aspect-square overflow-hidden shadow-md py-0 rounded-none">
-								<div className="relative w-full h-full group-hover:brightness-60 transition duration-200">
-									<Image
-										src={cat.image}
-										alt={cat.name}
-										fill
-										loading="lazy"
-										className="object-cover ease-in-out"
-									/>
-								</div>
 
-								<CardContent className="text-center text-white text-xl md:text-5xl font-semibold opacity-100 lg:opacity-0 group-hover:opacity-100 uppercase z-10 slide-up-on-hover text-shadow-black ">
-									{cat.name}
-								</CardContent>
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 px-4">
+					{categories.map((cat, idx) => (
+						<Link href={cat.href} key={cat.name}>
+							<Card
+								className="flex items-center bg-cover bg-center h-[6rem] relative overflow-hidden"
+								style={{ backgroundImage: `url(${cat.bg})` }}>
+								<div className="absolute inset-0 bg-white/70 backdrop-blur-sm" />
+
+								<div className="relative z-10 flex items-center w-full h-full">
+									{/* Icon Side */}
+									<div className="flex-shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden flex items-center justify-center mx-2">
+										<Image
+											src={cat.icon}
+											alt={cat.name}
+											width={96}
+											height={96}
+											loading="lazy"
+											className={cn(
+												"w-full h-full",
+												idx === 0
+													? "p-4"
+													: idx === 1
+													? "p-1"
+													: idx === 2
+													? "p-2"
+													: idx === 3
+													? "p-3"
+													: idx === 4
+													? "p-3"
+													: "p-2"
+											)}
+										/>
+									</div>
+
+									{/* Text Side */}
+									<div className="">
+										<h3 className="text-lg md:text-xl font-bold text-black">
+											{cat.name}
+										</h3>
+										<p className="text-sm md:text-base text-muted-foreground">
+											{cat.subtitle}
+										</p>
+									</div>
+								</div>
 							</Card>
 						</Link>
 					))}
@@ -78,5 +123,3 @@ export default function Categories() {
 		</MaxWidthWrapper>
 	);
 }
-
-// air00755

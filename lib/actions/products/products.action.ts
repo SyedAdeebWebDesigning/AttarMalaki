@@ -29,6 +29,26 @@ export const getProducts = async (page: number = 1): Promise<Product[]> => {
 	} catch (error) {}
 };
 
+export const getAllProducts = async (): Promise<Product[]> => {
+	try {
+		const products = await prisma.product.findMany({
+			include: {
+				quantities: true,
+			},
+			orderBy: {
+				createdAt: "desc",
+			},
+		});
+
+		if (!products) {
+			return [];
+		}
+		return products;
+	} catch (error) {
+		return [];
+	}
+};
+
 /**
  * Fetches a single product by its ID.
  * @param {string} id - The ID of the product to fetch.
