@@ -141,11 +141,18 @@ export function ProductDetails({ product, userId }: Props) {
 								</div>
 
 								<AddToBag
+									totalQty={selectedQuantity.stock}
 									productId={product.id}
 									productPrice={selectedQuantity.price}
 									productSize={selectedQuantity.size}
 									productQty={quantity}
 									userId={userId}
+									onStockUpdate={(newStock) => {
+										setSelectedQuantity((prev) => ({
+											...prev,
+											stock: newStock,
+										}));
+									}}
 								/>
 							</div>
 						</div>

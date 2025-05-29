@@ -1,7 +1,9 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { Size } from "@prisma/client";
 
+// AddToBag.tsx (or your action file)
 export const addToBag = async ({
 	userId,
 	productId,
@@ -12,7 +14,7 @@ export const addToBag = async ({
 	userId: string;
 	productId: string;
 	productPrice: number;
-	productSize: string;
+	productSize: Size;
 	quantity?: number;
 }) => {
 	try {
@@ -27,7 +29,7 @@ export const addToBag = async ({
 		});
 
 		if (existing) {
-			return await prisma.bag.update({
+			await prisma.bag.update({
 				where: {
 					userId_productId_size: {
 						userId,
@@ -40,17 +42,38 @@ export const addToBag = async ({
 					price: productPrice,
 				},
 			});
+		} else {
+			await prisma.bag.create({
+				data: {
+					userId,
+					productId,
+					quantity,
+					size: productSize,
+					price: productPrice,
+				},
+			});
 		}
 
-		return await prisma.bag.create({
-			data: {
-				userId,
+		// 🧠 Reduce stock now
+		const updatedQty = await prisma.productQuantity.updateMany({
+			where: {
 				productId,
-				quantity,
 				size: productSize,
-				price: productPrice,
+			},
+			data: {
+				stock: { decrement: quantity },
 			},
 		});
+
+		// 🧾 Return updated stock
+		const updated = await prisma.productQuantity.findFirst({
+			where: {
+				productId,
+				size: productSize,
+			},
+		});
+
+		return updated;
 	} catch (error: any) {
 		console.error("addToBag error:", error);
 		throw new Error("Failed to add item to bag");

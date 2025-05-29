@@ -1,55 +1,58 @@
 "use client";
 
-import { Button } from "../ui/button";
-import { ShoppingCart } from "lucide-react";
-
+import { Button } from "@/components/ui/button";
 import { addToBag } from "@/lib/actions/bag/bag.action";
-import { toast } from "react-toastify";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 type Props = {
+	userId: string;
 	productId: string;
 	productPrice: number;
-	productSize: string;
+	productSize: any;
 	productQty: number;
-	userId: string;
+	totalQty: number;
+	onStockUpdate: (newStock: number) => void; // 🆕
 };
 
-function AddToBag({
+const AddToBag = ({
+	userId,
 	productId,
 	productPrice,
+	totalQty,
 	productSize,
 	productQty,
-	userId,
-}: Props) {
+	onStockUpdate,
+}: Props) => {
 	const [isLoading, setIsLoading] = useState(false);
-	const handleAddToBag = async () => {
-		if (!userId) {
-			toast.error("Please sign in to add items to your bag.");
-			return;
-		}
-		if (!productId || !productPrice || !productSize || !productQty) {
-			toast.error("Invalid product details. Please try again.");
-			return;
-		}
+	const handleClick = async () => {
 		setIsLoading(true);
-		await addToBag({
+		const updated = await addToBag({
 			userId,
 			productId,
 			productPrice,
 			productSize,
 			quantity: productQty,
 		});
+
+		if (updated?.stock !== undefined) {
+			onStockUpdate(updated.stock); // 🔥 update parent
+		}
+
+		toast.success("Added to bag successfully!");
+		setIsLoading(false);
 	};
 
 	return (
-		<Button onClick={handleAddToBag} disabled={isLoading}>
-			<ShoppingCart className="h-4 w-4 mr-2" />
-			<span className="text-sm font-semibold">
-				{isLoading ? "Adding..." : "Add to Bag"}
-			</span>
+		<Button
+			onClick={handleClick}
+			disabled={isLoading || productQty <= 0 || totalQty === 0}>
+			{isLoading ? "Adding..." : "Add to Bag"}
+			{productQty <= 0 && (
+				<span className="text-red-500 ml-2">Out of Stock</span>
+			)}
 		</Button>
 	);
-}
+};
 
 export default AddToBag;
