@@ -22,7 +22,7 @@ export default function LoadingScreen() {
 					alt="Attar loading..."
 					width={60}
 					height={60}
-					className="animate-spin"
+					className="animate-pulse"
 				/>
 			</div>
 		</section>
