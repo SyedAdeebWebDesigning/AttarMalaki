@@ -4,6 +4,8 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ToastContainer } from "react-toastify";
 import NextTopLoader from "nextjs-toploader";
+import { Suspense } from "react";
+import LoadingScreen from "@/components/LoadingScreen";
 const geistSans = Geist({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
@@ -54,7 +56,7 @@ export default function RootLayout({
 							pauseOnHover
 							theme="light"
 						/>
-						<div>{children}</div>
+						<Suspense fallback={<LoadingScreen />}>{children}</Suspense>
 					</main>
 				</body>
 			</html>
