@@ -41,7 +41,7 @@ const navLinks = [
 		name: "Bag",
 		href: "/bag",
 		icon: <IoBagOutline className="mr-1.5 text-2xl size-6" />,
-		hasSpanText: true,
+		hasSpanText: false,
 	},
 ];
 
@@ -76,11 +76,6 @@ const NavBarClient = ({ user }: { user: any }) => {
 								href={link.href}
 								className={cn("hover:text-gray-700 flex items-center")}>
 								{link.icon} {link.name}
-								{link.hasSpanText && (
-									<span className="top-1 -right-6 shadow-2xl rounded-full size-6 text-black flex items-center justify-center">
-										4
-									</span>
-								)}
 							</Link>
 							<span className="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-gray-700 transition-all duration-300 group-hover:w-2/3"></span>
 						</li>

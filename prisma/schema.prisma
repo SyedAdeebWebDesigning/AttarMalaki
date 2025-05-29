@@ -121,5 +121,5 @@ model Bag {
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 
-  @@unique([userId, productId]) // Ensure a user can only have one bag entry per product
+  @@unique([userId, productId, size])
 }

@@ -10,6 +10,7 @@ import AddToBag from "./AddToBag";
 
 type Props = {
 	product: Product & { quantities: ProductQuantity[] };
+	userId: string;
 };
 
 const sizeLabels: Record<string, string> = {
@@ -18,7 +19,7 @@ const sizeLabels: Record<string, string> = {
 	ML_100: "100 ml",
 };
 
-export function ProductDetails({ product }: Props) {
+export function ProductDetails({ product, userId }: Props) {
 	const [selectedQuantity, setSelectedQuantity] = useState<ProductQuantity>(
 		product.quantities[0]
 	);
@@ -27,6 +28,18 @@ export function ProductDetails({ product }: Props) {
 		setSelectedQuantity(quantity);
 	};
 
+	const [quantity, setQuantity] = useState(1);
+
+	const handleIncrement = () => {
+		if (selectedQuantity.stock > quantity) {
+			setQuantity((prev) => prev + 1);
+		}
+	};
+	const handleDecrement = () => {
+		if (quantity > 1) {
+			setQuantity((prev) => prev - 1);
+		}
+	};
 	return (
 		<section className="text-gray-600 body-font overflow-hidden pt-20">
 			<div className="container px-5 py-24 mx-auto">
@@ -99,7 +112,42 @@ export function ProductDetails({ product }: Props) {
 										: "Out of Stock"}
 								</p>
 							</div>
-							<AddToBag />
+							<div className="flex items-center gap-4">
+								<div className="flex items-center gap-4">
+									<div className="flex items-center justify-between rounded w-32 h-12 px-2">
+										{/* Decrement Button */}
+										<Button
+											onClick={handleDecrement}
+											disabled={quantity <= 1 ? true : false}
+											className="size-10 flex items-center justify-center rounded-full text-xl"
+											variant="outline">
+											<span className="mb-0.5">-</span>
+										</Button>
+
+										{/* Quantity Display */}
+										<div className="text-lg font-medium">{quantity}</div>
+
+										{/* Increment Button */}
+										<Button
+											onClick={handleIncrement}
+											disabled={
+												selectedQuantity.stock <= quantity ? true : false
+											}
+											className="size-10 flex items-center justify-center rounded-full text-xl"
+											variant="outline">
+											<span className="mb-1">+</span>
+										</Button>
+									</div>
+								</div>
+
+								<AddToBag
+									productId={product.id}
+									productPrice={selectedQuantity.price}
+									productSize={selectedQuantity.size}
+									productQty={quantity}
+									userId={userId}
+								/>
+							</div>
 						</div>
 					</div>
 				</div>
