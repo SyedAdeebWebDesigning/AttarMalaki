@@ -2,13 +2,7 @@ import ProductUpdateForm from "@/components/shared/productUpdateForm";
 import { getProductById } from "@/lib/actions/products/products.action";
 import { Product } from "@/typings";
 
-interface pageProps {
-	params: {
-		id: string;
-	};
-}
-
-const page = async ({ params }: pageProps) => {
+const page = async ({ params }) => {
 	const product = (await getProductById(params.id)) as Product;
 
 	return (
