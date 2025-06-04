@@ -7,7 +7,6 @@ import { Product, ProductQuantity } from "@/typings";
 import { formatCurrency } from "@/lib/utils";
 import { Separator } from "../ui/separator";
 import AddToBag from "./AddToBag";
-import ProductStock from "./ProductStock";
 
 type Props = {
 	product: Product & { quantities: ProductQuantity[] };
@@ -107,19 +106,11 @@ export function ProductDetails({ product, userId }: Props) {
 										selectedQuantity.discountPrice || selectedQuantity.price
 									)}
 								</p>
-								<div className="text-sm text-gray-500 mt-1">
-									{selectedQuantity.stock > 0 ? (
-										<div>
-											<ProductStock
-												productId={product.id}
-												initialStock={selectedQuantity.stock}
-												size="MEDIUM"
-											/>
-										</div>
-									) : (
-										"Out of Stock"
-									)}
-								</div>
+								<p className="text-sm text-gray-500 mt-1">
+									{selectedQuantity.stock > 0
+										? `In Stock: ${selectedQuantity.stock}`
+										: "Out of Stock"}
+								</p>
 							</div>
 							<div className="flex items-center gap-4">
 								<div className="flex items-center gap-4">

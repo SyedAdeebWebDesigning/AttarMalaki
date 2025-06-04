@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { addToBag } from "@/lib/actions/bag/bag.action";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -25,6 +26,7 @@ const AddToBag = ({
 	onStockUpdate,
 }: Props) => {
 	const [isLoading, setIsLoading] = useState(false);
+	const router = useRouter();
 	const handleClick = async () => {
 		setIsLoading(true);
 		const updated = await addToBag({
@@ -39,11 +41,13 @@ const AddToBag = ({
 			onStockUpdate(updated.stock); // 🔥 update parent
 		}
 
-		toast.success("Added to bag successfully!");
+		toast.success("Added to bag successfully!", {
+			onClose: () => {
+				router.refresh();
+			},
+		});
 		setIsLoading(false);
 	};
-
-	console.log(totalQty, productQty);
 
 	return (
 		<Button
