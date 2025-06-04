@@ -35,7 +35,7 @@ const page = async () => {
 			<section>
 				<div className="flex items-center flex-col justify-center h-[100vh] mx-5">
 					<div className="relative size-36 mb-4">
-						<Image src={"/svg/bag.svg"} alt="bag" fill />
+						<Image src={"/svg/Bag.svg"} alt="bag" fill />
 					</div>
 					<h1 className="text-4xl font-bold">Your Bag is Empty!</h1>
 					<p className="text-lg text-gray-500 mt-2 text-center">
