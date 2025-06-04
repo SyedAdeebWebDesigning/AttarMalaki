@@ -90,3 +90,18 @@ export const getBagLength = async (userId: string) => {
 		return null;
 	}
 };
+
+export const getUserBag = async (userId: string) => {
+	try {
+		const bag = await prisma.bag.findMany({
+			where: { userId },
+		});
+		if (bag.length === 0) {
+			return null; // Return null if the bag is empty
+		}
+		return bag;
+	} catch (error: any) {
+		console.error("getUserBag error:", error);
+		return null;
+	}
+};
