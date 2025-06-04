@@ -117,7 +117,7 @@ model Bag {
   product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
   quantity  Int       @default(1)
   price     Int
-  size      String
+  size      Size
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 

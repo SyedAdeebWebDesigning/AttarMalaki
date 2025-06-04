@@ -92,7 +92,7 @@ export interface Bag {
   product: Product;
   quantity: number;
   price: number;
-  size: string;
+  size: Size;
   createdAt?: Date;
   updatedAt?: Date;
 }
