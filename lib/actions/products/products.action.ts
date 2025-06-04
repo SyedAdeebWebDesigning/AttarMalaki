@@ -49,22 +49,19 @@ export const getAllProducts = async (): Promise<Product[]> => {
 	}
 };
 
-/**
- * Fetches a single product by its ID.
- * @param {string} id - The ID of the product to fetch.
- * @returns {Promise<Product | null>} The product object or null if not found.
- */
 export const getProductById = async (id: string): Promise<Product | null> => {
 	try {
 		const product = await prisma.product.findUnique({
 			where: { id },
+			include: {
+				quantities: true, // 👈 include stock info
+			},
 		});
-		if (!product) {
-			return null;
-		}
+		if (!product) return null;
 		return product;
 	} catch (error) {
 		console.error("Error fetching product by ID:", error);
+		return null;
 	}
 };
 

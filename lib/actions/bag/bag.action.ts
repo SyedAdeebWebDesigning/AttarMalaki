@@ -4,6 +4,8 @@ import prisma from "@/lib/prisma";
 import { Size } from "@prisma/client";
 
 // AddToBag.tsx (or your action file)
+import { pusher } from "@/lib/pusher"; // ✅ make sure this exists
+
 export const addToBag = async ({
 	userId,
 	productId,
@@ -18,7 +20,7 @@ export const addToBag = async ({
 	quantity?: number;
 }) => {
 	try {
-		// 🧠 Get current stock for the size
+		// 🔍 Get current stock
 		const stockEntry = await prisma.productQuantity.findFirst({
 			where: {
 				productId,
@@ -26,15 +28,10 @@ export const addToBag = async ({
 			},
 		});
 
-		if (!stockEntry) {
-			throw new Error("This size is not available for the product.");
+		if (!stockEntry || stockEntry.stock < quantity) {
+			throw new Error(`Only ${stockEntry?.stock ?? 0} item(s) left in stock.`);
 		}
 
-		if (stockEntry.stock < quantity) {
-			throw new Error(`Only ${stockEntry.stock} item(s) left in stock.`);
-		}
-
-		// 🔍 Check if item already exists in bag
 		const existing = await prisma.bag.findUnique({
 			where: {
 				userId_productId_size: {
@@ -46,8 +43,7 @@ export const addToBag = async ({
 		});
 
 		if (existing) {
-			// If adding exceeds stock, throw error
-			if (quantity > stockEntry.stock) {
+			if (stockEntry.stock < quantity + existing.quantity) {
 				throw new Error(`Only ${stockEntry.stock} item(s) left in stock.`);
 			}
 
@@ -76,7 +72,7 @@ export const addToBag = async ({
 			});
 		}
 
-		// 🔻 Reduce stock
+		// 🧠 Reduce stock
 		await prisma.productQuantity.updateMany({
 			where: {
 				productId,
@@ -87,7 +83,7 @@ export const addToBag = async ({
 			},
 		});
 
-		// Return updated stock
+		// 🔄 Get updated stock
 		const updated = await prisma.productQuantity.findFirst({
 			where: {
 				productId,
@@ -95,10 +91,17 @@ export const addToBag = async ({
 			},
 		});
 
+		// 🔔 Real-time broadcast
+		await pusher.trigger("stock-channel", "stock-updated", {
+			productId,
+			size: productSize,
+			stock: updated?.stock,
+		});
+
 		return updated;
 	} catch (error: any) {
 		console.error("addToBag error:", error);
-		throw new Error(error.message || "Failed to add item to bag");
+		throw new Error("Failed to add item to bag");
 	}
 };
 
