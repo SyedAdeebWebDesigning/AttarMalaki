@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Product } from "@/typings";
 
@@ -10,6 +12,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import { redirect } from "next/navigation";
 
 type Props = {
 	products: Product[];
@@ -100,7 +103,12 @@ const ProductsTable = ({ products }: Props) => {
 						);
 
 						return (
-							<TableRow key={product.id} className="hover:bg-muted">
+							<TableRow
+								key={product.id}
+								className="hover:bg-muted cursor-pointer"
+								onClick={() => {
+									redirect(`/dashboard/products/${product.id}`);
+								}}>
 								<TableCell className="border-r border-gray-300">
 									{index + 1}
 								</TableCell>

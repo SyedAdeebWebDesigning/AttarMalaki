@@ -183,7 +183,7 @@ const page = async () => {
 								</div>
 
 								<Button
-									className="w-full bg-black text-white py-4 rounded-xl font-semibold text-lg hover:bg-gray-900 transition-all shadow hover:shadow-lg mb-3"
+									className="w-full text-white py-4 rounded-xl font-semibold text-lg transition-all shadow hover:shadow-lg mb-3"
 									size="lg">
 									<Link href="/checkout">Proceed to Checkout</Link>
 								</Button>

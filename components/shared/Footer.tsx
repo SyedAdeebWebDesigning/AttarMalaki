@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import MaxWidthWrapper from "./MaxWidthWrapper";
+import Image from "next/image";
 
 export function Footer() {
 	return (
@@ -69,21 +70,48 @@ export function Footer() {
 							</ul>
 						</div>
 
-						{/* Newsletter */}
 						<div className="space-y-4">
-							<h3 className="text-lg font-semibold text-slate-900">
-								Newsletter
+							<h3 className="text-lg font-semibold text-slate-900 flex items-center justify-start">
+								Payment integration with
+								<span>
+									<Image
+										src={"/svg/Stripe-Logo.svg"}
+										alt="Stripe"
+										width={50}
+										height={12}
+										className="inline-block ml-1"
+									/>
+								</span>
 							</h3>
 							<p className="text-slate-600">
-								Subscribe to receive updates on new products and special offers.
+								We accept all major credit and debit cards through Stripe for
+								secure transactions.
 							</p>
-							<div className="flex flex-col space-y-2">
-								<Input
-									type="email"
-									placeholder="Your email address"
-									className="bg-white border-slate-300 text-slate-900 placeholder:text-slate-500"
-								/>
-								<Button className="w-full">Subscribe</Button>
+							<div className="grid grid-cols-3 place-items-start">
+								<div className="flex items-center justify-start">
+									<Image
+										src={"/svg/visa.svg"}
+										alt="Visa"
+										width={80}
+										height={24}
+									/>
+								</div>
+								<div className="flex items-center justify-start">
+									<Image
+										src={"/svg/mastercard.svg"}
+										alt="MasterCard"
+										width={80}
+										height={24}
+									/>
+								</div>
+								<div className="flex items-center justify-start">
+									<Image
+										src={"/svg/paypal.svg"}
+										alt="PayPal"
+										width={80}
+										height={24}
+									/>
+								</div>
 							</div>
 						</div>
 					</div>

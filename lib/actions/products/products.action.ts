@@ -102,24 +102,41 @@ export const createProduct = async (
 	}
 };
 
-/**
- * Updates an existing product by its ID.
- * @param {string} id - The ID of the product to update.
- * @param {any} data - The updated product data.
- * @returns {Promise<Product>} The updated product object.
- */
 export const updateProduct = async (
 	id: string,
-	data: any
+	data: Prisma.ProductUpdateInput & {
+		quantities?: {
+			size: Size;
+			price: number;
+			stock: number;
+			discountPrice?: number;
+		}[];
+	}
 ): Promise<Product> => {
 	try {
-		const product = await prisma.product.update({
+		const { quantities, ...productData } = data;
+
+		// Update the main product
+		const updatedProduct = await prisma.product.update({
 			where: { id },
-			data,
+			data: {
+				...productData,
+				quantities: quantities
+					? {
+							deleteMany: {}, // 🧹 Delete existing quantities
+							create: quantities, // 🔁 Add new ones
+					  }
+					: undefined,
+			},
+			include: {
+				quantities: true,
+			},
 		});
-		return product;
+
+		return updatedProduct;
 	} catch (error) {
 		console.error("Error updating product:", error);
+		throw error;
 	}
 };
 
