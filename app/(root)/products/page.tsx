@@ -1,5 +1,8 @@
 import Products from "@/components/shared/Products";
-import { getProducts } from "@/lib/actions/products/products.action";
+import {
+	getProducts,
+	getTotalProductsCount,
+} from "@/lib/actions/products/products.action";
 import { Product } from "@/typings";
 import { redirect } from "next/navigation";
 
@@ -15,11 +18,13 @@ const Page = async ({ searchParams }: PageProps) => {
 		redirect("/products?page=1");
 	}
 
+	const totalProducts = await getTotalProductsCount();
+
 	const products = (await getProducts(pageNumber)) as Product[];
 
 	return (
 		<section className="pt-20">
-			<Products products={products} />
+			<Products products={products} totalProducts={totalProducts} />
 		</section>
 	);
 };

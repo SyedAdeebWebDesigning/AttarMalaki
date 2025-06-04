@@ -176,3 +176,13 @@ export const getProductsByCategory = async (
 		console.error("Error fetching products by category:", error);
 	}
 };
+
+export const getTotalProductsCount = async (): Promise<number> => {
+	try {
+		const count = await prisma.product.count();
+		return count;
+	} catch (error) {
+		console.error("Error fetching total products count:", error);
+		return 0;
+	}
+};

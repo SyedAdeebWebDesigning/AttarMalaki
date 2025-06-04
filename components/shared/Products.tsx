@@ -2,18 +2,34 @@
 
 import { Product } from "@/typings";
 import React from "react";
-import { Card, CardContent } from "../ui/card";
-import { formatCurrency } from "@/lib/utils";
-import Image from "next/image";
 import MaxWidthWrapper from "./MaxWidthWrapper";
-import { redirect } from "next/navigation";
 import ProductCard from "./Product";
+
+import {
+	Pagination,
+	PaginationContent,
+	PaginationEllipsis,
+	PaginationItem,
+	PaginationLink,
+	PaginationNext,
+	PaginationPrevious,
+} from "@/components/ui/pagination";
+import { redirect, useSearchParams } from "next/navigation";
 
 type Props = {
 	products: Product[];
+	totalProducts: number;
 };
 
-const Products = ({ products }: Props) => {
+const Products = ({ products, totalProducts }: Props) => {
+	const searchParams = useSearchParams();
+	const pageNumber = Number(searchParams.get("page")) || 1;
+	const totalPages = Math.ceil(totalProducts / 6);
+
+	if (pageNumber > totalPages) {
+		redirect(`/products?page=${totalPages}`);
+	}
+
 	return (
 		<section className="py-12 px-4 md:px-6 lg:px-8 bg-white">
 			<MaxWidthWrapper>
@@ -54,6 +70,40 @@ const Products = ({ products }: Props) => {
 						})}
 					</div>
 				</div>
+				{/* Pagination */}
+				<Pagination className="mt-10">
+					<PaginationContent>
+						<PaginationItem>
+							<PaginationPrevious href={`/products?page=${pageNumber - 1}`} />
+						</PaginationItem>
+						{Array.from({ length: totalPages }, (_, index) => (
+							<PaginationItem key={index}>
+								<PaginationLink
+									href={`/products?page=${index + 1}`}
+									className={`${
+										pageNumber === index + 1
+											? "bg-neutral-200 text-black"
+											: "text-gray-700 hover:bg-gray-100"
+									} px-3 py-2 rounded-md`}>
+									{index + 1}
+								</PaginationLink>
+							</PaginationItem>
+						))}
+						<PaginationItem>
+							<PaginationEllipsis />
+						</PaginationItem>
+						<PaginationItem>
+							<PaginationLink
+								href={`/products?page=${totalPages}`}
+								className="px-3 py-2 rounded-md">
+								{totalPages}
+							</PaginationLink>
+						</PaginationItem>
+						<PaginationItem>
+							<PaginationNext href={`/products?page=${pageNumber + 1}`} />
+						</PaginationItem>
+					</PaginationContent>
+				</Pagination>
 			</MaxWidthWrapper>
 		</section>
 	);
