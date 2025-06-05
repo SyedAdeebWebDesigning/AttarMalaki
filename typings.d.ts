@@ -15,6 +15,7 @@ export interface user {
   Review: Review[];
   Wishlist: Wishlist[];
   Bag: Bag[];
+  Order: Order[];
 }
 
 export interface Address {
@@ -50,6 +51,7 @@ export interface Product {
   quantities: ProductQuantity[];
   Wishlist: Wishlist[];
   Bag: Bag[];
+  OrderItem: OrderItem[];
 }
 
 export interface ProductQuantity {
@@ -95,4 +97,24 @@ export interface Bag {
   size: Size;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface Order {
+  id: string;
+  userId: string;
+  user: user;
+  total: number;
+  items: OrderItem[];
+  createdAt: Date;
+}
+
+export interface OrderItem {
+  id: string;
+  orderId: string;
+  order: Order;
+  productId: string;
+  product: Product;
+  quantity: number;
+  size: Size;
+  price: number;
 }

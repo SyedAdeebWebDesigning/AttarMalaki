@@ -21,6 +21,7 @@ import {
 import { getProductById } from "@/lib/actions/products/products.action";
 import BackButton from "@/components/shared/BackButton";
 import DeleteProductButton from "@/components/shared/DeleteProductButton";
+import CheckoutButton from "@/components/shared/CheckoutButton";
 
 const page = async () => {
 	const clerkUser = await currentUser();
@@ -57,7 +58,7 @@ const page = async () => {
 		(sum, item) => sum + item.price * item.quantity,
 		0
 	);
-	const shipping = subtotal > 3000 ? 0 : 199;
+	const shipping = subtotal > 999 ? 0 : 99;
 	const total = subtotal + shipping;
 
 	return (
@@ -182,11 +183,7 @@ const page = async () => {
 									</div>
 								</div>
 
-								<Button
-									className="w-full text-white py-4 rounded-xl font-semibold text-lg transition-all shadow hover:shadow-lg mb-3"
-									size="lg">
-									<Link href="/checkout">Proceed to Checkout</Link>
-								</Button>
+								<CheckoutButton />
 
 								<Button
 									variant="outline"

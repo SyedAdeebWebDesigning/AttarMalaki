@@ -28,6 +28,7 @@ model user {
   Review                Review[]
   Wishlist              Wishlist[]
   Bag                   Bag[]
+  Order                 Order[]
 }
 
 model Address {
@@ -65,6 +66,7 @@ model Product {
   quantities       ProductQuantity[]
   Wishlist         Wishlist[]
   Bag              Bag[]
+  OrderItem        OrderItem[]
 }
 
 model ProductQuantity {
@@ -122,4 +124,24 @@ model Bag {
   updatedAt DateTime? @updatedAt
 
   @@unique([userId, productId, size])
+}
+
+model Order {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String      @db.ObjectId
+  user      user        @relation(fields: [userId], references: [id])
+  total     Float
+  items     OrderItem[]
+  createdAt DateTime    @default(now())
+}
+
+model OrderItem {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  orderId   String  @db.ObjectId
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String  @db.ObjectId
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  size      Size
+  price     Int
 }
