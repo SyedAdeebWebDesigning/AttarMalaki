@@ -44,6 +44,7 @@ model Address {
   isSelected Boolean   @default(false) // Indicates if this is the user's selected address
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
+  Order      Order[]
 
   @@unique([userId, label]) // Ensure a user can only have one address with the same label
 }
@@ -132,7 +133,9 @@ model Order {
   userId    String      @db.ObjectId
   user      user        @relation(fields: [userId], references: [id])
   total     Float
+  addressId String      @db.ObjectId
   items     OrderItem[]
+  address   Address     @relation(fields: [addressId], references: [id])
   createdAt DateTime    @default(now())
 }
 

@@ -6,18 +6,7 @@ import { user } from "@/typings";
 import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
-import {
-	Trash2,
-	Plus,
-	Minus,
-	ShoppingBag,
-	Heart,
-	ArrowLeft,
-	Gift,
-	Truck,
-	Shield,
-	Star,
-} from "lucide-react";
+import { ShoppingBag, Heart, Truck, Shield } from "lucide-react";
 import { getProductById } from "@/lib/actions/products/products.action";
 import BackButton from "@/components/shared/BackButton";
 import DeleteProductButton from "@/components/shared/DeleteProductButton";
@@ -170,7 +159,7 @@ const page = async () => {
 									<div className="space-y-2 text-sm text-gray-700">
 										<div className="flex items-center">
 											<Truck className="w-4 h-4 mr-2" />
-											<span>Free shipping on orders above ₹3,000</span>
+											<span>Free shipping on orders above ₹999</span>
 										</div>
 										<div className="flex items-center">
 											<Shield className="w-4 h-4 mr-2" />

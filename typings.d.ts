@@ -31,6 +31,7 @@ export interface Address {
   isSelected: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  Order: Order[];
 }
 
 export interface Product {
@@ -105,7 +106,9 @@ export interface Order {
   userId: string;
   user: user;
   total: number;
+  addressId: string;
   items: OrderItem[];
+  address: Address;
   createdAt: Date;
 }
 

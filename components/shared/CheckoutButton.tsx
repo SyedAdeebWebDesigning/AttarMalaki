@@ -5,15 +5,17 @@ import { Button } from "../ui/button";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const CheckoutButton = () => {
 	const [isLoading, setIsLoading] = useState(false);
+	const router = useRouter();
 	const handleClick = async () => {
 		setIsLoading(true);
 		try {
 			const res = await createCheckoutSession();
 			if (res.url) {
-				window.location.href = res.url;
+				router.push(res.url);
 			}
 		} catch (err) {
 			toast.error("Checkout failed!");

@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import prisma from "@/lib/prisma";
+import { getSelectedAddressId } from "@/lib/actions/address.action";
 
 export async function POST(req: NextRequest) {
 	const sig = req.headers.get("stripe-signature")!;
@@ -29,11 +30,19 @@ export async function POST(req: NextRequest) {
 			include: { product: true },
 		});
 
+		const addressId = (await getSelectedAddressId(userId)) as string | any;
+
+		if (!addressId) {
+			console.error("No address found for user:", userId);
+			return new NextResponse("No address found", { status: 400 });
+		}
+
 		// 🧾 Create Order
 		await prisma.order.create({
 			data: {
 				userId,
 				total: session.amount_total! / 100,
+				addressId: addressId,
 				items: {
 					create: bagItems.map((item) => ({
 						productId: item.productId,

@@ -172,3 +172,21 @@ export const makeSelectedAddress = async (id: string, userId: string) => {
 		return { success: false, message: "Failed to select address" };
 	}
 };
+
+export const getSelectedAddressId = async (userId: string) => {
+	try {
+		const address = await prisma.address.findFirst({
+			where: { userId, isSelected: true },
+			select: { id: true },
+		});
+
+		if (!address) {
+			return { success: false, message: "No selected address found" };
+		}
+
+		return { success: true, selectedAddressId: address.id };
+	} catch (error) {
+		console.error("Error fetching selected address ID:", error);
+		return { success: false, message: "Failed to fetch selected address ID" };
+	}
+};
