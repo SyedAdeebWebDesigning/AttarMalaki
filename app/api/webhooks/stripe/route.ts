@@ -30,12 +30,14 @@ export async function POST(req: NextRequest) {
 			include: { product: true },
 		});
 
-		const addressId = (await getSelectedAddressId(userId)) as string | any;
+		const result = await getSelectedAddressId(userId);
 
-		if (!addressId) {
-			console.error("No address found for user:", userId);
+		if (!result.success || !result.selectedAddressId) {
+			console.error("No selected address found for user:", userId);
 			return new NextResponse("No address found", { status: 400 });
 		}
+
+		const addressId = result.selectedAddressId;
 
 		// 🧾 Create Order
 		await prisma.order.create({
