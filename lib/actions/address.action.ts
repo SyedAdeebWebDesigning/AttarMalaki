@@ -4,14 +4,8 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { ObjectId } from "mongodb";
 
-/**
- * Adds a new address for a user identified by Clerk ID.
- * @param {string} userClerkId - The Clerk ID of the user.
- * @param {object} addressData - The address details.
- * @returns {Promise<object>} The result object with success flag and address or error message.
- */
 export async function addAddress(
-	userClerkId: string, // Accept clerkId
+	userClerkId: string,
 	addressData: {
 		label: string;
 		street: string;
@@ -22,31 +16,34 @@ export async function addAddress(
 	}
 ) {
 	try {
-		// Find user ID based on Clerk ID
 		const user = await prisma.user.findUnique({
 			where: { clerkId: userClerkId },
 			select: { id: true },
 		});
 
-		if (!user) {
-			return { success: false, message: "User not found" };
-		}
+		if (!user) return { success: false, message: "User not found" };
 
-		// Add address for the user
+		// Check if this is the user's first address
+		const existingAddresses = await prisma.address.count({
+			where: { userId: user.id },
+		});
+
+		// Add address, mark as selected only if it's the first one
 		const newAddress = await prisma.address.create({
 			data: {
-				userId: user.id, // Use the fetched user ID
+				userId: user.id,
+				isSelected: existingAddresses === 0, // Select if first
 				...addressData,
 			},
 		});
 
 		// Mark the user as having completed addresses
 		await prisma.user.update({
-			where: { id: user.id }, // Use the correct user ID
+			where: { id: user.id },
 			data: { hasCompletedAddresses: true },
 		});
 
-		// Revalidate paths (optional, adjust as needed)
+		// Revalidate paths (if you have an address component on home or elsewhere)
 		revalidatePath("/");
 
 		return { success: true, address: newAddress };
@@ -149,5 +146,29 @@ export const deleteAddress = async (id: string, userId: string) => {
 	} catch (error) {
 		console.error("Error deleting address:", error);
 		return { success: false, message: "Failed to delete address" };
+	}
+};
+
+export const makeSelectedAddress = async (id: string, userId: string) => {
+	try {
+		// Update the selected address for the user
+		const updatedAddress = await prisma.address.update({
+			where: { id },
+			data: { isSelected: true },
+		});
+
+		// Unselect other addresses for the user
+		await prisma.address.updateMany({
+			where: {
+				userId,
+				id: { not: id }, // Exclude the newly selected address
+			},
+			data: { isSelected: false },
+		});
+
+		return { success: true, updatedAddress };
+	} catch (error) {
+		console.error("Error making address selected:", error);
+		return { success: false, message: "Failed to select address" };
 	}
 };

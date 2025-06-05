@@ -3,9 +3,13 @@
 import { createCheckoutSession } from "@/lib/actions/stripe/checkout";
 import { Button } from "../ui/button";
 import { toast } from "react-toastify";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 const CheckoutButton = () => {
+	const [isLoading, setIsLoading] = useState(false);
 	const handleClick = async () => {
+		setIsLoading(true);
 		try {
 			const res = await createCheckoutSession();
 			if (res.url) {
@@ -15,13 +19,19 @@ const CheckoutButton = () => {
 			toast.error("Checkout failed!");
 			console.error(err);
 		}
+		setIsLoading(false);
 	};
 	return (
 		<Button
+			disabled={isLoading}
 			onClick={handleClick}
-			className="w-full text-white py-4 rounded-xl font-semibold text-lg transition-all shadow hover:shadow-lg mb-3"
+			className="w-full text-white py-4 rounded-xl font-semibold text-lg transition-all shadow hover:shadow-lg mb-3 flex items-center justify-center relative"
 			size="lg">
-			Proceed to Checkout
+			{isLoading ? (
+				<Loader2 className="animate-spin size-6" />
+			) : (
+				"Proceed to Checkout"
+			)}
 		</Button>
 	);
 };

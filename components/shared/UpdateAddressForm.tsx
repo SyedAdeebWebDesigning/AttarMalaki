@@ -84,7 +84,7 @@ const UpdateAddressForm = ({ id }: { id: string }) => {
 	if (isLoading) return <p>Loading...</p>;
 
 	return (
-		<div className="max-w-xl mx-auto px-3">
+		<div className="max-w-xl mx-auto px-3 py-20">
 			<MaxWidthWrapper>
 				<Form {...form}>
 					<h1 className="text-2xl font-semibold my-20 text-left">

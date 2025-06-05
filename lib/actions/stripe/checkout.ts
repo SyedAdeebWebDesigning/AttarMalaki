@@ -26,12 +26,15 @@ export async function createCheckoutSession() {
 		0
 	);
 
-	const lineItems = bagItems.map((item) => ({
+	const lineItems = bagItems.map((item, idx) => ({
 		price_data: {
 			currency: "inr",
 			unit_amount: item.price * 100,
 			product_data: {
-				name: `${item.product.name} (${item.size.replace("ML_", "")}ml)`,
+				name: `${idx + 1}. ${item.product.name} (${item.size.replace(
+					"ML_",
+					""
+				)}ml)`,
 				description: item.product.shortDescription?.slice(0, 100) ?? "",
 				metadata: {
 					productId: item.productId,
@@ -59,9 +62,10 @@ export async function createCheckoutSession() {
 	}
 
 	const session = await stripe.checkout.sessions.create({
-		payment_method_types: ["card"],
+		payment_method_types: ["card", "paypal"],
 		mode: "payment",
 		line_items: lineItems,
+		customer_email: user.emailAddresses[0]?.emailAddress,
 		success_url: process.env.STRIPE_SUCCESS_URL!,
 		cancel_url: process.env.STRIPE_CANCEL_URL!,
 		metadata: {

@@ -32,17 +32,18 @@ model user {
 }
 
 model Address {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String    @db.ObjectId
-  user      user      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  label     String // e.g., "Home", "Work", or Custom Name
-  street    String
-  city      String
-  state     String
-  country   String
-  zipCode   String
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String    @db.ObjectId
+  user       user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  label      String // e.g., "Home", "Work", or Custom Name
+  street     String
+  city       String
+  state      String
+  country    String
+  zipCode    String
+  isSelected Boolean   @default(false) // Indicates if this is the user's selected address
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
 
   @@unique([userId, label]) // Ensure a user can only have one address with the same label
 }

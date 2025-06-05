@@ -9,9 +9,14 @@ import { useRouter } from "next/navigation";
 interface DeleteAddressButtonProps {
 	id: string;
 	userId: string;
+	isSelected: boolean;
 }
 
-const DeleteAddressButton = ({ id, userId }: DeleteAddressButtonProps) => {
+const DeleteAddressButton = ({
+	id,
+	userId,
+	isSelected,
+}: DeleteAddressButtonProps) => {
 	const router = useRouter();
 	const handleDelete = async () => {
 		try {
@@ -43,6 +48,7 @@ const DeleteAddressButton = ({ id, userId }: DeleteAddressButtonProps) => {
 			onClick={handleDelete}
 			variant={"destructive"}
 			size={"icon"}
+			disabled={isSelected} // You can add logic to disable if needed
 			className="rounded-full size-8 cursor-pointer ml-2">
 			<FaRegTrashAlt />
 		</Button>

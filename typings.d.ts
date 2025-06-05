@@ -28,6 +28,7 @@ export interface Address {
   state: string;
   country: string;
   zipCode: string;
+  isSelected: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
