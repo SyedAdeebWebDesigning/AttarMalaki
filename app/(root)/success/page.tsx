@@ -1,14 +1,61 @@
 "use client";
 
-import { useEffect } from "react";
-import MaxWidthWrapper from "@/components/shared/MaxWidthWrapper";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import confetti from "canvas-confetti";
+import clsx from "clsx";
+import { validateStripeSessionWithEmail } from "@/lib/actions/stripe/checkout";
+import { useAuth } from "@clerk/nextjs";
+import { toast } from "react-toastify";
 
-interface pageProps {}
+const Page = () => {
+	const router = useRouter();
+	const searchParams = useSearchParams();
+	const [isLoading, setIsLoading] = useState(true);
 
-const page = ({}: pageProps) => {
+	setTimeout(() => {
+		router.push("/");
+	}, 3000);
+
+	const auth = useAuth();
+
+	const userId = auth.userId;
+
 	useEffect(() => {
-		const end = Date.now() + 3 * 1000; // 3 seconds
+		setIsLoading(true);
+		const sessionId = searchParams.get("session_id");
+
+		if (!sessionId) {
+			router.replace("/");
+			return;
+		}
+
+		const getSessionStatus = async () => {
+			setIsLoading(true);
+			try {
+				const response = await validateStripeSessionWithEmail(
+					sessionId,
+					userId!
+				);
+				if (response.success) {
+					setIsLoading(false);
+				} else {
+					setIsLoading(true);
+					toast.error(response.message);
+					router.replace("/");
+				}
+			} catch (error) {
+				console.log(error.message);
+			}
+		};
+		getSessionStatus();
+		setIsLoading(false);
+	}, [router, searchParams]);
+
+	useEffect(() => {
+		if (isLoading) return;
+
+		const end = Date.now() + 3 * 1000;
 		const colors = ["#a786ff", "#fd8bbc", "#eca184", "#f8deb1"];
 
 		const frame = () => {
@@ -20,7 +67,7 @@ const page = ({}: pageProps) => {
 				spread: 55,
 				startVelocity: 60,
 				origin: { x: 0, y: 0.5 },
-				colors: colors,
+				colors,
 			});
 			confetti({
 				particleCount: 2,
@@ -28,30 +75,35 @@ const page = ({}: pageProps) => {
 				spread: 55,
 				startVelocity: 60,
 				origin: { x: 1, y: 0.5 },
-				colors: colors,
+				colors,
 			});
 
 			requestAnimationFrame(frame);
 		};
 
 		frame();
-	}, []);
+	}, [isLoading]);
 
 	return (
 		<section className="flex items-center justify-center h-screen bg-white py-20">
-			<MaxWidthWrapper>
-				<div className="flex flex-col items-center justify-center space-y-4 text-center">
-					<h2 className="text-4xl md:text-6xl font-extrabold text-[#2e3539] logoText">
-						thank you for your purchase!
-					</h2>
-					<p className="text-lg text-gray-600 max-w-xl">
-						We sincerely appreciate your order. Your fragrance will soon be on
-						its way to elevate your senses.
-					</p>
-				</div>
-			</MaxWidthWrapper>
+			<div
+				className={clsx(
+					"flex flex-col items-center justify-center space-y-4 text-center max-w-xl mx-auto px-4 transition-all duration-700 ease-out",
+					{
+						"blur-sm opacity-40": isLoading,
+						"blur-0 opacity-100": !isLoading,
+					}
+				)}>
+				<h2 className="text-4xl md:text-6xl font-extrabold text-[#2e3539] logoText">
+					Thank you for your purchase!
+				</h2>
+				<p className="text-lg text-gray-600">
+					We sincerely appreciate your order. Your fragrance will soon be on its
+					way to elevate your senses.
+				</p>
+			</div>
 		</section>
 	);
 };
 
-export default page;
+export default Page;
