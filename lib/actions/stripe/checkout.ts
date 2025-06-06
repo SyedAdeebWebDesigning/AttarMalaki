@@ -66,7 +66,7 @@ export async function createCheckoutSession() {
 		mode: "payment",
 		line_items: lineItems,
 		customer_email: user.emailAddresses[0]?.emailAddress,
-		success_url: process.env.STRIPE_SUCCESS_URL!,
+		success_url: `${process.env.STRIPE_SUCCESS_URL}?session_id={CHECKOUT_SESSION_ID}`,
 		cancel_url: process.env.STRIPE_CANCEL_URL!,
 		metadata: {
 			userId,
@@ -74,4 +74,36 @@ export async function createCheckoutSession() {
 	});
 
 	return { url: session.url };
+}
+
+export async function validateStripeSessionWithEmail(
+	sessionId: string,
+	userEmail: string
+) {
+	if (!sessionId.startsWith("cs_")) {
+		throw new Error("Invalid session ID");
+	}
+
+	try {
+		const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+		if (session.payment_status !== "paid") {
+			throw new Error("Payment not completed");
+		}
+
+		if (!session.customer_details?.email) {
+			throw new Error("No email found in session");
+		}
+
+		if (
+			session.customer_details.email.toLowerCase() !== userEmail.toLowerCase()
+		) {
+			throw new Error("Email mismatch");
+		}
+
+		return session;
+	} catch (error) {
+		console.error("Stripe session validation failed:", error);
+		throw new Error("Failed to validate session");
+	}
 }

@@ -104,12 +104,13 @@ export function Footer() {
 										height={24}
 									/>
 								</div>
-								<div className="flex items-center justify-start">
+								<div className="flex items-center justify-start ">
 									<Image
-										src={"/svg/paypal.svg"}
-										alt="PayPal"
+										src={"/svg/AmericanExpress.svg"}
+										alt="American Express"
+										className="p-1"
 										width={80}
-										height={24}
+										height={10}
 									/>
 								</div>
 							</div>

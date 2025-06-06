@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import prisma from "@/lib/prisma";
 import { getSelectedAddressId } from "@/lib/actions/address.action";
+import { redirect } from "next/navigation";
 
 export async function POST(req: NextRequest) {
 	const sig = req.headers.get("stripe-signature")!;
@@ -40,7 +41,7 @@ export async function POST(req: NextRequest) {
 		const addressId = result.selectedAddressId;
 
 		// 🧾 Create Order
-		await prisma.order.create({
+		const order = await prisma.order.create({
 			data: {
 				userId,
 				total: session.amount_total! / 100,
@@ -56,7 +57,6 @@ export async function POST(req: NextRequest) {
 			},
 		});
 
-		// 🧹 Clear the bag
 		await prisma.bag.deleteMany({ where: { userId } });
 	}
 
