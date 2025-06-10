@@ -26,9 +26,6 @@ const Banner = ({ tagline }: BannerProps) => {
 				className="object-cover object-center z-0"
 			/>
 
-			{/* Overlay for slight dark tint if needed (optional) */}
-			<div className="absolute inset-0 bg-black/10 z-10" />
-
 			{/* Actual content on top */}
 			<MaxWidthWrapper>
 				<section className="relative z-20 text-gray-600 body-font">
