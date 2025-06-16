@@ -15,7 +15,7 @@ const CheckoutButton = () => {
 		try {
 			const res = await createCheckoutSession();
 			if (res.url) {
-				router.push(res.url);
+				window.location.href = res.url;
 			}
 		} catch (err) {
 			toast.error("Checkout failed!");
