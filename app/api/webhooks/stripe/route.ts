@@ -46,6 +46,7 @@ export async function POST(req: NextRequest) {
 				userId,
 				total: session.amount_total! / 100,
 				addressId: addressId,
+				stripeSession: session.id,
 				items: {
 					create: bagItems.map((item) => ({
 						productId: item.productId,

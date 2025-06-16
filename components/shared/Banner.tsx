@@ -16,18 +16,16 @@ interface BannerProps {
 const Banner = ({ tagline }: BannerProps) => {
 	return (
 		<div className="relative w-full min-h-[93vh] flex items-center justify-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 overflow-hidden">
-			{/* Background image using Next.js <Image /> */}
-			<Image
-				src="/BannerBG.webp"
-				alt="Background"
-				fill
-				priority
-				quality={90}
-				className="object-cover object-center z-0"
-			/>
-
 			{/* Actual content on top */}
 			<MaxWidthWrapper>
+				<Image
+					src="/BannerBG.webp"
+					alt="Background"
+					fill
+					priority
+					quality={90}
+					className="object-cover object-center z-0"
+				/>
 				<section className="relative z-20 text-gray-600 body-font">
 					<div className="container mx-auto flex flex-col-reverse md:flex-row items-center md:py-24 gap-12">
 						{/* Text Section */}
@@ -35,7 +33,7 @@ const Banner = ({ tagline }: BannerProps) => {
 							<div className="relative mx-auto md:mx-0">
 								<Logo className="text-center md:text-left text-4xl text-black" />
 							</div>
-							<p className="text-lg sm:text-3xl lg:text-5xl text-gray-700 mt-6 mb-8">
+							<p className="text-lg sm:text-3xl lg:text-5xl text-gray-700 mb-8">
 								{tagline}
 							</p>
 							<div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
@@ -49,13 +47,13 @@ const Banner = ({ tagline }: BannerProps) => {
 
 						{/* Foreground Hero Image */}
 						<div className="flex-1 flex justify-center">
-							<div className="relative w-[300px] md:w-[500px] lg:w-[500px] xl:w-[700px] aspect-square">
+							<div className="relative w-[400px] md:w-[500px] lg:w-[600px] xl:w-[700px] aspect-square">
 								<Image
-									src="/BannerImage.webp"
+									src="/ProductBanner.webp"
 									alt="Hero Perfume Image"
 									fill
 									priority
-									className="object-cover object-center rounded"
+									className="object-contain object-center rounded"
 								/>
 							</div>
 						</div>

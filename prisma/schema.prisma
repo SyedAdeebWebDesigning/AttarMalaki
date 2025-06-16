@@ -128,13 +128,14 @@ model Bag {
 }
 
 model Order {
-  id        String      @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String      @db.ObjectId
-  user      user        @relation(fields: [userId], references: [id])
-  total     Float
-  addressId String      @db.ObjectId
-  items     OrderItem[]
-  createdAt DateTime    @default(now())
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String      @db.ObjectId
+  user          user        @relation(fields: [userId], references: [id])
+  total         Float
+  addressId     String      @db.ObjectId
+  stripeSession String
+  items         OrderItem[]
+  createdAt     DateTime    @default(now())
 }
 
 model OrderItem {

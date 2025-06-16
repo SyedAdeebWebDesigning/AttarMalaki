@@ -46,7 +46,7 @@ export async function createCheckoutSession() {
 	}));
 
 	// Add shipping fee if total is less than ₹999
-	if (cartTotal < 999) {
+	if (cartTotal < 1000) {
 		lineItems.push({
 			price_data: {
 				currency: "inr",
@@ -66,7 +66,7 @@ export async function createCheckoutSession() {
 		mode: "payment",
 		line_items: lineItems,
 		customer_email: user.emailAddresses[0]?.emailAddress,
-		success_url: `${process.env.STRIPE_SUCCESS_URL}?session_id={CHECKOUT_SESSION_ID}`,
+		success_url: `${process.env.STRIPE_SUCCESS_URL}?session_id`,
 		cancel_url: process.env.STRIPE_CANCEL_URL!,
 		metadata: {
 			userId,
