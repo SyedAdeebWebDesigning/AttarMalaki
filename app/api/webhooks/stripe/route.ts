@@ -26,6 +26,20 @@ export async function POST(req: NextRequest) {
 		const session = event.data.object;
 		const userId = session.metadata.userId;
 
+		// 🧠 STEP 1: Get PaymentIntent
+		const paymentIntentId = session.payment_intent as string;
+		const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+
+		// 🧠 STEP 2: Get PaymentMethod details
+		const paymentMethodId = paymentIntent.payment_method as string;
+		const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodId);
+
+		// 🧠 Extract card details (brand, last4, etc.)
+		const cardInfo = paymentMethod.card;
+		const brand = cardInfo?.brand; // e.g., 'visa'
+		const last4 = cardInfo?.last4; // e.g., '4242'
+		const cardId = paymentMethod.id; // This is the unique payment method ID
+
 		const bagItems = await prisma.bag.findMany({
 			where: { userId },
 			include: { product: true },
@@ -44,9 +58,12 @@ export async function POST(req: NextRequest) {
 		const order = await prisma.order.create({
 			data: {
 				userId,
-				total: session.amount_total! / 100,
+				total: (session.amount_total ?? 0) / 100,
 				addressId: addressId,
 				stripeSession: session.id,
+				paymentMethodId: cardId,
+				cardBrand: brand,
+				cardLast4: last4,
 				items: {
 					create: bagItems.map((item) => ({
 						productId: item.productId,

@@ -107,6 +107,9 @@ export interface Order {
   total: number;
   addressId: string;
   stripeSession: string;
+  paymentMethodId: string;
+  cardBrand: string;
+  cardLast4: string;
   items: OrderItem[];
   createdAt: Date;
 }

@@ -66,7 +66,7 @@ export async function createCheckoutSession() {
 		mode: "payment",
 		line_items: lineItems,
 		customer_email: user.emailAddresses[0]?.emailAddress,
-		success_url: `${process.env.STRIPE_SUCCESS_URL}?session_id`,
+		success_url: `${process.env.STRIPE_SUCCESS_URL}`,
 		cancel_url: process.env.STRIPE_CANCEL_URL!,
 		metadata: {
 			userId,
@@ -87,20 +87,6 @@ export async function validateStripeSessionWithEmail(
 
 	try {
 		const session = await stripe.checkout.sessions.retrieve(sessionId);
-
-		if (session.payment_status !== "paid") {
-			return {
-				success: false,
-				message: "Payment not completed",
-			};
-		}
-
-		if (!session.customer_details?.email) {
-			return {
-				success: false,
-				message: "No email associated with this session",
-			};
-		}
 
 		if (clerkUserId !== session.metadata.clerkUserId) {
 			return {
