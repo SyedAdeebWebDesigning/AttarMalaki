@@ -1,5 +1,5 @@
 import MaxWidthWrapper from "@/components/shared/MaxWidthWrapper";
-import PaymentInfoCard from "@/components/shared/PaymentInfoCard";
+import PaymentCard from "@/components/shared/PaymentCard";
 import { getAddressById } from "@/lib/actions/address.action";
 import { getOrderById, getPaymentInfoById } from "@/lib/actions/orders/order";
 import { formatCurrency, formatSize } from "@/lib/utils";
@@ -18,6 +18,15 @@ const page = async ({ params }) => {
 	const addressId = order.addressId;
 	const address = (await getAddressById(addressId)).address as Address;
 	const paymentInfo = (await getPaymentInfoById(order.paymentMethodId)) as any;
+
+	const number = `**** **** **** ${paymentInfo.payment.card.last4}`;
+	const name = paymentInfo.payment.billing_details?.name || "Unknown";
+	const expire = `${paymentInfo.payment.card.exp_month
+		.toString()
+		.padStart(2, "0")}/${paymentInfo.payment.card.exp_year
+		.toString()
+		.slice(-2)}`;
+	const type = paymentInfo.payment.card.brand;
 
 	return (
 		<section className="pt-24 pb-8 bg-neutral-50">
@@ -41,7 +50,7 @@ const page = async ({ params }) => {
 											{item.product.name}
 										</span>
 										<span className="text-xs text-gray-500">
-											Size: {formatSize(item.size)} × {item.quantity}
+											Size: {formatSize(item.size)} x {item.quantity}
 										</span>
 									</div>
 									<div className="ml-auto font-semibold text-sm">
@@ -89,18 +98,14 @@ const page = async ({ params }) => {
 					{/* 💳 Payment Info */}
 					<div className="p-4 border rounded-xl shadow-sm bg-white flex flex-col justify-start items-start gap-4 h-full w-full">
 						<h2 className="text-lg font-semibold">Payment Information</h2>
-						<PaymentInfoCard
-							cardLast4={order.cardLast4}
-							cardHolderName={
-								paymentInfo.payment.billing_details?.name || "Unknown"
-							}
-							cardExpiry={`${paymentInfo.payment.card.exp_month
-								.toString()
-								.padStart(2, "0")}${paymentInfo.payment.card.exp_year
-								.toString()
-								.slice(-2)}`}
-							cardBrand={paymentInfo.payment.card.brand}
-						/>
+						<div className="p-4 border rounded-xl shadow-sm bg-white flex flex-col justify-start items-start gap-4 h-full w-full">
+							<PaymentCard
+								number={number}
+								expire={expire}
+								name={name}
+								type={type}
+							/>
+						</div>
 					</div>
 				</div>
 			</MaxWidthWrapper>
