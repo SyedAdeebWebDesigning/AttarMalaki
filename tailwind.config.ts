@@ -28,6 +28,7 @@ module.exports = {
 			fontFamily: {
 				sans: ["var(--font-sans)", ...fontFamily.sans],
 				mono: ["var(--font-mono)", ...fontFamily.mono],
+				credit: ['"VT323"', "monospace"],
 			},
 			borderRadius: {
 				sm: "var(--radius-sm)",

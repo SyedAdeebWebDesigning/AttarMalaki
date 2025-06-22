@@ -12,7 +12,7 @@ interface PaymentCardProps {
 }
 
 const cardStyles = {
-	visa: "bg-gradient-to-r from-blue-600 to-blue-800",
+	visa: "bg-gradient-to-r from-[#3192d1] to-[#3192d1]",
 	mastercard:
 		"bg-gradient-to-r from-neutral-700 via-neutral-500 to-neutral-700",
 	amex: "bg-gradient-to-r from-teal-500 to-cyan-600",
@@ -20,10 +20,10 @@ const cardStyles = {
 };
 
 const logoIcons = {
-	visa: <RiVisaLine size={70} className="object-cover" />,
-	mastercard: <RiMastercardFill size={70} />,
-	amex: <GrAmex size={70} />,
-	default: <FaRegCreditCard size={70} />,
+	visa: <RiVisaLine size={90} className="object-cover" />,
+	mastercard: <RiMastercardFill size={90} />,
+	amex: <GrAmex size={90} />,
+	default: <FaRegCreditCard size={90} />,
 };
 
 const PaymentCard = ({ number, expire, name, type }: PaymentCardProps) => {
@@ -39,24 +39,32 @@ const PaymentCard = ({ number, expire, name, type }: PaymentCardProps) => {
 			)}>
 			{/* Top Row: SIM & Logo */}
 			<div className="flex justify-between items-center">
-				<div className="w-[4rem] h-[2.5rem] bg-yellow-400 rounded-sm shadow-inner" />
+				<div className="w-[5rem] h-[3.5rem] bg-gradient-to-br from-yellow-300 to-yellow-600 rounded-sm shadow-inner border border-yellow-700 relative overflow-hidden">
+					<div className="absolute inset-0 grid grid-cols-2 grid-rows-2 gap-[2px] p-[2px]">
+						<div className="bg-yellow-100/50 rounded-sm" />
+						<div className="bg-yellow-100/50 rounded-sm" />
+						<div className="bg-yellow-100/50 rounded-sm" />
+						<div className="bg-yellow-100/50 rounded-sm" />
+					</div>
+				</div>
+
 				<div>{Logo}</div>
 			</div>
 
 			{/* Card Number */}
-			<div className="font-mono text-[1.5rem] min-[771px]:text-[1rem] sm:text-[1.8rem] tracking-widest">
+			<div className="font-credit text-[1.5rem] tracking-[0.5rem]">
 				{formattedNumber}
 			</div>
 
 			{/* Card Footer */}
-			<div className="flex justify-between items-end text-sm font-medium">
+			<div className="flex justify-between items-end text-base font-credit">
 				<div>
-					<p className="text-gray-200 text-lg">Card Holder</p>
-					<p className="text-gray-200 text-lg">{name}</p>
+					<p className="text-gray-300">Card Holder</p>
+					<p>{name}</p>
 				</div>
 				<div>
-					<p className="text-gray-200 text-lg">Valid Thru</p>
-					<p className="text-gray-200 text-lg">{expire}</p>
+					<p className="text-gray-300">Valid Thru</p>
+					<p>{expire}</p>
 				</div>
 			</div>
 		</div>
