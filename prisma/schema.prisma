@@ -128,18 +128,18 @@ model Bag {
 }
 
 model Order {
-  id              String @id @default(auto()) @map("_id") @db.ObjectId
-  userId          String @db.ObjectId
-  user            user   @relation(fields: [userId], references: [id])
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String      @db.ObjectId
+  user            user        @relation(fields: [userId], references: [id])
   total           Float
-  addressId       String @db.ObjectId
+  addressId       String      @db.ObjectId
   stripeSession   String
   paymentMethodId String
   cardBrand       String
   cardLast4       String
-
-  items     OrderItem[]
-  createdAt DateTime    @default(now())
+  deliveredStatus String      @default("PLACED") // PLACED, SHIPPED, DELIVERED, CANCELLED
+  items           OrderItem[]
+  createdAt       DateTime    @default(now())
 }
 
 model OrderItem {

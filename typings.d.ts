@@ -110,6 +110,7 @@ export interface Order {
   paymentMethodId: string;
   cardBrand: string;
   cardLast4: string;
+  deliveredStatus: string;
   items: OrderItem[];
   createdAt: Date;
 }
