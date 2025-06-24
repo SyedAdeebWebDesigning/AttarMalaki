@@ -2,8 +2,10 @@ import MaxWidthWrapper from "@/components/shared/MaxWidthWrapper";
 import PaymentCard from "@/components/shared/PaymentCard";
 import { getAddressById } from "@/lib/actions/address.action";
 import { getOrderById, getPaymentInfoById } from "@/lib/actions/orders/order";
+import { getUserByClerkId } from "@/lib/actions/user/getUserByClerkId";
 import { formatCurrency, formatSize } from "@/lib/utils";
-import { Address, Order } from "@/typings";
+import { Address, Order, user } from "@/typings";
+import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 
 const page = async ({ params }) => {
@@ -28,13 +30,16 @@ const page = async ({ params }) => {
 		.slice(-2)}`;
 	const type = paymentInfo.payment.card.brand;
 
+	const _ = await currentUser();
+	const user = (await getUserByClerkId(_.id)) as user;
 	return (
 		<section className="pt-24 pb-8 bg-neutral-50">
 			<MaxWidthWrapper>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto ">
 					{/* 🛒 Order Items */}
-					<div className="p-4 border rounded-xl shadow-sm bg-white flex flex-col h-full">
+					<div className="p-4    flex flex-col h-full">
 						<h2 className="text-lg font-semibold mb-2">Order Items</h2>
+						<div className="border-b bg-gray-500 w-full mb-2" />
 						<ul className="space-y-4 pr-2 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-400 scrollbar-track-transparent">
 							{order.items.map((item, idx) => (
 								<li key={idx} className="flex gap-4 items-center">
@@ -43,7 +48,7 @@ const page = async ({ params }) => {
 										height={64}
 										src={item.product.image}
 										alt={item.product.name}
-										className="w-16 h-16 rounded object-cover border"
+										className="w-16 h-16 rounded object-cover "
 									/>
 									<div className="flex flex-col">
 										<span className="font-medium text-sm">
@@ -62,8 +67,10 @@ const page = async ({ params }) => {
 					</div>
 
 					{/* 📦 Order Summary */}
-					<div className="p-4 border rounded-xl shadow-sm bg-white flex flex-col justify-between h-full">
+					<div className="p-4    flex flex-col justify-between h-full">
 						<h2 className="text-lg font-semibold mb-2">Order Summary</h2>
+						<div className="border-b bg-gray-500 w-full mb-2" />
+
 						<div className="text-sm text-gray-700 space-y-1">
 							<p>
 								Order ID: <span className="font-mono">{order.id}</span>
@@ -84,21 +91,34 @@ const page = async ({ params }) => {
 					</div>
 
 					{/* 🏠 Shipping Address */}
-					<div className="p-4 border rounded-xl shadow-sm bg-white flex flex-col justify-start h-full">
+					<div className="p-4 rounded-xl  flex flex-col justify-start h-full">
 						<h2 className="text-lg font-semibold mb-2">Shipping Address</h2>
+						<div className="border-t bg-gray-500" />
 						<p className="text-sm text-gray-700 leading-relaxed">
 							{address.label} Address
 							<br />
-							{address.street}, {address.city}, {address.state}
+							Street: {address.street}
 							<br />
-							{address.country} - {address.zipCode}
+							City: {address.city}
+							<br />
+							State: {address.state}
+							<br />
+							Country / Zipcode: {address.country} / {address.zipCode}
+						</p>
+						<h2 className="text-lg font-semibold mt-4">User Details</h2>
+						<div className="border-t bg-gray-500" />
+						<p className="text-sm text-gray-700 leading-relaxed">
+							Name: {user.firstName} {user.lastName}
+							<br />
+							Email: {user.email || "Not provided"}
 						</p>
 					</div>
 
 					{/* 💳 Payment Info */}
-					<div className="p-4 border rounded-xl shadow-sm bg-white flex flex-col justify-start items-start gap-4 h-full w-full">
-						<h2 className="text-lg font-semibold">Payment Information</h2>
-						<div className="p-4 rounded-[32px] bg-white flex flex-col justify-start items-start gap-4 h-full w-full">
+					<div className="p-4 flex flex-col justify-start items-start gap-4 h-full w-full">
+						<h2 className="text-lg font-semibold ">Payment Information</h2>
+						<div className="border-b bg-gray-500 w-full" />
+						<div className="p-4 rounded-[32px]  flex flex-col justify-start items-start gap-4 h-full w-full">
 							<PaymentCard
 								number={number}
 								expire={expire}

@@ -37,14 +37,24 @@ const PaymentCard = ({ number, expire, name, type }: PaymentCardProps) => {
 	const bgClass = cardStyles[type] || cardStyles.default;
 	const Logo = logoIcons[type] || logoIcons.default;
 
+	const ringColor =
+		type === "visa"
+			? "ring-[#3192d1]"
+			: type === "mastercard"
+			? "ring-neutral-700"
+			: type === "amex"
+			? "ring-teal-500"
+			: "ring-gray-500";
+
 	return (
 		<div
 			className={clsx(
-				"w-full h-64 rounded-2xl p-5 shadow-2xl relative overflow-hidden flex flex-col justify-between backdrop-blur-2xl",
+				"w-full h-64 rounded-2xl p-5 shadow-2xl relative overflow-hidden flex flex-col justify-between group hover:scale-95 transition-transform duration-300 ease-in-out hover:ring-4 hover:ring-offset-4",
 				bgClass,
 				type === "amex"
 					? "text-black text-shadow-white"
-					: "text-white text-shadow-black"
+					: "text-white text-shadow-black",
+				ringColor
 			)}
 			style={{
 				backgroundImage: type === "default" ? "" : `url(${cardImages[type]})`,
@@ -73,12 +83,13 @@ const PaymentCard = ({ number, expire, name, type }: PaymentCardProps) => {
 			{/* Card Footer */}
 			<div className="flex justify-between items-end text-lg font-credit">
 				<div>
-					<p>{name}</p>
+					<p className="uppercase tracking-widest">{name}</p>
 				</div>
 				<div>
-					<p className="mr-[12px]">{expire}</p>
+					<p className="mr-[12px] uppercase tracking-widest">{expire}</p>
 				</div>
 			</div>
+			<div className="absolute w-10 h-full -left-20 top-0 bg-white/10 overflow-hidden group-hover:left-[120%] transition-all duration-300 ease-in-out skew-x-[12deg] " />
 		</div>
 	);
 };
