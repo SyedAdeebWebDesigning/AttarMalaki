@@ -19,11 +19,17 @@ const cardStyles = {
 	default: "bg-gradient-to-r from-gray-500 to-gray-700",
 };
 
+const cardImages = {
+	visa: "/cards/visa.webp",
+	mastercard: "/cards/mastercard.webp",
+	amex: "/cards/amex.webp",
+};
+
 const logoIcons = {
-	visa: <RiVisaLine size={90} className="object-cover" />,
-	mastercard: <RiMastercardFill size={90} />,
-	amex: <GrAmex size={90} />,
-	default: <FaRegCreditCard size={90} />,
+	visa: <RiVisaLine size={100} className="object-cover" />,
+	mastercard: <RiMastercardFill size={100} />,
+	amex: <GrAmex size={100} className="text-black" />,
+	default: <FaRegCreditCard size={60} />,
 };
 
 const PaymentCard = ({ number, expire, name, type }: PaymentCardProps) => {
@@ -34,9 +40,17 @@ const PaymentCard = ({ number, expire, name, type }: PaymentCardProps) => {
 	return (
 		<div
 			className={clsx(
-				"w-full h-64 rounded-2xl p-5 shadow-lg text-white relative overflow-hidden flex flex-col justify-between",
-				bgClass
-			)}>
+				"w-full h-64 rounded-2xl p-5 shadow-2xl relative overflow-hidden flex flex-col justify-between backdrop-blur-2xl",
+				bgClass,
+				type === "amex"
+					? "text-black text-shadow-white"
+					: "text-white text-shadow-black"
+			)}
+			style={{
+				backgroundImage: type === "default" ? "" : `url(${cardImages[type]})`,
+				backgroundSize: "cover",
+				backgroundPosition: "center",
+			}}>
 			{/* Top Row: SIM & Logo */}
 			<div className="flex justify-between items-center">
 				<div className="w-[5rem] h-[3.5rem] bg-gradient-to-br from-yellow-300 to-yellow-600 rounded-sm shadow-inner border border-yellow-700 relative overflow-hidden">
@@ -52,19 +66,17 @@ const PaymentCard = ({ number, expire, name, type }: PaymentCardProps) => {
 			</div>
 
 			{/* Card Number */}
-			<div className="font-credit text-[1.5rem] tracking-[0.5rem]">
+			<div className="font-credit text-[1.8rem] tracking-[8.8px] font-semibold">
 				{formattedNumber}
 			</div>
 
 			{/* Card Footer */}
-			<div className="flex justify-between items-end text-base font-credit">
+			<div className="flex justify-between items-end text-lg font-credit">
 				<div>
-					<p className="text-gray-300">Card Holder</p>
 					<p>{name}</p>
 				</div>
 				<div>
-					<p className="text-gray-300">Valid Thru</p>
-					<p>{expire}</p>
+					<p className="mr-[12px]">{expire}</p>
 				</div>
 			</div>
 		</div>

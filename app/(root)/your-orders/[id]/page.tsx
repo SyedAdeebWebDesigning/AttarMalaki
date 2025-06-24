@@ -98,7 +98,7 @@ const page = async ({ params }) => {
 					{/* 💳 Payment Info */}
 					<div className="p-4 border rounded-xl shadow-sm bg-white flex flex-col justify-start items-start gap-4 h-full w-full">
 						<h2 className="text-lg font-semibold">Payment Information</h2>
-						<div className="p-4 border rounded-xl shadow-sm bg-white flex flex-col justify-start items-start gap-4 h-full w-full">
+						<div className="p-4 rounded-[32px] bg-white flex flex-col justify-start items-start gap-4 h-full w-full">
 							<PaymentCard
 								number={number}
 								expire={expire}
