@@ -186,3 +186,47 @@ export const getTotalProductsCount = async (): Promise<number> => {
 		return 0;
 	}
 };
+
+export const getRelativeProducts = async (
+	category: string,
+	id: string
+): Promise<Product[]> => {
+	try {
+		const keywords = category
+			.split(" ")
+			.map((word) => word.trim())
+			.filter((word) => word.length > 0);
+
+		const products = await prisma.product.findMany({
+			where: {
+				AND: [
+					{
+						id: {
+							not: id, // Exclude the current product
+						},
+					},
+					{
+						OR: keywords.map((keyword) => ({
+							category: {
+								contains: keyword,
+								mode: "insensitive", // So "oud" matches "Oud"
+							},
+						})),
+					},
+				],
+			},
+			include: {
+				quantities: true, // Include stock info
+			},
+			take: 4,
+			orderBy: {
+				createdAt: "desc",
+			},
+		});
+
+		return products;
+	} catch (error) {
+		console.error("Error fetching related products:", error);
+		return [];
+	}
+};

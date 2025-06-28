@@ -83,19 +83,24 @@ export function ProductDetails({ product, userId }: Props) {
 
 						{/* Variant Buttons */}
 						<div className="my-6 flex flex-wrap gap-3">
-							{product.quantities.map((quantity) => (
-								<Button
-									key={quantity.id}
-									onClick={() => handleVariantClick(quantity)}
-									variant="outline"
-									className={
-										selectedQuantity.id === quantity.id
-											? "border-[#D12A5C] text-[#D12A5C] bg-[#FFF1F4]"
-											: ""
-									}>
-									{sizeLabels[quantity.size]}
-								</Button>
-							))}
+							{[...product.quantities]
+								.sort(
+									(a, b) =>
+										parseInt(sizeLabels[a.size]) - parseInt(sizeLabels[b.size])
+								)
+								.map((quantity) => (
+									<Button
+										key={quantity.id}
+										onClick={() => handleVariantClick(quantity)}
+										variant="outline"
+										className={
+											selectedQuantity.id === quantity.id
+												? "border-[#D12A5C] text-[#D12A5C] bg-[#FFF1F4]"
+												: ""
+										}>
+										{sizeLabels[quantity.size]}
+									</Button>
+								))}
 						</div>
 
 						{/* Price and Stock */}
