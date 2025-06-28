@@ -49,7 +49,7 @@ const PaymentCard = ({ number, expire, name, type }: PaymentCardProps) => {
 	return (
 		<div
 			className={clsx(
-				"w-full h-64 rounded-2xl p-5 shadow-2xl relative overflow-hidden flex flex-col justify-between group hover:scale-95 transition-transform duration-300 ease-in-out hover:ring-4 hover:ring-offset-4",
+				"w-full h-64 rounded-2xl p-5 shadow-2xl relative overflow-hidden flex flex-col justify-between group hover:scale-105 transition-transform duration-300 ease-in-out hover:ring-4 hover:ring-offset-4",
 				bgClass,
 				type === "amex"
 					? "text-black text-shadow-white"
