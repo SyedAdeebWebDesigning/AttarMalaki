@@ -12,6 +12,10 @@ export const getBestSellers = async (): Promise<Product[]> => {
 			where: {
 				isBestSeller: true,
 			},
+			orderBy: {
+				createdAt: "desc",
+			},
+			take: 6, // Limit to 6 best sellers
 			include: {
 				quantities: true,
 			},
