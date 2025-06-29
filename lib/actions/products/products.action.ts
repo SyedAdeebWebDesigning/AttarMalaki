@@ -7,13 +7,25 @@ import { Prisma, Product, Size } from "@prisma/client";
  * Fetches all products from the database.
  * @returns {Promise<Product[]>} An array of product objects.
  */
-export const getProducts = async (page: number = 1): Promise<Product[]> => {
-	const perPage = 6;
-	const skip = (page - 1) * perPage;
+export const getProducts = async (
+	page: number = 1,
+	category?: string
+): Promise<Product[]> => {
 	try {
+		const perPage = 6;
+		const skip = (page - 1) * perPage;
+
 		const products = await prisma.product.findMany({
-			skip,
-			take: perPage,
+			skip: category ? undefined : skip, // Only paginate if no category
+			take: category ? undefined : perPage,
+			where: category
+				? {
+						category: {
+							contains: category,
+							mode: "insensitive",
+						},
+				  }
+				: {},
 			include: {
 				quantities: true,
 			},
@@ -22,11 +34,11 @@ export const getProducts = async (page: number = 1): Promise<Product[]> => {
 			},
 		});
 
-		if (!products) {
-			return [];
-		}
-		return products;
-	} catch (error) {}
+		return products || [];
+	} catch (error) {
+		console.error("Error fetching products:", error);
+		return [];
+	}
 };
 
 export const getAllProducts = async (): Promise<Product[]> => {

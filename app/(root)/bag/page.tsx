@@ -36,7 +36,7 @@ const page = async () => {
 						className="mt-4 font-semibold shadow-md hover:bg-white hover:shadow-lg text-md"
 						variant="outline"
 						size="lg">
-						<Link href={"/products?page=1"}>Explore Products</Link>
+						<Link href={"/products?page=1&category="}>Explore Products</Link>
 					</Button>
 				</div>
 			</section>

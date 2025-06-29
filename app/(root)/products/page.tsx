@@ -7,7 +7,7 @@ import { Product } from "@/typings";
 import { redirect } from "next/navigation";
 
 type PageProps = {
-	searchParams?: { page?: string };
+	searchParams?: { page?: string; category?: string };
 };
 
 const Page = async ({ searchParams }: PageProps) => {
@@ -15,16 +15,23 @@ const Page = async ({ searchParams }: PageProps) => {
 	const pageNumber = Number(pageParam);
 
 	if (isNaN(pageNumber) || pageNumber < 1 || !searchParams?.page) {
-		redirect("/products?page=1");
+		redirect("/products?page=1&category=");
 	}
 
 	const totalProducts = await getTotalProductsCount();
 
-	const products = (await getProducts(pageNumber)) as Product[];
+	const products = (await getProducts(
+		pageNumber,
+		searchParams.category
+	)) as Product[];
 
 	return (
 		<section className="pt-20">
-			<Products products={products} totalProducts={totalProducts} />
+			<Products
+				products={products}
+				totalProducts={totalProducts}
+				category={searchParams.category}
+			/>
 		</section>
 	);
 };

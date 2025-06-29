@@ -13,7 +13,7 @@ const categories = [
 		subtitle: "Explore deep, woody aromas",
 		icon: "/categories/icons/oudh.png",
 		bg: "/categories/background/oudh.png",
-		href: "/products?page=1&category=oudh",
+		href: "/products?page=1&category=oud",
 	},
 	{
 		name: "Musk",

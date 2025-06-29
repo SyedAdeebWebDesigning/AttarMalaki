@@ -33,7 +33,7 @@ const navLinks = [
 	},
 	{
 		name: "Products",
-		href: "/products?page=1",
+		href: "/products?page=1&category=",
 		icon: <LucideLeaf className="mr-1.5 text-2xl size-6" />,
 		hasSpanText: false,
 	},

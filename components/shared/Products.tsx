@@ -19,15 +19,16 @@ import { redirect, useSearchParams } from "next/navigation";
 type Props = {
 	products: Product[];
 	totalProducts: number;
+	category?: string;
 };
 
-const Products = ({ products, totalProducts }: Props) => {
+const Products = ({ products, totalProducts, category }: Props) => {
 	const searchParams = useSearchParams();
 	const pageNumber = Number(searchParams.get("page")) || 1;
 	const totalPages = Math.ceil(totalProducts / 6);
 
 	if (pageNumber > totalPages) {
-		redirect(`/products?page=${totalPages}`);
+		redirect(`/products?page=${totalPages}&category=`);
 	}
 
 	return (
@@ -71,39 +72,45 @@ const Products = ({ products, totalProducts }: Props) => {
 					</div>
 				</div>
 				{/* Pagination */}
-				<Pagination className="mt-10">
-					<PaginationContent>
-						<PaginationItem>
-							<PaginationPrevious href={`/products?page=${pageNumber - 1}`} />
-						</PaginationItem>
-						{Array.from({ length: totalPages }, (_, index) => (
-							<PaginationItem key={index}>
+				{!category && (
+					<Pagination className="mt-10">
+						<PaginationContent>
+							<PaginationItem>
+								<PaginationPrevious
+									href={`/products?page=${pageNumber - 1}&category=`}
+								/>
+							</PaginationItem>
+							{Array.from({ length: totalPages }, (_, index) => (
+								<PaginationItem key={index}>
+									<PaginationLink
+										href={`/products?page=${index + 1}&category=`}
+										className={`${
+											pageNumber === index + 1
+												? "bg-neutral-200 text-black"
+												: "text-gray-700 hover:bg-gray-100"
+										} px-3 py-2 rounded-md`}>
+										{index + 1}
+									</PaginationLink>
+								</PaginationItem>
+							))}
+							<PaginationItem>
+								<PaginationEllipsis />
+							</PaginationItem>
+							<PaginationItem>
 								<PaginationLink
-									href={`/products?page=${index + 1}`}
-									className={`${
-										pageNumber === index + 1
-											? "bg-neutral-200 text-black"
-											: "text-gray-700 hover:bg-gray-100"
-									} px-3 py-2 rounded-md`}>
-									{index + 1}
+									href={`/products?page=${totalPages}&category=`}
+									className="px-3 py-2 rounded-md">
+									{totalPages}
 								</PaginationLink>
 							</PaginationItem>
-						))}
-						<PaginationItem>
-							<PaginationEllipsis />
-						</PaginationItem>
-						<PaginationItem>
-							<PaginationLink
-								href={`/products?page=${totalPages}`}
-								className="px-3 py-2 rounded-md">
-								{totalPages}
-							</PaginationLink>
-						</PaginationItem>
-						<PaginationItem>
-							<PaginationNext href={`/products?page=${pageNumber + 1}`} />
-						</PaginationItem>
-					</PaginationContent>
-				</Pagination>
+							<PaginationItem>
+								<PaginationNext
+									href={`/products?page=${pageNumber + 1}&category=`}
+								/>
+							</PaginationItem>
+						</PaginationContent>
+					</Pagination>
+				)}
 			</MaxWidthWrapper>
 		</section>
 	);
