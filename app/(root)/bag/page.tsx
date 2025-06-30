@@ -16,9 +16,8 @@ const page = async () => {
 	const clerkUser = await currentUser();
 	const userId = clerkUser.id;
 	const user = (await getUserByClerkId(userId)) as user;
-	const bag = await getUserBag(user.id);
 
-	console.log("User Bag:", bag);
+	const bag = await getUserBag(user.id);
 
 	if (!bag || bag.length === 0) {
 		return (

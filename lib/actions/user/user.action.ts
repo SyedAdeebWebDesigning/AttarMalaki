@@ -44,6 +44,8 @@ export const createUser = async (UserData: CreateUserProps) => {
 				email: UserData.email,
 				isAdmin: UserData.isAdmin,
 				imgUrl: UserData.imgUrl,
+				hasCompletedAddresses: false, // Default value
+
 			},
 		});
 	} catch (error) {

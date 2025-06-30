@@ -36,7 +36,9 @@ export function Footer() {
 									</Link>
 								</li>
 								<li>
-									<Link href="/products" className="hover:text-slate-900">
+									<Link
+										href="/products?page=1&category="
+										className="hover:text-slate-900">
 										Products
 									</Link>
 								</li>
