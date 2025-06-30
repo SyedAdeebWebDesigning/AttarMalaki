@@ -30,6 +30,18 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	if (process.env.IS_COMPROMISED === "true") {
+		return (
+			<div className="text-red-500 text-center min-h-screen items-center justify-center flex flex-col">
+				<h1 className="text-2xl font-bold">Security Alert</h1>
+				<p className="mt-4">
+					This application has been compromised. Please contact support
+					immediately.
+				</p>
+			</div>
+		);
+	}
+
 	return (
 		<ClerkProvider
 			appearance={{
