@@ -242,3 +242,62 @@ export const getRelativeProducts = async (
 		return [];
 	}
 };
+
+export const getProductReviews = async (productId: string) => {
+	try {
+		const reviews = await prisma.review.findMany({
+			where: { productId },
+			orderBy: { createdAt: "desc" },
+			select: {
+				user: {
+					select: {
+						id: true,
+						firstName: true,
+						lastName: true,
+						email: true,
+						imgUrl: true,
+					},
+				},
+				rating: true,
+				comment: true,
+				createdAt: true,
+			},
+		});
+
+		if (!reviews) {
+			return [];
+		}
+
+		return reviews;
+	} catch (error) {
+		console.error("Error fetching product reviews:", error);
+		return [];
+	}
+};
+
+export const addProductReview = async (
+	userId: string,
+	productId: string,
+	comment: string,
+	rating: number
+) => {
+	try {
+		const review = await prisma.review.create({
+			data: {
+				userId,
+				productId,
+				comment,
+				rating,
+			},
+		});
+		return {
+			success: true,
+			review,
+		};
+	} catch (error) {
+		return {
+			success: false,
+			error: "Failed to add review",
+		};
+	}
+};

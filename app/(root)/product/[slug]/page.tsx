@@ -3,9 +3,14 @@ import MaxWidthWrapper from "@/components/shared/MaxWidthWrapper";
 import ProductCard from "@/components/shared/Product";
 import { ProductDetails } from "@/components/shared/ProductDetails";
 import ReviewBar from "@/components/shared/ReviewBar";
+import ReviewForm from "@/components/shared/ReviewForm";
+import ReviewList from "@/components/shared/ReviewList";
 import { Separator } from "@/components/ui/separator";
 import { getProductBySlug } from "@/lib/actions/products/getProductBySlug";
-import { getRelativeProducts } from "@/lib/actions/products/products.action";
+import {
+	getProductReviews,
+	getRelativeProducts,
+} from "@/lib/actions/products/products.action";
 import { getUserByClerkId } from "@/lib/actions/user/getUserByClerkId";
 import { Product, user } from "@/typings";
 import { currentUser } from "@clerk/nextjs/server";
@@ -24,6 +29,7 @@ const Page = async ({ params }: PageProps) => {
 	const userClerkId = _?.id;
 	const user = (await getUserByClerkId(userClerkId)) as user;
 	const userId = user?.id;
+	const productId = product?.id;
 	if (!user) {
 		return <div>Please sign in to view product details.</div>;
 	}
@@ -33,6 +39,8 @@ const Page = async ({ params }: PageProps) => {
 		product.category,
 		product.id
 	)) as Product[];
+
+	const productReviews = (await getProductReviews(productId)) as any;
 
 	return (
 		<MaxWidthWrapper>
@@ -76,10 +84,16 @@ const Page = async ({ params }: PageProps) => {
 			<section className="py-10">
 				<div>
 					<Heading className="my-10 mx-0">Product Reviews</Heading>
-					<ReviewBar />
+					<ReviewBar reviews={productReviews} />
 				</div>
 				<div className="w-full flex items-center justify-center"></div>
+				<div className="flex flex-col sm:flex-row items-start justify-start gap-5">
+					<ReviewForm userId={userId} productId={productId} />
+					<ReviewList productId={productId} />
+				</div>
 			</section>
+
+			{/* Review Form */}
 		</MaxWidthWrapper>
 	);
 };

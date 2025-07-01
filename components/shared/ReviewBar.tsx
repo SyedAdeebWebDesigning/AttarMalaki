@@ -3,38 +3,46 @@
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { Progress } from "../ui/progress";
 import { AnimatedCircularProgressBar } from "../ui/animated-circular-progress-bar";
+import { Review } from "@/typings";
 
-const ReviewBar = () => {
-	const reviews = [
-		{ rating: 5, count: 45 },
-		{ rating: 4, count: 15 },
-		{ rating: 3, count: 20 },
-		{ rating: 2, count: 2 },
-		{ rating: 1, count: 5 },
-	];
+const ReviewBar = ({ reviews }: { reviews: Review[] }) => {
+	// Group reviews by rating
+	const getReviewCounts = (reviews: Review[]) => {
+		const reviewCount = [
+			{ rating: 5, count: 0 },
+			{ rating: 4, count: 0 },
+			{ rating: 3, count: 0 },
+			{ rating: 2, count: 0 },
+			{ rating: 1, count: 0 },
+		];
 
-	const totalReviews = reviews.reduce((acc, review) => acc + review.count, 0);
-	const calculatePercentage = (rating: number) => {
-		const count =
-			reviews.find((review) => review.rating === rating)?.count || 0;
-		return totalReviews > 0 ? (count / totalReviews) * 100 : 0;
+		reviews.forEach((review) => {
+			const found = reviewCount.find((r) => r.rating === review.rating);
+			if (found) found.count += 1;
+		});
+
+		return reviewCount;
 	};
 
-	// Calculate the average rating
-	const averageRating =
-		(
-			reviews.reduce((acc, review) => acc + review.rating * review.count, 0) /
-			totalReviews
-		).toFixed(1) || 0;
+	const reviewSummary = getReviewCounts(reviews);
+
+	const totalReviews = reviewSummary.reduce((acc, r) => acc + r.count, 0);
+
+	const calculatePercentage = (count: number) =>
+		totalReviews > 0 ? (count / totalReviews) * 100 : 0;
+
+	const averageRating = (
+		reviews.reduce((acc, review) => acc + review.rating, 0) / totalReviews
+	).toFixed(1);
 
 	return (
-		<div className="flex flex-col sm:flex-row items-start justify-between mb-6 border-dashed border-2 rounded-xl p-10">
-			{/* Review Rating Left */}
+		<div className="flex flex-col sm:flex-row items-start justify-between mb-4 border-dashed border-2 rounded-xl p-10">
+			{/* Left: Circular rating */}
 			<div className="flex items-start justify-start w-1/2">
 				<AnimatedCircularProgressBar
 					max={5}
 					min={0}
-					value={Number(averageRating)}
+					value={Number(averageRating) || 0}
 					gaugePrimaryColor="rgb(255 164 57)"
 					gaugeSecondaryColor="rgba(0, 0, 0, 0.1)"
 				/>
@@ -45,21 +53,18 @@ const ReviewBar = () => {
 					</div>
 				</div>
 			</div>
-			{/* Review Rating Right */}
+
+			{/* Right: Review breakdown bars */}
 			<div className="w-full flex items-center sm:items-end flex-col gap-5 mt-10 sm:mt-0 pr-10">
-				{reviews.map((review) => (
+				{reviewSummary.map(({ rating, count }) => (
 					<div
 						className="flex justify-center w-full items-center sm:justify-end relative"
-						key={review.rating}>
+						key={rating}>
 						<span className="text-xl text-gray-500 mr-2 flex items-center">
-							{review.rating} <FaStar className="ml-2 size-5 text-[#FFA439]" />
+							{rating} <FaStar className="ml-2 size-5 text-[#FFA439]" />
 						</span>
-						<Progress
-							value={calculatePercentage(review.rating)}
-							className="sm:w-3/5"
-							barClassName=""
-						/>
-						<p className="text-xl w-0 ml-2">{review.count}</p>
+						<Progress value={calculatePercentage(count)} className="sm:w-3/5" />
+						<p className="text-xl w-0 ml-2">{count}</p>
 					</div>
 				))}
 			</div>
@@ -69,10 +74,11 @@ const ReviewBar = () => {
 
 export default ReviewBar;
 
+// Star rendering component
 export const StarRating = ({ rating }: { rating: number }) => {
-	const fullStars = Math.floor(rating); // 4
-	const hasHalfStar = rating % 1 >= 0.25 && rating % 1 < 0.75; // true if between .25 and .75
-	const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0); // fill remaining stars
+	const fullStars = Math.floor(rating);
+	const hasHalfStar = rating % 1 >= 0.25 && rating % 1 < 0.75;
+	const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 
 	const stars = [];
 
