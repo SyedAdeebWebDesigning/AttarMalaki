@@ -50,9 +50,11 @@ const ReviewList = async ({ productId }: ReviewListProps) => {
 										)}
 									</span>
 								</div>
-								<p className="text-gray-600 mb-1">{review.comment}</p>
+								<p className="text-gray-600 mb-1 line-clamp-2">
+									{review.comment}
+								</p>
 								<span className="text-sm text-gray-400">
-									{new Date(review.createdAt).toLocaleDateString()}
+									{new Date(review.createdAt).toLocaleDateString("en-IN")}
 								</span>
 							</div>
 						))}
