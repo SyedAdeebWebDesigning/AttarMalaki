@@ -25,7 +25,7 @@ type Props = {
 const Products = ({ products, totalProducts, category }: Props) => {
 	const searchParams = useSearchParams();
 	const pageNumber = Number(searchParams.get("page")) || 1;
-	const totalPages = Math.ceil(totalProducts / 6);
+	const totalPages = Math.ceil(totalProducts / 9);
 
 	if (pageNumber > totalPages) {
 		redirect(`/products?page=${totalPages}&category=`);

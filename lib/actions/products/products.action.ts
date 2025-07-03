@@ -12,7 +12,7 @@ export const getProducts = async (
 	category?: string
 ): Promise<Product[]> => {
 	try {
-		const perPage = 6;
+		const perPage = 9;
 		const skip = (page - 1) * perPage;
 
 		const products = await prisma.product.findMany({
