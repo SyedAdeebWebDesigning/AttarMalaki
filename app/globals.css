@@ -254,3 +254,7 @@
 .text-shadow-white {
 	text-shadow: 0 0 4px rgb(255, 255, 255);
 }
+
+.cl-userButtonPopoverFooter {
+	display: none;
+}
