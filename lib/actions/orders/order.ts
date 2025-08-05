@@ -13,6 +13,33 @@ export default async function ValidateOrder(orderId: string): Promise<boolean> {
 	return !!exists;
 }
 
+export const getOrders = async () => {
+	try {
+		const orders = await prisma.order.findMany({
+			include: {
+				user: {
+					select: {
+						firstName: true,
+						lastName: true,
+						email: true,
+					},
+				},
+			},
+			orderBy: {
+				createdAt: "desc",
+			},
+		});
+
+		return {
+			message: "Orders retrieved successfully.",
+			orders,
+		};
+	} catch (error) {
+		console.error("Error fetching orders:", error);
+		return [];
+	}
+};
+
 export const getUserOrders = async () => {
 	const clerkUser = await currentUser();
 	const clerkUserId = clerkUser?.id;
