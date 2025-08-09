@@ -5,6 +5,8 @@
   "hints": {
     "axe/structure": "off",
     "axe/forms": "off",
-    "no-inline-styles": "off"
+    "no-inline-styles": "off",
+    "typescript-config/strict": "off",
+    "typescript-config/consistent-casing": "off"
   }
 }
