@@ -17,7 +17,7 @@ const ProductCard = ({ product, lowest }: Props) => {
 		<Link href={`/product/${product.slug}`} prefetch>
 			<Card
 				key={product.id}
-				className="overflow-hidden transition-all duration-200 hover:shadow-md flex flex-col py-0 rounded cursor-pointer">
+				className="overflow-hidden transition-all duration-200 hover:shadow-md flex flex-col py-0 rounded cursor-pointer relative">
 				<div className="aspect-square relative overflow-hidden">
 					<Image
 						src={product.image || "/placeholder.svg"}

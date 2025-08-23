@@ -52,6 +52,7 @@ const AddToBag = ({
 	return (
 		<Button
 			onClick={handleClick}
+			className="w-full"
 			disabled={isLoading || productQty > totalQty || totalQty === 0}>
 			{isLoading ? "Adding..." : "Add to Bag"}
 			{productQty <= 0 && (

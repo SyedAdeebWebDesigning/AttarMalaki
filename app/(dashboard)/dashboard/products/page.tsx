@@ -1,9 +1,10 @@
 import Heading from "@/components/shared/Heading";
 import { Button } from "@/components/ui/button";
-import { getAllProducts } from "@/lib/actions/products/products.action";
+
 import Link from "next/link";
 import { Product } from "@/typings";
 import ProductsTable from "@/components/shared/ProductsTable";
+import { getAllProducts } from "@/lib/actions/products/products.action";
 interface pageProps {}
 
 const page = async ({}: pageProps) => {

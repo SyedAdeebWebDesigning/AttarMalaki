@@ -7,6 +7,7 @@ import { Product, ProductQuantity } from "@/typings";
 import { formatCurrency } from "@/lib/utils";
 import { Separator } from "../ui/separator";
 import AddToBag from "./AddToBag";
+import WishlistButton from "./WishlistButton";
 
 type Props = {
 	product: Product & { quantities: ProductQuantity[] };
@@ -104,7 +105,7 @@ export function ProductDetails({ product, userId }: Props) {
 						</div>
 
 						{/* Price and Stock */}
-						<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+						<div className="flex flex-col sm:flex-row sm:justify-start sm:items-center gap-4">
 							<div>
 								<p className="title-font font-semibold text-2xl text-gray-900">
 									{formatCurrency(
@@ -117,7 +118,7 @@ export function ProductDetails({ product, userId }: Props) {
 										: "Out of Stock"}
 								</p>
 							</div>
-							<div className="flex items-center gap-4">
+							<div className="flex items-center gap-4 w-full">
 								<div className="flex items-center gap-4">
 									<div className="flex items-center justify-between rounded w-32 h-12 px-2">
 										{/* Decrement Button */}
@@ -145,21 +146,24 @@ export function ProductDetails({ product, userId }: Props) {
 									</div>
 								</div>
 
-								<AddToBag
-									totalQty={selectedQuantity.stock}
-									productId={product.id}
-									productPrice={selectedQuantity.price}
-									productSize={selectedQuantity.size}
-									productQty={quantity}
-									userId={userId}
-									onStockUpdate={(newStock) => {
-										setSelectedQuantity((prev) => ({
-											...prev,
-											stock: newStock,
-										}));
-									}}
-								/>
+								<div className="w-full">
+									<AddToBag
+										totalQty={selectedQuantity.stock}
+										productId={product.id}
+										productPrice={selectedQuantity.price}
+										productSize={selectedQuantity.size}
+										productQty={quantity}
+										userId={userId}
+										onStockUpdate={(newStock) => {
+											setSelectedQuantity((prev) => ({
+												...prev,
+												stock: newStock,
+											}));
+										}}
+									/>
+								</div>
 							</div>
+							<WishlistButton />
 						</div>
 					</div>
 				</div>

@@ -1,8 +1,8 @@
+export const revalidate = 3600; // ✅ cache for 1 hour
+
 import Products from "@/components/shared/Products";
-import {
-	getProducts,
-	getTotalProductsCount,
-} from "@/lib/actions/products/products.action";
+import { getProducts } from "@/lib/actions/products/getProducts";
+import { getTotalProductsCount } from "@/lib/actions/products/products.action";
 import { Product } from "@/typings";
 import { redirect } from "next/navigation";
 

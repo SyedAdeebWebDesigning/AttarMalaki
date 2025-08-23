@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { getProductBySlug } from "@/lib/actions/products/getProductBySlug";
 import {
 	getProductReviews,
-	getRelativeProducts,
+	getRelatedProducts,
 } from "@/lib/actions/products/products.action";
 import { getUserByClerkId } from "@/lib/actions/user/getUserByClerkId";
 import { Product, user } from "@/typings";
@@ -18,7 +18,6 @@ import { currentUser } from "@clerk/nextjs/server";
 type PageProps = {
 	params: Promise<{ slug: string }>;
 };
-
 
 const Page = async ({ params }: PageProps) => {
 	const { slug } = await params;
@@ -33,7 +32,7 @@ const Page = async ({ params }: PageProps) => {
 	}
 	if (!product) return <div>Product not found</div>;
 
-	const relatedProducts = (await getRelativeProducts(
+	const relatedProducts = (await getRelatedProducts(
 		product.category,
 		product.id
 	)) as Product[];
