@@ -12,6 +12,7 @@ import WishlistButton from "./WishlistButton";
 type Props = {
 	product: Product & { quantities: ProductQuantity[] };
 	userId: string;
+	wishlist: { exists: boolean; message: string };
 };
 
 const sizeLabels: Record<string, string> = {
@@ -20,7 +21,7 @@ const sizeLabels: Record<string, string> = {
 	ML_100: "100 ml",
 };
 
-export function ProductDetails({ product, userId }: Props) {
+export function ProductDetails({ product, userId, wishlist }: Props) {
 	const [selectedQuantity, setSelectedQuantity] = useState<ProductQuantity>(
 		product.quantities[0]
 	);
@@ -163,7 +164,11 @@ export function ProductDetails({ product, userId }: Props) {
 									/>
 								</div>
 							</div>
-							<WishlistButton />
+							<WishlistButton
+								userId={userId}
+								productId={product.id}
+								isWishlist={wishlist.exists}
+							/>
 						</div>
 					</div>
 				</div>

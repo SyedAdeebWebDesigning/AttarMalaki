@@ -12,6 +12,7 @@ import {
 	getRelatedProducts,
 } from "@/lib/actions/products/products.action";
 import { getUserByClerkId } from "@/lib/actions/user/getUserByClerkId";
+import { checkWishlist } from "@/lib/actions/wishlist/checkWishlist.action";
 import { Product, user } from "@/typings";
 import { currentUser } from "@clerk/nextjs/server";
 
@@ -37,12 +38,18 @@ const Page = async ({ params }: PageProps) => {
 		product.id
 	)) as Product[];
 
+	const wishlistItem = (await checkWishlist(userId, productId)) as any;
+
 	const productReviews = (await getProductReviews(productId)) as any;
 
 	return (
 		<MaxWidthWrapper>
 			<section>
-				<ProductDetails product={product} userId={userId} />
+				<ProductDetails
+					product={product}
+					userId={userId}
+					wishlist={wishlistItem}
+				/>
 			</section>
 
 			<Separator className="mx-auto" />
