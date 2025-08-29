@@ -22,10 +22,12 @@ const Banner = ({ tagline }: BannerProps) => {
 					src="/BannerBG.webp"
 					alt="Background"
 					fill
-					loading="lazy"
+					priority // ✅ replaces lazy load, forces preload
+					fetchPriority="high" // ✅ HTML hint for modern browsers
 					quality={90}
 					className="object-cover object-center z-0"
 				/>
+
 				<section className="relative z-20 text-gray-600 body-font">
 					<div className="container mx-auto flex flex-col-reverse md:flex-row items-center md:py-24 gap-12">
 						{/* Text Section */}
