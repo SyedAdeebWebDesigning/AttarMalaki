@@ -1,21 +1,19 @@
+import LoadingScreen from "@/components/LoadingScreen";
 import { Footer } from "@/components/shared/Footer";
 import NavBar from "@/components/shared/NavBar";
-import { getUserByClerkId } from "@/lib/actions/user/getUserByClerkId";
-import { currentUser } from "@clerk/nextjs/server";
-import { user } from "@prisma/client";
+import { Suspense } from "react";
 
 interface layoutProps {
 	children: React.ReactNode;
 }
 
 const layout = async ({ children }: layoutProps) => {
-	const clerkUser = await currentUser();
-	const user = (await getUserByClerkId(clerkUser?.id ?? "")) as user;
-
 	return (
 		<div>
-			<NavBar user={user} />
-			<div className="">{children}</div>
+			<NavBar />
+			<div className="">
+				<Suspense fallback={<LoadingScreen />}>{children}</Suspense>
+			</div>
 			<Footer />
 		</div>
 	);

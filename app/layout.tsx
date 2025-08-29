@@ -68,7 +68,7 @@ export default function RootLayout({
 							pauseOnHover
 							theme="light"
 						/>
-						<Suspense fallback={<LoadingScreen />}>{children}</Suspense>
+						{children}
 					</main>
 				</body>
 			</html>
