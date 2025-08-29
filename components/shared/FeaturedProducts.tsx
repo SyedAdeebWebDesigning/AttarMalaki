@@ -6,7 +6,9 @@ import { Suspense } from "react";
 import { Skeleton } from "../ui/skeleton";
 import { Card, CardContent } from "../ui/card";
 
-export async function FeaturedProducts() {
+export const revalidate = 3600; // ISR: cache results for 1h
+
+export function FeaturedProducts() {
 	return (
 		<section className="py-12 px-4 md:px-6 lg:px-8 bg-white">
 			<MaxWidthWrapper>
@@ -20,16 +22,7 @@ export async function FeaturedProducts() {
 							their exceptional quality and lasting fragrance.
 						</p>
 					</div>
-					<Suspense
-						fallback={
-							<MaxWidthWrapper>
-								<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-									{Array.from({ length: 3 }).map((_, i) => (
-										<ProductCardSkeleton key={i} />
-									))}
-								</div>
-							</MaxWidthWrapper>
-						}>
+					<Suspense fallback={<ProductsSkeleton />}>
 						<RenderProducts />
 					</Suspense>
 				</div>
@@ -43,20 +36,15 @@ async function RenderProducts() {
 	return (
 		<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 			{bestSellers.map((product) => {
-				// Find the lowest effective price directly
-				let lowest = product.quantities[0];
-				for (const q of product.quantities) {
-					const effectiveQPrice =
+				const lowest = product.quantities.reduce((min, q) => {
+					const qPrice =
 						q.discountPrice && q.discountPrice > 0 ? q.discountPrice : q.price;
-					const effectiveLowestPrice =
-						lowest.discountPrice && lowest.discountPrice > 0
-							? lowest.discountPrice
-							: lowest.price;
-
-					if (effectiveQPrice < effectiveLowestPrice) {
-						lowest = q;
-					}
-				}
+					const minPrice =
+						min.discountPrice && min.discountPrice > 0
+							? min.discountPrice
+							: min.price;
+					return qPrice < minPrice ? q : min;
+				}, product.quantities[0]);
 
 				return (
 					<ProductCard key={product.id} product={product} lowest={lowest} />
@@ -66,51 +54,29 @@ async function RenderProducts() {
 	);
 }
 
-const ProductCardSkeleton = () => {
-	return (
-		<Card className="overflow-hidden transition-all duration-200 flex flex-col py-0 rounded relative">
-			{/* Image Skeleton */}
-			<div className="aspect-square relative overflow-hidden">
-				<Skeleton className="w-full h-full" />
+const ProductCardSkeleton = () => (
+	<Card className="overflow-hidden transition-all duration-200 flex flex-col py-0 rounded relative">
+		<div className="aspect-square relative overflow-hidden">
+			<Skeleton className="w-full h-full" />
+		</div>
+		<CardContent className="p-4 flex flex-col flex-grow">
+			<div className="flex items-start justify-between gap-2">
+				<Skeleton className="h-6 w-3/4 rounded" />
+				<Skeleton className="h-5 w-16 rounded" />
 			</div>
-
-			{/* Content Skeleton */}
-			<CardContent className="p-4 flex flex-col flex-grow">
-				<div className="flex items-start justify-between gap-2">
-					{/* Title placeholder */}
-					<Skeleton className="h-6 w-3/4 rounded" />
-					{/* Price placeholder */}
-					<Skeleton className="h-5 w-16 rounded" />
-				</div>
-
-				{/* Description placeholders */}
-				<div className="mt-2 space-y-2">
-					<Skeleton className="h-4 w-full rounded" />
-					<Skeleton className="h-4 w-5/6 rounded" />
-					<Skeleton className="h-4 w-2/3 rounded" />
-				</div>
-			</CardContent>
-		</Card>
-	);
-};
-
-export const ProductsSkeleton = () => {
-	return (
-		<section className="py-12 px-4 md:px-6 lg:px-8 bg-white">
-			<div className="max-w-7xl mx-auto">
-				{/* Header skeleton */}
-				<div className="flex flex-col items-center mb-10 text-center">
-					<Skeleton className="h-10 w-72 mb-4 rounded" />
-					<Skeleton className="h-5 w-96 rounded" />
-				</div>
-
-				{/* Products Grid Skeleton */}
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-					{Array.from({ length: 3 }).map((_, i) => (
-						<ProductCardSkeleton key={i} />
-					))}
-				</div>
+			<div className="mt-2 space-y-2">
+				<Skeleton className="h-4 w-full rounded" />
+				<Skeleton className="h-4 w-5/6 rounded" />
+				<Skeleton className="h-4 w-2/3 rounded" />
 			</div>
-		</section>
-	);
-};
+		</CardContent>
+	</Card>
+);
+
+export const ProductsSkeleton = () => (
+	<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+		{Array.from({ length: 6 }).map((_, i) => (
+			<ProductCardSkeleton key={i} />
+		))}
+	</div>
+);

@@ -121,7 +121,7 @@
 	}
 	body {
 		@apply bg-background text-foreground;
-		font-family: "Cairo", sans-serif;
+		font-family: "Inter", sans-serif;
 		font-optical-sizing: auto;
 	}
 
@@ -141,18 +141,21 @@
 	}
 
 	@font-face {
-		font-family: "Cairo-Regular";
-		src: url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.eot");
-		src: url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.eot?#iefix")
-				format("embedded-opentype"),
-			url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.woff2")
-				format("woff2"),
-			url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.woff")
-				format("woff"),
-			url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.ttf")
-				format("truetype"),
-			url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.svg#Cairo-Regular")
-				format("svg");
+		@font-face {
+			font-family: "Cairo-Regular";
+			src: url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.eot");
+			src: url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.eot?#iefix")
+					format("embedded-opentype"),
+				url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.woff2")
+					format("woff2"),
+				url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.woff")
+					format("woff"),
+				url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.ttf")
+					format("truetype"),
+				url("https://db.onlinewebfonts.com/t/157ad1135ef04af4b68096015987c5eb.svg#Cairo-Regular")
+					format("svg");
+			font-display: swap; /* 👈 Add this */
+		}
 	}
 
 	@font-face {
@@ -183,10 +186,6 @@
 
 	.cl-formButtonPrimary {
 		border: none !important;
-	}
-
-	body {
-		font-family: "Cairo-Regular";
 	}
 }
 

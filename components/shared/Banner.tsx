@@ -22,7 +22,7 @@ const Banner = ({ tagline }: BannerProps) => {
 					src="/BannerBG.webp"
 					alt="Background"
 					fill
-					priority
+					loading="lazy"
 					quality={90}
 					className="object-cover object-center z-0"
 				/>
@@ -33,7 +33,7 @@ const Banner = ({ tagline }: BannerProps) => {
 							<div className="relative mx-auto md:mx-0">
 								<Logo className="text-center md:text-left text-4xl text-black" />
 							</div>
-							<p className="text-lg sm:text-3xl lg:text-5xl text-gray-700 mb-8">
+							<p className="text-lg sm:text-3xl lg:text-[40px] leading-tight text-neutral-900 mb-8">
 								{tagline}
 							</p>
 							<div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
