@@ -23,6 +23,7 @@ import {
 	SignInButton,
 	UserButton,
 } from "@clerk/nextjs";
+import { GoHeartFill } from "react-icons/go";
 
 const navLinks = [
 	{
@@ -86,20 +87,25 @@ const NavBarClient = ({ user }: { user: any }) => {
 								{user && user.hasCompletedAddresses ? (
 									<UserButton.Link
 										label="Your Address"
-										labelIcon={<FaLocationDot />}
+										labelIcon={<FaLocationDot className="size-4" />}
 										href="/your-address"
 									/>
 								) : (
 									<UserButton.Link
 										label="Add Address"
-										labelIcon={<FaLocationDot />}
+										labelIcon={<FaLocationDot className="size-4" />}
 										href="/address"
 									/>
 								)}
 								<UserButton.Link
 									label="Your Orders"
-									labelIcon={<BsBox2Fill />}
+									labelIcon={<BsBox2Fill className="size-4" />}
 									href="/your-orders"
+								/>
+								<UserButton.Link
+									label="Your Wishlist"
+									labelIcon={<GoHeartFill className="size-4" />}
+									href="/your-wishlist"
 								/>
 								{user && user.isAdmin && (
 									<UserButton.Link
