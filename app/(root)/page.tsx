@@ -1,4 +1,3 @@
-import ChatbotIframe from "@/components/ChatBot";
 import { FaqSection } from "@/components/shared/Accordion";
 import Banner from "@/components/shared/Banner";
 import Categories from "@/components/shared/Categories";
